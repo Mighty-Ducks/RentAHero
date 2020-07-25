@@ -108,7 +108,7 @@ apiRouter.post('/api/superheroes', (req, res) => {
     } else {
         const superhero = await Superhero.create({
             availability: availability,
-            categoryId: categoryId, // requires association Superhero.belongsTo(Category) & Category.hasMany(Superhero)
+            categoryId: categoryId, // requires association Superhero.belongsTo(Category) & Category.hasMany(Superhero);
             description: description,
             image: image,
             name: name,
