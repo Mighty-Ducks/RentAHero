@@ -13,7 +13,10 @@
     "react/jsx-filename-extension": "off",
     "react/prefer-stateless-function": "off",
     "react/state-in-constructor": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "no-extra-parens": ["error", "all", {
+      "nestedBinaryExpressions": false
+    }]
   },
   "env": {
     "jest/globals": true,
