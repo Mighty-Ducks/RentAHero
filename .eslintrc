@@ -6,6 +6,9 @@
       "error",
       {
         "singleQuote": true
+      },
+      {
+        "endOfLine": "auto"
       }
     ],
     "no-plusplus": "off",
@@ -16,7 +19,8 @@
     "import/prefer-default-export": "off",
     "no-extra-parens": ["error", "all", {
       "nestedBinaryExpressions": false
-    }]
+    }],
+    "no-unused-vars": 2
   },
   "env": {
     "jest/globals": true,
