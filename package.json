@@ -14,7 +14,7 @@
   "dependencies": {
     "@babel/core": "^7.10.5",
     "axios": "^0.19.2",
-    "babel-loader": "^8.1.0",
+    "bootstrap": "^4.5.0",
     "express": "^4.17.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -32,6 +32,8 @@
     "@babel/preset-env": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^4.0.0",
     "eslint": "^7.5.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-prettier": "^6.11.0",
@@ -44,9 +46,12 @@
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.0.1",
     "node-dev": "^5.0.0",
+    "node-sass": "^4.14.1",
     "prettier": "^2.0.5",
     "prettier-eslint": "^9.0.1",
-    "prettier-eslint-cli": "^5.0.0"
+    "prettier-eslint-cli": "^5.0.0",
+    "sass-loader": "^9.0.2",
+    "style-loader": "^1.2.1"
   },
   "keywords": [],
   "description": ""

@@ -1,0 +1,19 @@
+$theme-colors: ('primary': #5867dd);
+
+@import 'bootstrap/scss/bootstrap.scss';
+
+html {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  min-height: 100%;
+}
+
+#app {
+  background-color: #C3E8ED;
+  border-radius: 5px;
+  margin: .5rem;
+  width: 100%;
+}
