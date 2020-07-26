@@ -1,17 +1,15 @@
 // Initialize express and calles app.listen
 const express = require('express');
-const apiRouter = require('./routes/routes_index');
-
 const app = express();
 
-app.use('/api', apiRouter);
+const PORT = process.env.PORT || 3000;
 
 const startServer = (PORT) => {
-    return new Promise ((res) => {
-        app.listen(PORT, () => {
-            console.log(`Server is now running at PORT: ${PORT}`);
-        })
+    return new Promise((res) => {
+        app.listen(PORT, () => console.log(`Server is running in PORT ${PORT}`))
     })
 }
 
-module.exports = app;
+startServer(PORT);
+
+module.exports = app; // to export to app.use routes and middlewares
