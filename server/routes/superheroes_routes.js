@@ -1,10 +1,5 @@
 const superheroesRouter = require('express').Router();
-const path = require('path');
 const { Superhero } = require('../db/models/models_index.js');
-
-superheroesRouter.get('/', (req, res) => { // send index.html to root directory
-    res.sendFile(path.join(__dirname, '../index.html'));
-})
 
 // app.use('/api/superheroes', superheroesRouter) in routes_index.js
 
@@ -13,7 +8,8 @@ superheroesRouter.get('/', async (req, res) => {
     const superheroes = await Superhero.findAll();
 
     if(!superheroes){
-        res.status(404).send({ message: 'Superheroes not found' })
+        res.status(404).send({ message: 'Superheroes not found' });
+        console.log(`No superheroes`);
     } else {
         res.send({ superheroes });
     } 
@@ -23,7 +19,7 @@ superheroesRouter.get('/', async (req, res) => {
 superheroesRouter.get('/:id', async (req, res) => {
     const { id } = req.params;
 
-    const superhero = await Superhero.findAll({
+    const superhero = await Superhero.findOne({
         where: { id: id }
     });
 
@@ -35,7 +31,7 @@ superheroesRouter.get('/:id', async (req, res) => {
 });
 
 // update/edit superhero
-superheroesRouter.put('/:id', (req, res) => {
+superheroesRouter.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { availability, categoryId, description, image, name, powers, offerings, price } = req.body; // review to agree on properties for superhero
     
@@ -73,7 +69,7 @@ superheroesRouter.put('/:id', (req, res) => {
 })
 
 // delete a superhero
-superheroesRouter.delete('/:id', (req, res) => {
+superheroesRouter.delete('/:id', async (req, res) => {
     const { id } = req.params;
 
     const superhero = await Superhero.findByPk(id);
@@ -89,7 +85,7 @@ superheroesRouter.delete('/:id', (req, res) => {
 });
 
 // add a superhero
-superheroesRouter.post('/', (req, res) => {
+superheroesRouter.post('/', async (req, res) => {
     const { availability, categoryId, description, image, name, powers, offerings, price  } = req.body;
     
     const inputCheck = (inputs) => { //check if inputs are empty. need validation on front-end too
