@@ -5,28 +5,26 @@ const { Superhero } = require('../db/models/models_index.js');
 
 // get all superheroes
 superheroesRouter.get('/', async (req, res) => {
-    const superheroes = await Superhero.findAll();
-
-    if(!superheroes){
-        res.status(404).send({ message: 'Superheroes not found' });
-        console.log(`No superheroes`);
-    } else {
+    
+    try {
+        const superheroes = await Superhero.findAll();
         res.send({ superheroes });
-    } 
+    } catch(e) {
+        console.log(e);
+        res.status(200).send({ message: 'Superheroes not found' });
+    }
 });
 
 // get individual superhero
 superheroesRouter.get('/:id', async (req, res) => {
     const { id } = req.params;
 
-    const superhero = await Superhero.findOne({
-        where: { id: id }
-    });
-
-    if(!superhero){
-        res.status(404).send({ message: `Superhero id: ${id} not found.` })
-    } else {
+    try {
+        const superhero = await Superhero.findByPk(id);
         res.send({ superhero });
+    } catch (e) {
+        console.log(e);
+        res.status(200).send({ message: `Superhero id: ${id} not found.` })
     }
 });
 
@@ -34,37 +32,24 @@ superheroesRouter.get('/:id', async (req, res) => {
 superheroesRouter.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { availability, categoryId, description, image, name, powers, offerings, price } = req.body; // review to agree on properties for superhero
-    
-    const inputCheck = (inputs) => { //check if inputs are empty. need validation on front-end too
-        let emptyInput = false;
-        for(let key in inputs){
-            if(inputs[key] === null || inputs[key] === ''){
-                emptyInput = false;
-            } else {
-                emptyInput = true;
-            }
-            return emptyInput;
-        }
-    }
 
-    const superhero = await Superhero.findByPk(id);
-
-    if(!inputCheck(req.body)){ // if an input is empty send error
-        res.status(400).send({ message: `Cannot leave any fields empty.` });
-    } else if(!superhero){
-        res.status(404).send({ message: `Superhero id: ${id} not found.`})
-    } else {
+    try {
+        const superhero = await Superhero.findByPk(id);
         const updatedSuperhero = await superhero.update({
-            availability: availability,
-            categoryId: categoryId, // requires association Superhero.belongsTo(Category) & Category.hasMany(Superhero)
-            description: description,
-            image: image,
-            name: name,
-            offerings: offerings, // for example, superman can offer to fly you around the city, batman can take you on a ride in the batmobile
-            powers: powers,
-            price: price,
+            availability,
+            categoryId, // requires association Superhero.belongsTo(Category) & Category.hasMany(Superhero)
+            description,
+            image,
+            name,
+            offerings, // for example, superman can offer to fly you around the city, batman can take you on a ride in the batmobile
+            powers,
+            price,
         })
         res.send({ updatedSuperhero });
+    } catch (e) {
+        console.log(e);
+        res.status(200).send({ message: `Superhero id: ${id} not found.`})
+
     }
 })
 
@@ -72,49 +57,34 @@ superheroesRouter.put('/:id', async (req, res) => {
 superheroesRouter.delete('/:id', async (req, res) => {
     const { id } = req.params;
 
-    const superhero = await Superhero.findByPk(id);
-
-    if(!superhero){
-        res.status(404).send({ message: `Superhero id: ${id} not found.`})
-    } else {
-        const deletedSuperhero = await superhero.destroy({
-            where: { id: id }
-        })
-        res.send({ deletedSuperhero });
+    try {
+        const superhero = await Superhero.findByPk(id);
+        superhero.destroy();
+        res.sendStatus(200);
+    } catch(e) {
+        console.log(e);
+        res.status(200).send({ message: `Superhero id: ${id} not found.`})
     }
 });
 
 // add a superhero
 superheroesRouter.post('/', async (req, res) => {
     const { availability, categoryId, description, image, name, powers, offerings, price  } = req.body;
-    
-    const inputCheck = (inputs) => { //check if inputs are empty. need validation on front-end too
-        let emptyInput = false;
-        for(let key in inputs){
-            if(inputs[key] === null || inputs[key] === ''){
-                emptyInput = false;
-            } else {
-                emptyInput = true;
-            }
-            return emptyInput;
-        }
-    }
 
-    if(!inputCheck(req.body)){ // if an input empty send error
-        res.send({ message: `Cannot leave any fields empty.` })
-    } else {
+    try {
         const superhero = await Superhero.create({
-            availability: availability,
-            categoryId: categoryId, // requires association Superhero.belongsTo(Category) & Category.hasMany(Superhero)
-            description: description,
-            image: image,
-            name: name,
-            offerings: offerings, // for example, superman can offer to fly you around the city, batman can take you on a ride in the batmobile
-            powers: powers,
-            price: price,
+            availability,
+            categoryId, // requires association Superhero.belongsTo(Category) & Category.hasMany(Superhero)
+            description,
+            image,
+            name,
+            offerings, // for example, superman can offer to fly you around the city, batman can take you on a ride in the batmobile
+            powers,
+            price,
         });
-        
         res.send({superhero});
+    } catch(e) {
+        console.log(e);
     }
 })
 
