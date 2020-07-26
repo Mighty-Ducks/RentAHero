@@ -8,10 +8,10 @@ superheroesRouter.get('/', async (req, res) => {
     
     try {
         const superheroes = await Superhero.findAll();
-        res.send({ superheroes });
+        res.status(200).send({ superheroes });
     } catch(e) {
         console.log(e);
-        res.status(200).send({ message: 'Superheroes not found' });
+        res.status(400).send({ message: 'Superheroes not found' });
     }
 });
 
@@ -21,10 +21,10 @@ superheroesRouter.get('/:id', async (req, res) => {
 
     try {
         const superhero = await Superhero.findByPk(id);
-        res.send({ superhero });
+        res.status(200).send({ superhero });
     } catch (e) {
         console.log(e);
-        res.status(200).send({ message: `Superhero id: ${id} not found.` })
+        res.status(400).send({ message: `Superhero id: ${id} not found.` })
     }
 });
 
@@ -45,10 +45,10 @@ superheroesRouter.put('/:id', async (req, res) => {
             powers,
             price,
         })
-        res.send({ updatedSuperhero });
+        res.status(200).send({ updatedSuperhero });
     } catch (e) {
         console.log(e);
-        res.status(200).send({ message: `Superhero id: ${id} not found.`})
+        res.status(400).send({ message: `Superhero id: ${id} not found.`})
 
     }
 })
@@ -60,10 +60,10 @@ superheroesRouter.delete('/:id', async (req, res) => {
     try {
         const superhero = await Superhero.findByPk(id);
         superhero.destroy();
-        res.sendStatus(200);
+        res.status(200).send({ message: `Superhero id: ${id} succesfully deleted.` });
     } catch(e) {
         console.log(e);
-        res.status(200).send({ message: `Superhero id: ${id} not found.`})
+        res.status(400).send({ message: `Superhero id: ${id} not found.`})
     }
 });
 
