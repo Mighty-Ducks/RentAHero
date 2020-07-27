@@ -11,7 +11,7 @@ superheroesRouter.get('/', async (req, res) => {
     res.status(200).send(superheroes);
   } catch (e) {
     console.error(e);
-    res.status(404).send({ message: 'Server error' });
+    res.status(500).send({ message: 'Server error' });
   }
 });
 
@@ -29,7 +29,7 @@ superheroesRouter.get('/:id', async (req, res) => {
     }
   } catch (e) {
     console.error(e);
-    res.status(400).send({ message: 'Server error' });
+    res.status(500).send({ message: 'Server error' });
   }
 });
 
@@ -67,7 +67,7 @@ superheroesRouter.put('/:id', async (req, res) => {
     }
   } catch (e) {
     console.error(e);
-    res.status(400).send({ message: 'Server error' });
+    res.status(500).send({ message: 'Server error' });
   }
 });
 
@@ -88,7 +88,7 @@ superheroesRouter.delete('/:id', async (req, res) => {
     }
   } catch (e) {
     console.error(e);
-    res.status(400).send({ message: 'Server error' });
+    res.status(500).send({ message: 'Server error' });
   }
 });
 
@@ -119,7 +119,7 @@ superheroesRouter.post('/', async (req, res) => {
     res.status(200).send(superhero);
   } catch (e) {
     console.error(e);
-    res.status(400).send({ message: 'Server error' });
+    res.status(500).send({ message: 'Server error' });
   }
 });
 
