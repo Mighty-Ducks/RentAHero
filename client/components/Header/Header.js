@@ -11,17 +11,24 @@ export default class Header extends Component {
         <nav>
           <ul>
             <li>
-              <Link to="/female">Female <i className="fas fa-venus"></i></Link>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/male">Male <i className="fas fa-mars"></i></Link>
-            </li>
-            <li>
-              <Link to="/others">Others <i className="fas fa-pastafarianism"></i></Link>
+              <Link to="/categories">Categories</Link>
             </li>
           </ul>
         </nav>
 
+        <div id="user-info">
+          <ul>
+            <li>
+              <Link to="/cart">Cart</Link>
+            </li>
+            <li>
+              <Link to="/login">Sign In</Link>
+            </li>
+          </ul>
+        </div>
 
       </header>
     )
