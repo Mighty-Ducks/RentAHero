@@ -1,4 +1,4 @@
-const { TYPES } = require('./actions');
+const { TYPES } = require('./types');
 
 const initialState = {
   heroes: [],
