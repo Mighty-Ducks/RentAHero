@@ -27,7 +27,6 @@ superheroesRouter.get('/:id', async (req, res) => {
     } else {
       res.status(404).send({ message: `Superhero id: ${id} not found.` });
     }
-
   } catch (e) {
     console.error(e);
     res.status(400).send({ message: 'Server error' });
@@ -37,7 +36,16 @@ superheroesRouter.get('/:id', async (req, res) => {
 // update/edit superhero
 superheroesRouter.put('/:id', async (req, res) => {
   const { id } = req.params;
-  const { availability, categoryId, description, image, name, powers, offerings, price } = req.body; // review to agree on properties for superhero
+  const {
+    availability,
+    categoryId,
+    description,
+    image,
+    name,
+    powers,
+    offerings,
+    price,
+  } = req.body; // review to agree on properties for superhero
 
   try {
     const superhero = await Superhero.findByPk(id);
@@ -52,7 +60,7 @@ superheroesRouter.put('/:id', async (req, res) => {
         offerings, // for example, superman can offer to fly you around the city, batman can take you on a ride in the batmobile
         powers,
         price,
-      })
+      });
       res.status(200).send(updatedSuperhero);
     } else {
       res.status(404).send({ message: `Superhero id: ${id} not found.` });
@@ -61,7 +69,7 @@ superheroesRouter.put('/:id', async (req, res) => {
     console.error(e);
     res.status(400).send({ message: 'Server error' });
   }
-})
+});
 
 // delete a superhero
 superheroesRouter.delete('/:id', async (req, res) => {
@@ -72,7 +80,9 @@ superheroesRouter.delete('/:id', async (req, res) => {
 
     if (superhero) {
       superhero.destroy();
-      res.status(204).send({ message: `Superhero id: ${id} succesfully deleted.` });
+      res
+        .status(204)
+        .send({ message: `Superhero id: ${id} succesfully deleted.` });
     } else {
       res.status(404).send({ message: `Superhero id: ${id} not found.` });
     }
@@ -84,7 +94,16 @@ superheroesRouter.delete('/:id', async (req, res) => {
 
 // add a superhero
 superheroesRouter.post('/', async (req, res) => {
-  const { availability, categoryId, description, image, name, powers, offerings, price } = req.body;
+  const {
+    availability,
+    categoryId,
+    description,
+    image,
+    name,
+    powers,
+    offerings,
+    price,
+  } = req.body;
 
   try {
     const superhero = await Superhero.create({
@@ -102,6 +121,6 @@ superheroesRouter.post('/', async (req, res) => {
     console.error(e);
     res.status(400).send({ message: 'Server error' });
   }
-})
+});
 
 module.exports = superheroesRouter;
