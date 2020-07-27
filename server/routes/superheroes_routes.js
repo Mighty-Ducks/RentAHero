@@ -10,8 +10,8 @@ superheroesRouter.get('/', async (req, res) => {
         const superheroes = await Superhero.findAll();
         res.status(200).send({ superheroes });
     } catch(e) {
-        console.log(e);
-        res.status(400).send({ message: 'Superheroes not found' });
+        console.error(e);
+        res.status(404).send({ message: 'Server error' });
     }
 });
 
@@ -23,7 +23,7 @@ superheroesRouter.get('/:id', async (req, res) => {
         const superhero = await Superhero.findByPk(id);
         res.status(200).send({ superhero });
     } catch (e) {
-        console.log(e);
+        console.error(e);
         res.status(400).send({ message: `Superhero id: ${id} not found.` })
     }
 });
@@ -35,19 +35,21 @@ superheroesRouter.put('/:id', async (req, res) => {
 
     try {
         const superhero = await Superhero.findByPk(id);
-        const updatedSuperhero = await superhero.update({
-            availability,
-            categoryId, // requires association Superhero.belongsTo(Category) & Category.hasMany(Superhero)
-            description,
-            image,
-            name,
-            offerings, // for example, superman can offer to fly you around the city, batman can take you on a ride in the batmobile
-            powers,
-            price,
-        })
-        res.status(200).send({ updatedSuperhero });
+        if(superhero){
+            const updatedSuperhero = await superhero.update({
+                availability,
+                categoryId, // requires association Superhero.belongsTo(Category) & Category.hasMany(Superhero)
+                description,
+                image,
+                name,
+                offerings, // for example, superman can offer to fly you around the city, batman can take you on a ride in the batmobile
+                powers,
+                price,
+            })
+            res.status(200).send({ updatedSuperhero });
+        }
     } catch (e) {
-        console.log(e);
+        console.error(e);
         res.status(400).send({ message: `Superhero id: ${id} not found.`})
 
     }
@@ -59,10 +61,12 @@ superheroesRouter.delete('/:id', async (req, res) => {
 
     try {
         const superhero = await Superhero.findByPk(id);
-        superhero.destroy();
-        res.status(200).send({ message: `Superhero id: ${id} succesfully deleted.` });
+        if(superhero){
+            superhero.destroy();
+            res.status(200).send({ message: `Superhero id: ${id} succesfully deleted.` });
+        }
     } catch(e) {
-        console.log(e);
+        console.error(e);
         res.status(400).send({ message: `Superhero id: ${id} not found.`})
     }
 });
@@ -82,9 +86,9 @@ superheroesRouter.post('/', async (req, res) => {
             powers,
             price,
         });
-        res.send({superhero});
+        res.status(200).send({superhero});
     } catch(e) {
-        console.log(e);
+        console.error(e);
     }
 })
 
