@@ -6,8 +6,12 @@ export default class Header extends Component {
   render() {
     return (
       <header>
-        <strong className="logo"><Link to="/"><i className="fas fa-mask"></i><span>RentAHero</span></Link></strong>
-
+        <strong className="logo">
+          <Link to="/">
+            <i className="fas fa-mask"></i>
+            <span>RentAHero</span>
+          </Link>
+        </strong>
         <nav>
           <ul>
             <li>
@@ -18,7 +22,6 @@ export default class Header extends Component {
             </li>
           </ul>
         </nav>
-
         <div id="user-info">
           <ul>
             <li>
@@ -29,8 +32,7 @@ export default class Header extends Component {
             </li>
           </ul>
         </div>
-
       </header>
-    )
+    );
   }
 }
