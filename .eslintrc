@@ -10,7 +10,10 @@
   "rules": {
     "indent": [
       "error",
-      2 // 2-spaces
+      2, // 2-spaces
+      {
+        "SwitchCase": 1
+      }
     ],
     "prettier/prettier": [
       "error",
