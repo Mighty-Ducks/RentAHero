@@ -1,5 +1,5 @@
 const superheroesRouter = require('express').Router();
-const { Superhero } = require('../db/models/models_index.js');
+const { Superhero } = require('../../db/models/models_index.js');
 
 // app.use('/api/superheroes', superheroesRouter) in routes_index.js
 

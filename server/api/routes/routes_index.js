@@ -1,7 +1,8 @@
 // app.use for all the diffrent routes
 const superheroesRouter = require('./superheroes_routes');
+const app = require('../server');
 
-const applyRoutes = (app) => {
+const applyRoutes = () => {
   app.use('/api/superheroes', superheroesRouter);
 };
 
