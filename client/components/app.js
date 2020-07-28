@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { HashRouter } from 'react-router-dom';
+import { HashRouter, Switch, Route } from 'react-router-dom';
 import '../../public/styles.scss';
 
-import { Header } from '.';
+import { Header, Home } from '.';
 
 class App extends Component {
   render() {
@@ -10,11 +10,9 @@ class App extends Component {
       <HashRouter>
         <Header />
         <div className="p-5">
-          <img
-            alt="I will miss you"
-            src="./assets/stormtrooper.png"
-            height="400"
-          />
+          <Switch>
+            <Route exact path="/" component={Home} />
+          </Switch>
         </div>
         <h1>Hello!</h1>
       </HashRouter>
