@@ -12,7 +12,7 @@ const PUBLIC_PATH = path.join(__dirname, '../public');
 
 applyRoutes(app);
 
-app.use(express.static(DIST_PATH));
+app.use('/dist', express.static(DIST_PATH));
 app.use(express.static(PUBLIC_PATH));
 
 app.listen(PORT, () => console.log(`Server is running in PORT ${PORT}`));
