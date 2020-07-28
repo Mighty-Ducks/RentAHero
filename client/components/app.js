@@ -12,7 +12,7 @@ class App extends Component {
         <div className="p-5">
           <img
             alt="I will miss you"
-            src="../../public/assets/stormtrooper.png"
+            src="./assets/stormtrooper.png"
             height="400"
           />
         </div>
