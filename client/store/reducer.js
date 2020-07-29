@@ -1,3 +1,5 @@
+import { combineReducers } from 'redux';
+
 const TYPES = require('./types');
 
 const initialState = {
@@ -5,7 +7,7 @@ const initialState = {
   hero: {},
 };
 
-const reducer = (state = initialState, action) => {
+const heroesReducer = (state = initialState, action) => {
   switch (action.type) {
     case TYPES.SET_HEROES:
       return {
@@ -16,5 +18,9 @@ const reducer = (state = initialState, action) => {
       return state;
   }
 };
+
+const reducer = combineReducers({
+  heroes: heroesReducer,
+});
 
 export default reducer;

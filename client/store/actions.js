@@ -22,7 +22,7 @@ export const fetchHeroes = () => (dispatch) => {
         name: 'Hacker man',
         avatar:
           'https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/hackerman-tary-kristina.jpg',
-        power: 'money',
+        power: 'hack the time',
         pricePerHr: '13',
         bookLink: 'www.google.com',
       },
