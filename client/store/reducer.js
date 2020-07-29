@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-const TYPES = require('./types');
+const { TYPES } = require('./types');
 
 const initialHeroState = {
   heroes: [],

@@ -1,4 +1,5 @@
-import TYPES from './types';
+const axios = require('axios');
+const { TYPES } = require('./types');
 
 export const setHeroes = (heroes) => {
   return {
@@ -7,27 +8,8 @@ export const setHeroes = (heroes) => {
   };
 };
 
-export const fetchHeroes = () => (dispatch) => {
-  const { data } = {
-    data: [
-      {
-        name: 'Iron man',
-        avatar:
-          'https://www.sideshow.com/storage/product-images/903752/iron-man-mark-vii_marvel_silo.png',
-        power: 'money',
-        pricePerHr: '13',
-        bookLink: 'www.google.com',
-      },
-      {
-        name: 'Hacker man',
-        avatar:
-          'https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/hackerman-tary-kristina.jpg',
-        power: 'hack the time',
-        pricePerHr: '13',
-        bookLink: 'www.google.com',
-      },
-    ],
-  };
+export const fetchHeroes = () => async (dispatch) => {
+  const { data } = await axios.get('/api/superheroes/');
 
   return dispatch(setHeroes(data));
 };
