@@ -1,9 +1,17 @@
 import React from 'react';
 import { render } from 'react-dom';
-import App from './components/app';
+import { Provider } from 'react-redux';
+import App from './app';
+import store from './store/store';
 
 const app = document.querySelector('#app');
 
-render(<App />, app, () => {
-  console.log('App rendered!');
-});
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  app,
+  () => {
+    console.log('App rendered!');
+  }
+);
