@@ -5,7 +5,7 @@ const TYPES = require('./types');
 const initialHeroState = {
   heroes: [],
   hero: {},
-}
+};
 
 const heroesReducer = (state = initialHeroState, action) => {
   switch (action.type) {
