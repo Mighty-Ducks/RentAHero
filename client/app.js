@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import '../public/styles.scss';
 
 import { Header, Home } from './components';
-
 import { fetchHeroes } from './store/actions';
 
 class App extends Component {
