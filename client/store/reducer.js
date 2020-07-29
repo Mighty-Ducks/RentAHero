@@ -1,19 +1,26 @@
-const { TYPES } = require('./types');
+import { combineReducers } from 'redux';
+
+const TYPES = require('./types');
 
 const initialState = {
   heroes: [],
+  hero: {},
 };
 
-const reducer = (state = initialState, action) => {
+const heroesReducer = (state = initialState, action) => {
   switch (action.type) {
     case TYPES.SET_HEROES:
       return {
         ...state,
-        heroes: action.heroes,
+        heroes: action.payload,
       };
     default:
       return state;
   }
 };
+
+const reducer = combineReducers({
+  heroes: heroesReducer,
+});
 
 export default reducer;

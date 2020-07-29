@@ -8,7 +8,7 @@ export default class Header extends Component {
   render() {
     return (
       <header>
-        <div className="border-bottom d-flex justify-content-between py-2 pl-3">
+        <div className="border-bottom d-flex justify-content-between align-items-center py-2 pl-3">
           <Logo />
           <ul className="pr-1">
             <li>
@@ -23,7 +23,7 @@ export default class Header extends Component {
             </li>
           </ul>
         </div>
-        <div className="border-bottom d-flex justify-content-between py-3">
+        <div className="border-bottom d-flex justify-content-between align-items-center py-3">
           <nav>
             <ul>
               <li>
