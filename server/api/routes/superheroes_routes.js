@@ -36,30 +36,17 @@ superheroesRouter.get('/:id', async (req, res) => {
 // update/edit superhero
 superheroesRouter.put('/:id', async (req, res) => {
   const { id } = req.params;
-  const {
-    availability,
-    categoryId,
-    description,
-    image,
-    name,
-    powers,
-    offerings,
-    price,
-  } = req.body; // review to agree on properties for superhero
+  const { name, imgURL, description, actId } = req.body; // review to agree on properties for superhero
 
   try {
     const superhero = await Superhero.findByPk(id);
 
     if (superhero) {
       const updatedSuperhero = await superhero.update({
-        availability,
-        categoryId, // requires association Superhero.belongsTo(Category) & Category.hasMany(Superhero)
-        description,
-        image,
         name,
-        offerings, // for example, superman can offer to fly you around the city, batman can take you on a ride in the batmobile
-        powers,
-        price,
+        imgURL,
+        description,
+        actId,
       });
       res.status(200).send(updatedSuperhero);
     } else {
@@ -94,27 +81,14 @@ superheroesRouter.delete('/:id', async (req, res) => {
 
 // add a superhero
 superheroesRouter.post('/', async (req, res) => {
-  const {
-    availability,
-    categoryId,
-    description,
-    image,
-    name,
-    powers,
-    offerings,
-    price,
-  } = req.body;
+  const { name, imgURL, description, actId } = req.body;
 
   try {
     const superhero = await Superhero.create({
-      availability,
-      categoryId, // requires association Superhero.belongsTo(Category) & Category.hasMany(Superhero)
-      description,
-      image,
       name,
-      offerings, // for example, superman can offer to fly you around the city, batman can take you on a ride in the batmobile
-      powers,
-      price,
+      imgURL,
+      description,
+      actId,
     });
     res.status(200).send(superhero);
   } catch (e) {
