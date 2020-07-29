@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const app = require('./server');
 const applyRoutes = require('./routes/routes_index');
 const expressMiddleware = require('./middleware');
@@ -9,7 +10,9 @@ expressMiddleware();
 
 const startServer = () => {
   return new Promise((res) => {
-    app.listen(PORT);
+    app.listen(PORT, () => {
+      console.log(chalk.green(`App is now listening to PORT:${PORT}`))
+    });
     res();
   });
 };
