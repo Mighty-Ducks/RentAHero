@@ -2,12 +2,12 @@ import { combineReducers } from 'redux';
 
 const TYPES = require('./types');
 
-const initialState = {
+const initialHeroState = {
   heroes: [],
   hero: {},
 };
 
-const heroesReducer = (state = initialState, action) => {
+const heroesReducer = (state = initialHeroState, action) => {
   switch (action.type) {
     case TYPES.SET_HEROES:
       return {
