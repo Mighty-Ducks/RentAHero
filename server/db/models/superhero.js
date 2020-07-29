@@ -1,4 +1,4 @@
-const { UUID, UUIDV4, STRING, TEXT } = require('sequelize');
+const { UUID, UUIDV4, STRING, TEXT, INTEGER } = require('sequelize');
 const db = require('../db_index');
 
 const Superhero = db.define('hero', {
@@ -19,6 +19,10 @@ const Superhero = db.define('hero', {
   },
   description: {
     type: TEXT,
+  },
+  popularity: {
+    type: INTEGER,
+    defaultValue: 0,
   },
 });
 

@@ -3,7 +3,7 @@ const db = require('./db_index');
 const initialData = require('./seed');
 
 const seedInitialData = ({ force = false }) => {
-  return new Promise((res, rej) => {
+  return new Promise((res) => {
     initialData({ force });
     res(console.log(chalk.greenBright('Initial data seeded!')));
   });

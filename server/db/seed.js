@@ -1,4 +1,4 @@
-const { Superhero, Act, Category, User } = require('./models/models_index');
+const { Superhero, Act, Category } = require('./models/models_index');
 
 const superheroes = [
   {
