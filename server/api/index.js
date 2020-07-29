@@ -11,7 +11,7 @@ expressMiddleware();
 const startServer = () => {
   return new Promise((res) => {
     app.listen(PORT, () => {
-      console.log(chalk.green(`App is now listening to PORT:${PORT}`))
+      console.log(chalk.green(`App is now listening to PORT:${PORT}`));
     });
     res();
   });
