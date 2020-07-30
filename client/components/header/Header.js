@@ -33,10 +33,10 @@ export default class Header extends Component {
                 <Link to="/categories">Categories</Link>
               </li>
               <li>
-                <Link to="/popular">Most Popular</Link>
+                <Link to="/acts">Acts</Link>
               </li>
               <li>
-                <Link to="/deals">Deals</Link>
+                <Link to="/popular">Most Popular</Link>
               </li>
               <li>
                 <Link to="/new">New</Link>
