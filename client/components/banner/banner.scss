@@ -5,14 +5,19 @@
   height: calc(100vh / 16 * 9);
   
   .banner-text {
-    h1, h2 {
+    text-transform: uppercase;
+    h1 {
       background-color: #000;
       color: #fff;
-      display: inline-block;
+      display: inline;
+      font-weight: 900;
       padding: .5rem 1rem;
+      text-shadow: 2px 2px 1px #999;
     }
-    h1 {
-      font-weight: 600;
+    .banner-text-slogan {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.7rem;
+      padding: 0 1rem;
       text-shadow: 2px 2px 1px #999;
     }
   }

@@ -25,8 +25,7 @@ export default class Banner extends Component {
     return (
       <div className={`banner banner-${align} border-bottom`}>
         <div className="banner-text">
-          <h2>{slogan}</h2>
-          <br />
+          <div className="banner-text-slogan">{slogan}</div>
           <h1>{title}</h1>
         </div>
         {imgSrc && <img alt={imgAlt} src={imgSrc} />}

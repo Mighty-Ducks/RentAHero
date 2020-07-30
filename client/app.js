@@ -24,7 +24,6 @@ class App extends Component {
             <Route exact path="/" component={Home} />
           </Switch>
         </div>
-        <h1>Hello!</h1>
       </HashRouter>
     );
   }
