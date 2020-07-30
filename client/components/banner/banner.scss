@@ -1,0 +1,22 @@
+.banner {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: calc(100vh / 16 * 9);
+  
+  .banner-text {
+    h1, h2 {
+      background-color: #000;
+      color: #fff;
+      display: inline-block;
+      padding: .5rem 1rem;
+    }
+    h1 {
+      font-weight: 600;
+      text-shadow: 2px 2px 1px #999;
+    }
+  }
+  img {
+    height: 100%;
+  }
+}
