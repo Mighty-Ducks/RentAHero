@@ -19,12 +19,11 @@ class App extends Component {
     return (
       <HashRouter>
         <Header />
-        <div className="p-5">
+        <div className="py-5">
           <Switch>
             <Route exact path="/" component={Home} />
           </Switch>
         </div>
-        <h1>Hello!</h1>
       </HashRouter>
     );
   }
