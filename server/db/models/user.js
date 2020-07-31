@@ -21,10 +21,11 @@ const User = db.define('user', {
       notEmpty: true,
     },
   },
-  userName: {
-    // Email
+  // username
+  email: {
     type: STRING,
     allowNull: false,
+    unique: true,
     validate: {
       notEmpty: true,
       isEmail: true,

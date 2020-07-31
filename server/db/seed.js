@@ -1,4 +1,5 @@
-const { Superhero, Act, Category } = require('./models/models_index');
+const { Superhero, Act, Category, User } = require('./models/models_index');
+const hash = require('../utilities/index');
 
 const superheroes = [
   {
@@ -45,12 +46,23 @@ const categories = [
   },
 ];
 
+const users = [
+  {
+    firstName: 'Judith',
+    lastName: 'Blinder',
+    email: 'me@judith.com',
+    password: hash('000000'),
+    admin: true,
+  },
+];
+
 const initialData = async ({ force = false }) => {
   if (force) {
     await Promise.all([
       superheroes.map((superhero) => Superhero.create(superhero)),
       acts.map((act) => Act.create(act)),
       categories.map((category) => Category.create(category)),
+      users.map((user) => User.create(user)),
     ]);
   }
 };
