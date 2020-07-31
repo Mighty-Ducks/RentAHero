@@ -1,6 +1,6 @@
 const superheroesRouter = require('express').Router();
 const { check, validationResult } = require('express-validator');
-const { Act, Superhero } = require('../../db/models/models_index.js');
+const { Act, Superhero, Category } = require('../../db/models/models_index.js');
 
 // app.use('/api/superheroes', superheroesRouter) in routes_index.js
 
@@ -8,7 +8,14 @@ const { Act, Superhero } = require('../../db/models/models_index.js');
 superheroesRouter.get('/', async (req, res) => {
   try {
     const superheroes = await Superhero.findAll({
-      include: [Act],
+      include: [
+        {
+          model: Act,
+        },
+        {
+          model: Category,
+        },
+      ],
     });
 
     res.status(200).send(superheroes);
@@ -52,7 +59,7 @@ superheroesRouter.put(
     }
 
     const { id } = req.params;
-    const { name, imgURL, description, actId } = req.body;
+    const { name, imgURL, description, actIds, categoryIds } = req.body;
 
     try {
       const superhero = await Superhero.findByPk(id, {
@@ -61,7 +68,12 @@ superheroesRouter.put(
       // find all acts that are in the actId array from req.body.
       const updatedActs = await Act.findAll({
         where: {
-          id: actId,
+          id: actIds,
+        },
+      });
+      const updatedCategories = await Act.findAll({
+        where: {
+          id: categoryIds,
         },
       });
       if (superhero) {
@@ -72,9 +84,17 @@ superheroesRouter.put(
         });
         // then add those acts to the updatedSuperhero
         await updatedSuperhero.setActs(updatedActs);
+        await updatedSuperhero.setCategories(updatedCategories);
         // then FIND the same hero AGAIN after the acts are updated. The hero object above doesn't include the updated acts
         const findSuperhero = await Superhero.findByPk(id, {
-          include: [Act],
+          include: [
+            {
+              model: Act,
+            },
+            {
+              model: Category,
+            },
+          ],
         });
         res.status(200).send(findSuperhero);
       } else {
@@ -121,7 +141,7 @@ superheroesRouter.post(
       });
     }
 
-    const { name, imgURL, description, actId } = req.body;
+    const { name, imgURL, description, actIds, categoryIds } = req.body;
 
     try {
       const superhero = await Superhero.create({
@@ -130,10 +150,18 @@ superheroesRouter.post(
         description,
       });
       // use magic method to add Acts when creating a new Hero
-      await superhero.addActs(actId);
+      await superhero.addActs(actIds);
+      await superhero.addCategories(categoryIds);
       // then FIND the same hero AGAIN after the acts are added. The superhero object above doesn't include the added acts.
       const findSuperhero = await Superhero.findByPk(superhero.id, {
-        include: Act,
+        include: [
+          {
+            model: Act,
+          },
+          {
+            model: Category,
+          },
+        ],
       });
       res.status(200).send(findSuperhero);
     } catch (e) {
