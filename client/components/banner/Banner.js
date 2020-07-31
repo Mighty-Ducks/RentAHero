@@ -20,8 +20,6 @@ export default class Banner extends Component {
   render() {
     const { slogan, title, imgSrc, imgAlt, align } = this.state;
 
-    console.log(this.state);
-
     return (
       <div className={`banner banner-${align} border-bottom`}>
         <div className="banner-text">
