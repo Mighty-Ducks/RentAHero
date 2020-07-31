@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import '../public/styles.scss';
 
-import { Header, Home } from './components';
+import { Header, Home, Login, Register } from './components';
 import { fetchHeroes } from './store/actions';
 
 class App extends Component {
@@ -22,6 +22,8 @@ class App extends Component {
         <div className="py-5">
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
           </Switch>
         </div>
       </HashRouter>
