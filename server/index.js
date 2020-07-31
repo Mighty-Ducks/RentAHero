@@ -1,4 +1,4 @@
-const startServer = require('./api/index');
+const { startServer } = require('./api/index');
 const syncAndSeed = require('./db/syncAndSeed');
 // const seed = require('./seed');
 
