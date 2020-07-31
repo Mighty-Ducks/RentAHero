@@ -11,7 +11,7 @@
     "watch:lint": "node node_modules/eslint-watch/bin/esw client server tests -w --fix",
     "start:db": "createdb grace_shopper_db",
     "test": "jest -i",
-    "test:endpoint": "jest -i tests/endpoint.spec"
+    "test:endpoint": "jest --forceExit tests/endpoint.spec"
   },
   "author": "",
   "license": "ISC",
