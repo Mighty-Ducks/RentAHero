@@ -32,3 +32,33 @@ describe('Superhero Tests', () => {
     });
   });
 });
+
+describe('Acts Tests', () => {
+  describe('Fetch superheroes', () => {
+    it('Returns status 200', async () => {
+      const res = await request.get('/api/acts');
+      expect(res.statusCode).toBe(200);
+    });
+  });
+  describe('Create a new act', () => {
+    it('Returns status 200, and the posted objects', (done) => {
+      return request
+        .post('/api/acts')
+        .send({
+          name: 'Blast from the Past',
+          description:
+            'Take a trip back in time to the prehistoric era with Flash!',
+          price: 5000,
+        })
+        .end((err, res) => {
+          expect(res.status).toBe(200);
+          expect(res.body.name).toBe('Blast from the Past');
+          expect(res.body.description).toBe(
+            'Take a trip back in time to the prehistoric era with Flash!'
+          );
+          expect(res.body.price).toEqual(5000);
+          done();
+        });
+    });
+  });
+});
