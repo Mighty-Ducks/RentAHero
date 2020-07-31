@@ -11,7 +11,7 @@ describe('Superhero Tests', () => {
     });
   });
   describe('Create a new superhero', () => {
-    it('Returns status 200, and the posted objects', (done) => {
+    it('Returns status 200, and the posted object', (done) => {
       return request
         .post('/api/superheroes')
         .send({
@@ -41,7 +41,7 @@ describe('Acts Tests', () => {
     });
   });
   describe('Create a new act', () => {
-    it('Returns status 200, and the posted objects', (done) => {
+    it('Returns status 200, and the posted object', (done) => {
       return request
         .post('/api/acts')
         .send({
@@ -71,7 +71,7 @@ describe('Categories Tests', () => {
     });
   });
   describe('Create a new category', () => {
-    it('Returns status 200, and the posted objects', (done) => {
+    it('Returns status 200, and the posted object', (done) => {
       return request
         .post('/api/categories')
         .send({
