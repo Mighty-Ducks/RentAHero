@@ -9,7 +9,9 @@
     "start:dev": "node-dev server/index.js --ignore dist/ --ignore client/",
     "lint": "eslint client server tests",
     "watch:lint": "node node_modules/eslint-watch/bin/esw client server tests -w --fix",
-    "start:db": "createdb grace_shopper_db"
+    "start:db": "createdb grace_shopper_db",
+    "test": "jest -i",
+    "test:endpoint": "jest --forceExit tests/endpoint.spec"
   },
   "author": "",
   "license": "ISC",
@@ -60,7 +62,8 @@
     "prettier-eslint": "^9.0.1",
     "prettier-eslint-cli": "^5.0.0",
     "sass-loader": "^9.0.2",
-    "style-loader": "^1.2.1"
+    "style-loader": "^1.2.1",
+    "supertest": "^4.0.2"
   },
   "keywords": [],
   "description": ""
