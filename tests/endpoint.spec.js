@@ -34,7 +34,7 @@ describe('Superhero Tests', () => {
 });
 
 describe('Acts Tests', () => {
-  describe('Fetch superheroes', () => {
+  describe('Fetch acts', () => {
     it('Returns status 200', async () => {
       const res = await request.get('/api/acts');
       expect(res.statusCode).toBe(200);
@@ -57,6 +57,29 @@ describe('Acts Tests', () => {
             'Take a trip back in time to the prehistoric era with Flash!'
           );
           expect(res.body.price).toEqual(5000);
+          done();
+        });
+    });
+  });
+});
+
+describe('Categories Tests', () => {
+  describe('Fetch categories', () => {
+    it('Returns status 200', async () => {
+      const res = await request.get('/api/acts');
+      expect(res.statusCode).toBe(200);
+    });
+  });
+  describe('Create a new category', () => {
+    it('Returns status 200, and the posted objects', (done) => {
+      return request
+        .post('/api/categories')
+        .send({
+          name: 'Aliens',
+        })
+        .end((err, res) => {
+          expect(res.status).toBe(200);
+          expect(res.body.name).toBe('Aliens');
           done();
         });
     });
