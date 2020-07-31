@@ -67,7 +67,7 @@ describe('Categories Tests', () => {
   describe('Fetch categories', () => {
     it('Returns status 200', async () => {
       const res = await request.get('/api/acts');
-      expect(res.statusCode).toBe(200);
+      expect(res.status).toBe(200);
     });
   });
   describe('Create a new category', () => {
