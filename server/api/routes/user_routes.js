@@ -94,7 +94,13 @@ usersRouter.delete('/:id', async (req, res) => {
 // add a user
 usersRouter.post(
   '/',
-  [check('email', 'email is required').not().isEmpty()],
+  [
+    check('firstName', 'User name is required').not().isEmpty(),
+    check('email', 'Include a valid email').isEmail(),
+    check('password', 'Enter a password with 6 or more characters').isLength({
+      min: 6,
+    }),
+  ],
   async (req, res) => {
     const errors = validationResult(req);
 

@@ -20,7 +20,7 @@ class Login extends Component {
     e.preventDefault();
 
     const { email, password } = this.state;
-    const { data } = await axios.post(`/api/users/login`, { email, password });
+    const { data } = await axios.post('/api/users/login', { email, password });
 
     if (data) {
       const { loggedIn, history } = this.props;
