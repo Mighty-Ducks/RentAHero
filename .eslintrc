@@ -35,7 +35,8 @@
       "error",
       "all",
       {
-        "nestedBinaryExpressions": false
+        "nestedBinaryExpressions": false,
+        "conditionalAssign": false
       }
     ],
     "no-unused-vars": 2,

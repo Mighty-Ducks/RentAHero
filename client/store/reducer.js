@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 const { TYPES } = require('./types');
 
 const initialHeroState = {
-  heroes: [],
+  heroesList: [],
   hero: {},
 };
 
@@ -12,7 +12,7 @@ const heroesReducer = (state = initialHeroState, action) => {
     case TYPES.SET_HEROES:
       return {
         ...state,
-        heroes: action.payload,
+        heroesList: action.payload,
       };
     default:
       return state;

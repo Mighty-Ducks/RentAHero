@@ -8,10 +8,12 @@
     text-transform: uppercase;
     h1 {
       background-color: #000;
+      box-shadow: 3px 3px 1px #999;
       color: #fff;
       display: inline;
       font-weight: 900;
       padding: .5rem 1rem;
+      position: relative;
       text-shadow: 2px 2px 1px #999;
     }
     .banner-text-slogan {

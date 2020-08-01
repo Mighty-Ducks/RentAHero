@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import '../public/styles.scss';
 
-import { Header, Home, Login, Register } from './components';
+import { Header, Home, Login, Register, Categories } from './components';
 import { fetchHeroes } from './store/actions';
 
 class App extends Component {
@@ -24,6 +24,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
+            <Route exact path="/categories" component={Categories} />
           </Switch>
         </div>
       </HashRouter>
