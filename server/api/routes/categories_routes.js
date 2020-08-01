@@ -1,10 +1,12 @@
 const categoriesRouter = require('express').Router();
-const { Category } = require('../../db/models/models_index.js');
+const { Category, Superhero } = require('../../db/models/models_index.js');
 
 // get all categories
 categoriesRouter.get('/', async (req, res) => {
   try {
-    const categories = await Category.findAll();
+    const categories = await Category.findAll({
+      include: [Superhero],
+    });
 
     res.status(200).send(categories);
   } catch (e) {
@@ -18,7 +20,9 @@ categoriesRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const category = await Category.findByPk(id);
+    const category = await Category.findByPk(id, {
+      include: [Superhero],
+    });
 
     if (category) {
       res.status(200).send(category);
