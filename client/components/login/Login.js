@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import axios from 'axios';
+import PropTypes from 'prop-types';
+import { setLoggedIn } from '../../store/actions';
 import './login.scss';
 
-export default class Login extends Component {
+class Login extends Component {
   state = {
     email: '',
     password: '',
-    // isLogged: !!localStorage.getItem('token'),
   };
 
   setFieldToState = (e) => {
@@ -16,15 +19,15 @@ export default class Login extends Component {
   loginUser = async (e) => {
     e.preventDefault();
 
-    // const { email, password } = this.state;
-    // const { data } = await axios.post(`${API}/api/auth`, { email, password });
+    const { email, password } = this.state;
+    const { data } = await axios.post('/api/users/login', { email, password });
 
-    /*
     if (data) {
-      localStorage.setItem('token', data.token);
-      this.setState({ isLogged: true })
+      const { loggedIn, history } = this.props;
+
+      loggedIn(true);
+      history.push('/');
     }
-    */
   };
 
   render() {
@@ -76,3 +79,27 @@ export default class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  loggedIn: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    heroes: state.heroes,
+    users: state.users,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loggedIn: async (flag) => {
+      dispatch(setLoggedIn(flag));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

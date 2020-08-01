@@ -13,3 +13,10 @@ export const fetchHeroes = () => async (dispatch) => {
 
   return dispatch(setHeroes(data));
 };
+
+export const setLoggedIn = (flag) => {
+  return {
+    type: TYPES.SET_LOGGED_IN,
+    flag,
+  };
+};

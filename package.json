@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "build:dev": "npm run build -- --watch --mode=development",
+    "build": "webpack --mode=\"production\"",
+    "build:dev": "webpack --watch --mode=\"development\"",
     "start": "node server/index.js",
     "start:dev": "node-dev server/index.js --ignore dist/ --ignore client/",
     "lint": "eslint client server tests",
@@ -20,6 +20,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "chalk": "^4.1.0",
+    "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "express-validator": "^6.6.0",
     "pg": "^8.3.0",
