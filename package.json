@@ -11,7 +11,8 @@
     "watch:lint": "node node_modules/eslint-watch/bin/esw client server tests -w",
     "start:db": "createdb grace_shopper_db",
     "test": "jest -i",
-    "test:endpoint": "jest --forceExit tests/endpoint.spec"
+    "test:endpoint": "jest --forceExit tests/endpoint.spec",
+    "test:reduxStore": "jest --watch tests/reduxStore.spec"
   },
   "author": "",
   "license": "ISC",
@@ -43,6 +44,7 @@
     "@babel/preset-env": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.2.2",
     "babel-loader": "^8.1.0",
     "css-loader": "^4.0.0",
     "eslint": "^7.5.0",
@@ -56,7 +58,7 @@
     "eslint-plugin-react-hooks": "^4.0.2",
     "eslint-watch": "^7.0.0",
     "html-webpack-plugin": "^4.3.0",
-    "jest": "^26.0.1",
+    "jest": "^26.2.2",
     "node-dev": "^5.0.0",
     "node-sass": "^4.14.1",
     "prettier": "^2.0.5",

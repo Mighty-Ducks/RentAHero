@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(async (req, res, next) => {
   if (!req.cookies.session_id) {
     const session = await Session.create();
-    console.log(chalk.cyan('Session_id:', session.id));
+    // console.log(chalk.cyan('Session_id:', session.id));
     res.cookie('session_id', session.id);
     req.session_id = session.id;
     next();
