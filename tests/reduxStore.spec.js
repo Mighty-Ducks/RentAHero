@@ -11,19 +11,19 @@ describe('actions', () => {
         popularity: 3,
       },
     ];
-    const expextedAction = {
+    const expectedAction = {
       type: types.TYPES.SET_HEROES,
       payload: superheroes,
     };
-    expect(actions.setHeroes(superheroes)).toEqual(expextedAction);
+    expect(actions.setHeroes(superheroes)).toEqual(expectedAction);
   });
   it('Should create an action to set loggedIn status', () => {
     const flag = true;
 
-    const expextedAction = {
+    const expectedAction = {
       type: types.TYPES.SET_LOGGED_IN,
       flag,
     };
-    expect(actions.setLoggedIn(flag)).toEqual(expextedAction);
+    expect(actions.setLoggedIn(flag)).toEqual(expectedAction);
   });
 });
