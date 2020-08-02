@@ -19,6 +19,28 @@ const heroesReducer = (state = initialHeroState, action) => {
         ...state,
         heroesList: action.payload,
       };
+    case TYPES.SET_HERO:
+      return {
+        ...state,
+        hero: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+const initialActState = {
+  actsList: [],
+  act: {},
+};
+
+const actsReducer = (state = initialActState, action) => {
+  switch (action.type) {
+    case TYPES.SET_ACTS:
+      return {
+        ...state,
+        actsList: action.payload,
+      };
     default:
       return state;
   }
@@ -39,6 +61,7 @@ const usersReducer = (state = initialUserState, action) => {
 const reducer = combineReducers({
   heroes: heroesReducer,
   users: usersReducer,
+  acts: actsReducer,
 });
 
 export default reducer;

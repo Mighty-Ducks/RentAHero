@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import './categories.scss';
+import './heroes.scss';
 
-class Categories extends Component {
+class Heroes extends Component {
   render() {
     const { heroesList } = this.props;
 
     return (
       <div className="px-3">
-        <h1>Categories</h1>
+        <h1>Heroes</h1>
         <div className="row mt-5">
           <div className="col-md-3">
             <ul className="list-group">
@@ -29,7 +29,7 @@ class Categories extends Component {
             </ul>
           </div>
           <div className="col-md-9">
-            <div className="categories-list row row-cols-1 row-cols-md-3">
+            <div className="heroes-list row row-cols-1 row-cols-md-3">
               {heroesList.map(({ id, imgURL, name, description }) => {
                 return (
                   <div className="col mb-4" key={id}>
@@ -50,12 +50,9 @@ class Categories extends Component {
                         <p className="card-text">{description}</p>
                       </div>
                       <div className="card-footer text-center">
-                        <a
-                          href="https://calendly.com/rentaheroinfo/rent-a-batman?month=2020-07"
-                          className="btn btn-primary"
-                        >
+                        <Link to={`heroes/${id}`} className="btn btn-primary">
                           Book a hero
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -75,12 +72,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-Categories.defaultProps = {
+Heroes.defaultProps = {
   heroesList: [],
 };
 
-Categories.propTypes = {
+Heroes.propTypes = {
   heroesList: PropTypes.arrayOf(PropTypes.object),
 };
 
-export default connect(mapStateToProps)(Categories);
+export default connect(mapStateToProps)(Heroes);

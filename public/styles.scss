@@ -25,3 +25,14 @@ body {
 .label-full {
   width: 100%;
 }
+
+.list-group,
+.card,
+.card-img,
+.card-img-bottom {
+  border-radius: 0;
+}
+
+.card {
+  box-shadow: 3px 3px 0 #999;
+}
