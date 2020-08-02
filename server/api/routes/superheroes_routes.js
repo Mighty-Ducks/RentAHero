@@ -1,13 +1,22 @@
 const superheroesRouter = require('express').Router();
 const { check, validationResult } = require('express-validator');
-const { Superhero } = require('../../db/models/models_index.js');
+const { Act, Superhero, Category } = require('../../db/models/models_index.js');
 
 // app.use('/api/superheroes', superheroesRouter) in routes_index.js
 
 // get all superheroes
 superheroesRouter.get('/', async (req, res) => {
   try {
-    const superheroes = await Superhero.findAll();
+    const superheroes = await Superhero.findAll({
+      include: [
+        {
+          model: Act,
+        },
+        {
+          model: Category,
+        },
+      ],
+    });
 
     res.status(200).send(superheroes);
   } catch (e) {
@@ -21,7 +30,9 @@ superheroesRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const superhero = await Superhero.findByPk(id);
+    const superhero = await Superhero.findByPk(id, {
+      include: [Act],
+    });
 
     if (superhero) {
       res.status(200).send(superhero);
@@ -48,22 +59,47 @@ superheroesRouter.put(
     }
 
     const { id } = req.params;
-    const { name, imgURL, description, actId } = req.body; // review to agree on properties for superhero
+    const { name, imgURL, description, actIds, categoryIds } = req.body;
 
     try {
-      const superhero = await Superhero.findByPk(id);
-
+      const superhero = await Superhero.findByPk(id, {
+        include: [Act],
+      });
+      // find all acts that are in the actId array from req.body.
+      const updatedActs = await Act.findAll({
+        where: {
+          id: actIds,
+        },
+      });
+      const updatedCategories = await Act.findAll({
+        where: {
+          id: categoryIds,
+        },
+      });
       if (superhero) {
         const updatedSuperhero = await superhero.update({
           name,
-          imgURL,
           description,
-          actId,
+          imgURL,
         });
-        res.status(200).send(updatedSuperhero);
+        // then add those acts to the updatedSuperhero
+        await updatedSuperhero.setActs(updatedActs);
+        await updatedSuperhero.setCategories(updatedCategories);
+        // then FIND the same hero AGAIN after the acts are updated. The hero object above doesn't include the updated acts
+        const findSuperhero = await Superhero.findByPk(id, {
+          include: [
+            {
+              model: Act,
+            },
+            {
+              model: Category,
+            },
+          ],
+        });
+        res.status(200).send(findSuperhero);
+      } else {
+        res.status(404).send({ message: `Superhero id: ${id} not found.` });
       }
-
-      res.status(404).send({ message: `Superhero id: ${id} not found.` });
     } catch (e) {
       console.error(e);
       res.status(500).send({ message: 'Server error' });
@@ -105,16 +141,29 @@ superheroesRouter.post(
       });
     }
 
-    const { name, imgURL, description, actId } = req.body;
+    const { name, imgURL, description, actIds, categoryIds } = req.body;
 
     try {
       const superhero = await Superhero.create({
         name,
         imgURL,
         description,
-        actId,
       });
-      res.status(200).send(superhero);
+      // use magic method to add Acts when creating a new Hero
+      await superhero.addActs(actIds);
+      await superhero.addCategories(categoryIds);
+      // then FIND the same hero AGAIN after the acts are added. The superhero object above doesn't include the added acts.
+      const findSuperhero = await Superhero.findByPk(superhero.id, {
+        include: [
+          {
+            model: Act,
+          },
+          {
+            model: Category,
+          },
+        ],
+      });
+      res.status(200).send(findSuperhero);
     } catch (e) {
       console.error(e);
       res.status(500).send({ message: 'Server error' });

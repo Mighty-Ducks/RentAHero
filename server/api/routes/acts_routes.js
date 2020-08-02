@@ -1,11 +1,13 @@
 const actsRouter = require('express').Router();
 const { check, validationResult } = require('express-validator');
-const { Act } = require('../../db/models/models_index.js');
+const { Act, Superhero } = require('../../db/models/models_index.js');
 
 // get all acts
 actsRouter.get('/', async (req, res) => {
   try {
-    const acts = await Act.findAll();
+    const acts = await Act.findAll({
+      include: [Superhero],
+    });
 
     res.status(200).send(acts);
   } catch (e) {
@@ -19,7 +21,9 @@ actsRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const act = await Act.findByPk(id);
+    const act = await Act.findByPk(id, {
+      include: [Superhero],
+    });
 
     if (act) {
       res.status(200).send(act);
