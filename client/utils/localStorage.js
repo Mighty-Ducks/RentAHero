@@ -15,7 +15,7 @@ const checkInputs = () => {
 const updateLocalStorage = () => {
   const updatedStorage = [];
   inputs.forEach((input) => {
-    if (input.checked) acts.push({ id: input.value });
+    if (input.checked) updatedStorage.push({ id: input.value });
   });
   localStorage.setItem('cart', JSON.stringify(updatedStorage));
 };
