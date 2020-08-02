@@ -5,6 +5,19 @@ import Home from './home/Home';
 import Banner from './banner/Banner';
 import Login from './login/Login';
 import Register from './register/Register';
-import Categories from './categories/Categories';
+import Heroes from './heroes/Heroes';
+import Hero from './hero/Hero';
+import Acts from './acts/Acts';
 
-export { Header, Logo, Search, Home, Banner, Login, Register, Categories };
+export {
+  Header,
+  Logo,
+  Search,
+  Home,
+  Banner,
+  Login,
+  Register,
+  Heroes,
+  Hero,
+  Acts,
+};

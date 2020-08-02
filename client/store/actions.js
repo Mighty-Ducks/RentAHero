@@ -13,3 +13,29 @@ export const fetchHeroes = () => async (dispatch) => {
 
   return dispatch(setHeroes(data));
 };
+
+export const setHero = (hero) => {
+  return {
+    type: TYPES.SET_HERO,
+    payload: hero,
+  };
+};
+
+export const fetchHero = (id) => async (dispatch) => {
+  const { data } = await axios.get(`/api/superheroes/${id}`);
+
+  return dispatch(setHero(data));
+};
+
+export const setActs = (acts) => {
+  return {
+    type: TYPES.SET_ACTS,
+    payload: acts,
+  };
+};
+
+export const fetchActs = () => async (dispatch) => {
+  const { data } = await axios.get('/api/acts/');
+
+  return dispatch(setActs(data));
+};
