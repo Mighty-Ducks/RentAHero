@@ -6,15 +6,16 @@ const inputs = document.querySelectorAll('input[type=checkbox]');
 // acts in localStorage have their boxes checked on load.
 const checkInputs = () => {
   inputs.forEach((input) => {
-    inputs.checked = getStorage.find((act) => act.id === input.id);
+    const findAct = getStorage.find((act) => act.id === input.id);
+    if (findAct) input.checked = true;
   });
 };
 
 // update localStorage when boxes/acts are checked and checked off.
-const updateLocalStorage = (obj) => {
+const updateLocalStorage = () => {
   const updatedStorage = [];
   inputs.forEach((input) => {
-    if (input.checked) updatedStorage.push(obj);
+    if (input.checked) acts.push({ id: input.value });
   });
   localStorage.setItem('cart', JSON.stringify(updatedStorage));
 };
