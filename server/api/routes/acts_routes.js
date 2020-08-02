@@ -101,10 +101,10 @@ actsRouter.post(
         description,
         price,
       });
-      res.status(200).send(act);
+      return res.status(200).send(act);
     } catch (e) {
       console.error(e);
-      res.status(500).send({ message: 'Server error' });
+      return res.status(500).send({ message: 'Server error' });
     }
   }
 );
