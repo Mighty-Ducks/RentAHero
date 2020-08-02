@@ -50,12 +50,9 @@ class Heroes extends Component {
                         <p className="card-text">{description}</p>
                       </div>
                       <div className="card-footer text-center">
-                        <a
-                          href="https://calendly.com/rentaheroinfo/rent-a-batman?month=2020-07"
-                          className="btn btn-primary"
-                        >
+                        <Link to={`heroes/${id}`} className="btn btn-primary">
                           Book a hero
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
