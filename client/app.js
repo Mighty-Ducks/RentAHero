@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 
 import '../public/styles.scss';
 
-import { Header, Home, Login, Register, Categories } from './components';
-import { fetchHeroes } from './store/actions';
+import { Header, Home, Login, Register, Heroes, Hero } from './components';
+import { fetchHeroes, fetchActs } from './store/actions';
 
 class App extends Component {
   componentDidMount() {
@@ -24,7 +24,8 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
-            <Route exact path="/categories" component={Categories} />
+            <Route exact path="/heroes" component={Heroes} />
+            <Route exact path="/heroes/:id" component={Hero} />
           </Switch>
         </div>
       </HashRouter>
@@ -40,6 +41,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     load: () => {
       dispatch(fetchHeroes());
+      dispatch(fetchActs());
     },
   };
 };
