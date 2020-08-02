@@ -1,4 +1,5 @@
 const actsRouter = require('express').Router();
+const { check, validationResult } = require('express-validator');
 const { Act } = require('../../db/models/models_index.js');
 
 // get all acts
@@ -76,21 +77,36 @@ actsRouter.delete('/:id', async (req, res) => {
 });
 
 // add an act
-actsRouter.post('/', async (req, res) => {
-  const { name, description, price, heroId } = req.body;
+actsRouter.post(
+  '/',
+  [
+    check('name', 'Act name is required').not().isEmpty(),
+    check('price', 'Price is required').not().isEmpty(),
+    check('price', 'Should be a price format (ex. 12.34)').isFloat(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
 
-  try {
-    const act = await Act.create({
-      name,
-      description,
-      price,
-      heroId,
-    });
-    res.status(200).send(act);
-  } catch (e) {
-    console.error(e);
-    res.status(500).send({ message: 'Server error' });
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+      });
+    }
+
+    const { name, description, price } = req.body;
+
+    try {
+      const act = await Act.create({
+        name,
+        description,
+        price,
+      });
+      res.status(200).send(act);
+    } catch (e) {
+      console.error(e);
+      res.status(500).send({ message: 'Server error' });
+    }
   }
-});
+);
 
 module.exports = actsRouter;
