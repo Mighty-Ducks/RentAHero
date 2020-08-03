@@ -91,9 +91,9 @@ usersRouter.delete('/:id', async (req, res) => {
   }
 });
 
-// add a user
+// add a user - register
 usersRouter.post(
-  '/',
+  '/register',
   [
     check('firstName', 'User name is required').not().isEmpty(),
     check('email', 'Include a valid email').isEmail(),
@@ -110,16 +110,21 @@ usersRouter.post(
       });
     }
 
-    const { firstName, lastName, email, password, admin } = req.body;
+    const { firstName, lastName, email, password } = req.body;
+    const admin = false;
 
     try {
       const user = await User.create({
         firstName,
         lastName,
         email,
-        password,
+        password: hash(password),
         admin,
       });
+      const usersSession = await Session.findByPk(req.session_id);
+
+      await usersSession.setUser(user);
+
       res.status(200).send(user);
     } catch (e) {
       console.error(e);
