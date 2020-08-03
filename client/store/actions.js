@@ -46,3 +46,10 @@ export const fetchActs = () => async (dispatch) => {
 
   return dispatch(setActs(data));
 };
+
+export const setCart = (cart) => {
+  return {
+    type: TYPES.SET_CART,
+    cart,
+  };
+};

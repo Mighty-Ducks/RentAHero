@@ -58,10 +58,27 @@ const usersReducer = (state = initialUserState, action) => {
   }
 };
 
+const initialCartState = {
+  cart: [],
+};
+
+const cartReducer = (state = initialCartState, action) => {
+  switch (action.type) {
+    case TYPES.SET_CART:
+      return {
+        ...state,
+        cart: action.cart,
+      };
+    default:
+      return state;
+  }
+};
+
 const reducer = combineReducers({
   heroes: heroesReducer,
   users: usersReducer,
   acts: actsReducer,
+  cart: cartReducer,
 });
 
 export default reducer;
