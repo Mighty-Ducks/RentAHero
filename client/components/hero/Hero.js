@@ -18,8 +18,12 @@ class Hero extends Component {
 
   render() {
     const {
-      hero: { name, imgURL, description },
+      hero: { name, imgURL, description, acts },
     } = this.props;
+
+    if (!acts || !acts.length) {
+      return null;
+    }
 
     return (
       <div className="px-3 hero-view">
@@ -35,38 +39,35 @@ class Hero extends Component {
             <div className="col-md-8">
               <div className="card-body">
                 <h2 className="card-title">{name}</h2>
-                <p className="card-text">{description}</p>
+                <div className="card bg-light mb-3">
+                  <div className="card-body">{description}</div>
+                </div>
                 <form>
-                  <h5>Please choose acts you want to book</h5>
+                  <h6>Please choose acts you want to book</h6>
                   <div className="mb-3 pb-3 border-bottom">
-                    <div className="form-check">
-                      <label
-                        className="form-check-label"
-                        htmlFor="defaultCheck1"
-                      >
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="defaultCheck1"
-                        />
-                        Kill them all - 13 USD
-                      </label>
-                    </div>
-                    <div className="form-check">
-                      <label
-                        className="form-check-label"
-                        htmlFor="defaultCheck2"
-                      >
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="defaultCheck2"
-                        />
-                        Clean you room - 66 USD
-                      </label>
-                    </div>
+                    {acts.map((act) => {
+                      return (
+                        <div key={act.id} className="form-check">
+                          <label
+                            className="form-check-label d-flex justify-content-between"
+                            htmlFor={`check-${act.id}`}
+                          >
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              value=""
+                              id={`check-${act.id}`}
+                            />
+                            {act.name}
+                            <span className="space-dots"></span>
+                            <strong>
+                              {act.price}
+                              &nbsp;USD
+                            </strong>
+                          </label>
+                        </div>
+                      );
+                    })}
                   </div>
                   <div className="d-flex justify-content-between align-items-center">
                     <div className="total">
