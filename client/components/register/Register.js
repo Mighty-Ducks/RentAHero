@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import axios from 'axios';
+import { setLoggedIn } from '../../store/actions';
 import './register.scss';
 
-export default class Register extends Component {
+class Register extends Component {
   state = {
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
-    // isLogged: !!localStorage.getItem('token'),
   };
 
   setFieldToState = (e) => {
@@ -17,34 +21,54 @@ export default class Register extends Component {
   registerUser = async (e) => {
     e.preventDefault();
 
-    // const { name, email, password } = this.state;
-    // const { data } = await axios.post(`${API}/api/user`, { name, email, password });
+    const { firstName, lastName, email, password } = this.state;
+    const { data } = await axios.post('/api/users/register', {
+      firstName,
+      lastName,
+      email,
+      password,
+    });
 
-    /*
     if (data) {
       localStorage.setItem('token', data.token);
-      this.setState({ isLogged: true })
+      const { loggedIn, history } = this.props;
+
+      loggedIn(true);
+      history.push('/');
     }
-    */
   };
 
   render() {
-    const { name, email, password } = this.state;
+    const { firstName, lastName, email, password } = this.state;
 
     return (
       <div className="card p-5 col-md-6 m-auto">
         <form onSubmit={this.registerUser} className="auth-form">
           <h1>Register User</h1>
           <div className="form-group">
-            <label htmlFor="name" className="label-full">
-              Name
+            <label htmlFor="firstName" className="label-full">
+              First Name
               <input
-                type="name"
+                type="firstName"
                 className="form-control"
-                name="name"
-                value={name}
+                name="firstName"
+                value={firstName}
                 onChange={(e) => this.setFieldToState(e)}
-                placeholder="Name"
+                placeholder="First Name"
+                required
+              />
+            </label>
+          </div>
+          <div className="form-group">
+            <label htmlFor="LastName" className="label-full">
+              Last Name
+              <input
+                type="LastName"
+                className="form-control"
+                name="lastName"
+                value={lastName}
+                onChange={(e) => this.setFieldToState(e)}
+                placeholder="Last Name"
                 required
               />
             </label>
@@ -91,3 +115,20 @@ export default class Register extends Component {
     );
   }
 }
+
+Register.propTypes = {
+  loggedIn: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loggedIn: async (flag) => {
+      dispatch(setLoggedIn(flag));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Register);

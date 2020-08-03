@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const chalk = require('chalk');
 const cookieParser = require('cookie-parser');
 const app = require('./server');
 const { Session, User } = require('../db/models/models_index');
@@ -20,7 +19,7 @@ app.use(cookieParser());
 app.use(async (req, res, next) => {
   if (!req.cookies.session_id) {
     const session = await Session.create();
-    // console.log(chalk.cyan('Session_id:', session.id));
+    // console.log('Session_id:', session.id);
     res.cookie('session_id', session.id);
     req.session_id = session.id;
     next();
@@ -37,7 +36,7 @@ app.use(async (req, res, next) => {
     if (user) {
       req.user = user;
     }
-    console.log(chalk.cyan('Session_id:', req.session_id, 'User', user));
+    // console.log(chalk.cyan('Session_id:', req.session_id, 'User', user));
 
     next();
   }
