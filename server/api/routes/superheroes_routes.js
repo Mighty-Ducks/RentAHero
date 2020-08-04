@@ -46,66 +46,57 @@ superheroesRouter.get('/:id', async (req, res) => {
 });
 
 // update/edit superhero
-superheroesRouter.put(
-  '/:id',
-  [check('name', 'Hero name is required').not().isEmpty()],
-  async (req, res) => {
-    const errors = validationResult(req);
+superheroesRouter.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name, imgURL, description, actIds, categoryIds } = req.body;
+  const updParams = {};
 
-    if (!errors.isEmpty()) {
-      res.status(400).json({
-        errors: errors.array(),
+  if (name) updParams.name = name;
+  if (imgURL) updParams.imgURL = imgURL;
+  if (description) updParams.description = description;
+
+  try {
+    const superhero = await Superhero.findByPk(id, {
+      include: [Act],
+    });
+
+    // find all acts that are in the actId array from req.body.
+    const updatedActs = await Act.findAll({
+      where: {
+        id: actIds,
+      },
+    });
+
+    const updatedCategories = await Act.findAll({
+      where: {
+        id: categoryIds || null,
+      },
+    });
+    if (superhero) {
+      const updatedSuperhero = await superhero.update(updParams);
+      // then add those acts to the updatedSuperhero
+      await updatedSuperhero.setActs(updatedActs);
+      await updatedSuperhero.setCategories(updatedCategories);
+      // then FIND the same hero AGAIN after the acts are updated. The hero object above doesn't include the updated acts
+      const findSuperhero = await Superhero.findByPk(id, {
+        include: [
+          {
+            model: Act,
+          },
+          {
+            model: Category,
+          },
+        ],
       });
+      res.status(200).send(findSuperhero);
+    } else {
+      res.status(404).send({ message: `Superhero id: ${id} not found.` });
     }
-
-    const { id } = req.params;
-    const { name, imgURL, description, actIds, categoryIds } = req.body;
-
-    try {
-      const superhero = await Superhero.findByPk(id, {
-        include: [Act],
-      });
-      // find all acts that are in the actId array from req.body.
-      const updatedActs = await Act.findAll({
-        where: {
-          id: actIds,
-        },
-      });
-      const updatedCategories = await Act.findAll({
-        where: {
-          id: categoryIds,
-        },
-      });
-      if (superhero) {
-        const updatedSuperhero = await superhero.update({
-          name,
-          description,
-          imgURL,
-        });
-        // then add those acts to the updatedSuperhero
-        await updatedSuperhero.setActs(updatedActs);
-        await updatedSuperhero.setCategories(updatedCategories);
-        // then FIND the same hero AGAIN after the acts are updated. The hero object above doesn't include the updated acts
-        const findSuperhero = await Superhero.findByPk(id, {
-          include: [
-            {
-              model: Act,
-            },
-            {
-              model: Category,
-            },
-          ],
-        });
-        res.status(200).send(findSuperhero);
-      } else {
-        res.status(404).send({ message: `Superhero id: ${id} not found.` });
-      }
-    } catch (e) {
-      console.error(e);
-      res.status(500).send({ message: 'Server error' });
-    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({ message: 'Server error' });
   }
-);
+});
 
 // delete a superhero
 superheroesRouter.delete('/:id', async (req, res) => {
