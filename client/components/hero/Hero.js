@@ -5,6 +5,10 @@ import { fetchHero } from '../../store/actions';
 import './hero.scss';
 
 class Hero extends Component {
+  state = {
+    total: 0,
+  };
+
   componentDidMount() {
     const {
       load,
@@ -16,14 +20,19 @@ class Hero extends Component {
     load(id);
   }
 
+  setFieldToState = ({ target: { value, checked } }) => {
+    const { total } = this.state;
+    const updatedTotal = checked ? total + +value : total - +value;
+
+    this.setState({ total: updatedTotal });
+  };
+
   render() {
     const {
-      hero: { name, imgURL, description, acts },
+      hero: { name, imgURL, description, acts = [] },
     } = this.props;
 
-    if (!acts || !acts.length) {
-      return null;
-    }
+    const { total } = this.state;
 
     return (
       <div className="px-3 hero-view">
@@ -55,15 +64,16 @@ class Hero extends Component {
                             <input
                               className="form-check-input"
                               type="checkbox"
-                              value=""
+                              value={act.price}
                               id={`check-${act.id}`}
+                              onChange={this.setFieldToState}
                             />
                             {act.name}
                             <span className="space-dots"></span>
-                            <strong>
-                              {act.price}
-                              &nbsp;USD
-                            </strong>
+                            <div>
+                              <strong>{act.price}</strong>
+                              <span className="text-muted">&nbsp;$</span>
+                            </div>
                           </label>
                         </div>
                       );
@@ -72,7 +82,10 @@ class Hero extends Component {
                   <div className="d-flex justify-content-between align-items-center">
                     <div className="total">
                       Total:&nbsp;
-                      <strong className="h1">99 USD</strong>
+                      <strong className="h1">
+                        {total}
+                        &nbsp;$
+                      </strong>
                     </div>
                     <p className="card-text">
                       <a
