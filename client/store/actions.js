@@ -15,8 +15,8 @@ export const setHeroes = (heroes) => {
   };
 };
 
-export const fetchHeroes = () => async (dispatch) => {
-  const { data } = await axios.get('/api/superheroes/');
+export const fetchHeroes = (page) => async (dispatch) => {
+  const { data } = await axios.get(`/api/superheroes/page/${page}`);
 
   return dispatch(setHeroes(data));
 };

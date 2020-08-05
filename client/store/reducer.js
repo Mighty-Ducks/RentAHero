@@ -5,6 +5,8 @@ const { TYPES } = require('./types');
 const initialHeroState = {
   heroesList: [],
   hero: {},
+  page: 1,
+  limit: 6,
 };
 
 const initialUserState = {
