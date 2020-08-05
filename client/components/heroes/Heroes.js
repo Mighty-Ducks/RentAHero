@@ -68,7 +68,7 @@ class Heroes extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    heroesList: state.heroes.heroesList,
+    heroesList: state.heroes.heroesList.heroes,
   };
 };
 

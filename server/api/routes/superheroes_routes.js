@@ -6,19 +6,28 @@ const { Act, Superhero, Category } = require('../../db/models/models_index.js');
 
 // get all superheroes
 superheroesRouter.get('/', async (req, res) => {
+  let limit = 5;
+  let offset = 0;
   try {
-    const superheroes = await Superhero.findAll({
-      include: [
-        {
-          model: Act,
-        },
-        {
-          model: Category,
-        },
-      ],
+    Superhero.findAndCountAll().then((data) => {
+      const { page } = req.query;
+      const pages = Math.ceil(data.count / limit);
+      offset = limit * (page || 1 - 1);
+      Superhero.findAll({
+        limit,
+        offset,
+        include: [
+          {
+            model: Act,
+          },
+          {
+            model: Category,
+          },
+        ],
+      }).then((heroes) => {
+        res.status(200).send({ count: data.count, pages, heroes });
+      });
     });
-
-    res.status(200).send(superheroes);
   } catch (e) {
     console.error(e);
     res.status(500).send({ message: 'Server error' });
