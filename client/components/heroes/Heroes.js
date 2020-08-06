@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './heroes.scss';
+// import { Popup, AddHeroForm } from '..';
+import Popup from '../popup/Popup';
+import AddHeroForm from '../addHeroForm/AddHeroForm';
 
 class Heroes extends Component {
   render() {
-    const { heroesList } = this.props;
+    const { heroesList, loggedIn } = this.props;
 
     return (
       <div className="px-3">
@@ -29,6 +32,12 @@ class Heroes extends Component {
             </ul>
           </div>
           <div className="col-md-9">
+            <Popup
+              title="Create a Hero"
+              buttonText="Create"
+              BodyModal={AddHeroForm}
+            />
+            {loggedIn && <>Logged</>}
             <div className="heroes-list row row-cols-1 row-cols-md-3">
               {heroesList.map(({ id, imgURL, name, description }) => {
                 return (
@@ -69,15 +78,18 @@ class Heroes extends Component {
 const mapStateToProps = (state) => {
   return {
     heroesList: state.heroes.heroesList,
+    loggedIn: state.users.loggedIn,
   };
 };
 
 Heroes.defaultProps = {
   heroesList: [],
+  loggedIn: false,
 };
 
 Heroes.propTypes = {
   heroesList: PropTypes.arrayOf(PropTypes.object),
+  loggedIn: PropTypes.bool,
 };
 
 export default connect(mapStateToProps)(Heroes);

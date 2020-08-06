@@ -8,6 +8,8 @@ import Register from './register/Register';
 import Heroes from './heroes/Heroes';
 import Hero from './hero/Hero';
 import Acts from './acts/Acts';
+import Popup from './popup/Popup';
+import AddHeroForm from './addHeroForm/AddHeroForm';
 
 export {
   Header,
@@ -20,4 +22,6 @@ export {
   Heroes,
   Hero,
   Acts,
+  Popup,
+  AddHeroForm,
 };

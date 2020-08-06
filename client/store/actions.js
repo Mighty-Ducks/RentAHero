@@ -34,6 +34,19 @@ export const fetchHero = (id) => async (dispatch) => {
   return dispatch(setHero(data));
 };
 
+export const createHero = (newHero) => {
+  return {
+    type: TYPES.CREATE_HERO,
+    payload: newHero,
+  };
+};
+
+export const postHero = (newHero) => async (dispatch) => {
+  const { data } = await axios.post('/api/superheroes/', newHero);
+
+  return dispatch(createHero(data));
+};
+
 export const setActs = (acts) => {
   return {
     type: TYPES.SET_ACTS,
