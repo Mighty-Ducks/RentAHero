@@ -1,11 +1,13 @@
-// const cartRouter = require('express').Router();
+const cartRouter = require('express').Router();
+const chalk = require('chalk');
 // const { check, validationResult } = require('express-validator');
-// const { Cart } = require('../../db/models/models_index.js');
+const { Cart, Item } = require('../../db/models/models_index.js');
 
-// // app.use('/api/cart', cartRouter) in routes_index.js
+// app.use('/api/cart', cartRouter) in routes_index.js
 
-// // get all items in cart
-// cartRouter.get('/', async (req, res) => {
+// get all items in cart
+// cartRouter.get('/items/:id', async (req, res) => {
+//   const { id } = req.params;
 //   try {
 //     const users = await Cart.findAll();
 //     res.status(200).send(users);
@@ -34,28 +36,50 @@
 //   }
 // });
 
-// add an item to cart
-// cartRouter.post('/item/:id', async (req, res) => {
-//     const { firstName, lastName, email, password } = req.body;
-//     const admin = false;
+// add an item to cart - if a cart does not exist create one!
+cartRouter.post('/item', async (req, res) => {
+  console.log(chalk.yellow(`request was made to ${req.path}`));
+  const isCart = await Cart.findOne({
+    where: {
+      sessionId: req.session_id,
+    },
+  });
 
-//     try {
-//       const user = await User.create({
-//         firstName,
-//         lastName,
-//         email,
-//         password: hash(password),
-//         admin,
-//       });
-//       const usersSession = await Session.findByPk(req.session_id);
+  const { heroId, actId, price, total } = req.body;
 
-//       await usersSession.setUser(user);
+  if (isCart) {
+    try {
+      const item = await Item.create({
+        price,
+        heroId,
+        actId,
+      });
+      isCart.setItems(item);
+      res.status(200).send(item);
+    } catch (e) {
+      console.error(e);
 
-//       res.status(200).send(user);
-//     } catch (e) {
-//       console.error(e);
-//       res.status(500).send({ message: 'Server error' });
-//     }
-// });
+      res.status(500).send({ message: 'Server error' });
+    }
+  } else {
+    try {
+      const cart = await Cart.create({
+        total,
+        userId: req.user ? req.user.id : null,
+        sessionId: req.session_id,
+      });
+      const item = await Item.create({
+        price,
+        heroId,
+        actId,
+      });
+      cart.setItems(item);
+      res.status(200).send(item);
+    } catch (e) {
+      console.error(e);
+      res.status(500).send({ message: 'Server error' });
+    }
+  }
+});
 
-// module.exports = cartRouter;
+module.exports = cartRouter;

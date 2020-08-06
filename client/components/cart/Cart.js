@@ -10,7 +10,7 @@ class Cart extends Component {
 
     return (
       <section>
-        <div className="row">
+        <div className="row container-xl">
           <div className="col-lg-8">
             <div className="card wish-list mb-3">
               <div className="card-body">

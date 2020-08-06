@@ -17,9 +17,11 @@ const expressMiddleware = () => {
 app.use(cookieParser());
 // Checking for cookie and assigning one if not exist.
 app.use(async (req, res, next) => {
-  if (!req.cookies.session_id) {
+  // To make sure cookie is in db
+  const sessionId = Session.findByPk(req.cookies.session_id);
+
+  if (!req.cookies.session_id || !sessionId) {
     const session = await Session.create();
-    // console.log('Session_id:', session.id);
     res.cookie('session_id', session.id);
     req.session_id = session.id;
     next();
@@ -36,7 +38,6 @@ app.use(async (req, res, next) => {
     if (user) {
       req.user = user;
     }
-    // console.log(chalk.cyan('Session_id:', req.session_id, 'User', user));
 
     next();
   }
