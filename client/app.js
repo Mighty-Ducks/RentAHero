@@ -5,7 +5,15 @@ import { connect } from 'react-redux';
 
 import '../public/styles.scss';
 
-import { Header, Home, Login, Register, Heroes, Hero } from './components';
+import {
+  Header,
+  Home,
+  Login,
+  Register,
+  Heroes,
+  Hero,
+  Cart,
+} from './components';
 import { fetchHeroes, fetchActs } from './store/actions';
 
 class App extends Component {
@@ -26,6 +34,7 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/heroes" component={Heroes} />
             <Route exact path="/heroes/:id" component={Hero} />
+            <Route exact path="/cart" component={Cart} />
           </Switch>
         </div>
       </HashRouter>
