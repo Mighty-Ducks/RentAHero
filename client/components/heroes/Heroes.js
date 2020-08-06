@@ -34,7 +34,7 @@ class Heroes extends Component {
   render() {
     const {
       heroesList,
-      heroesList: { count },
+      heroesTotal,
       match: {
         params: { page },
       },
@@ -42,7 +42,7 @@ class Heroes extends Component {
     const limit = 12;
     const pages = Array.from(
       {
-        length: heroesList && Math.ceil(count / limit),
+        length: Math.ceil(heroesTotal / limit),
       },
       (v, i) => i + 1
     );
@@ -101,8 +101,8 @@ class Heroes extends Component {
           </div>
           <div className="col-md-9">
             <div className="heroes-list row row-cols-1 row-cols-md-3">
-              {heroesList.heroes &&
-                heroesList.heroes.map(({ id, imgURL, name, description }) => {
+              {heroesList &&
+                heroesList.map(({ id, imgURL, name, description }) => {
                   return (
                     <div className="col mb-4" key={id}>
                       <div className="card h-100 ">
@@ -144,6 +144,7 @@ class Heroes extends Component {
 const mapStateToProps = (state) => {
   return {
     heroesList: state.heroes.heroesList,
+    heroesTotal: state.heroes.heroesTotal,
   };
 };
 
@@ -156,15 +157,13 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 Heroes.defaultProps = {
-  heroesList: {},
+  heroesList: [],
   match: {},
 };
 
 Heroes.propTypes = {
-  heroesList: PropTypes.shape({
-    heroes: PropTypes.arrayOf(PropTypes.object),
-    count: PropTypes.number,
-  }),
+  heroesList: PropTypes.arrayOf(PropTypes.object),
+  heroesTotal: PropTypes.number.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       page: PropTypes.string,
