@@ -19,32 +19,42 @@ class Heroes extends Component {
   render() {
     const {
       heroesList,
+      heroesList: { count },
       load,
-      match: {
-        params: { page },
-      },
     } = this.props;
-    const pageNumbers = (pages) => {
-      const pagesArray = [];
-      for (let i = 0; i < pages; i++) {
-        pagesArray.push(i);
-      }
-      return pagesArray.map((page) => {
-        return (
-          <li key={page}>
-            <Link onClick={() => load(page)} to={`/heroes/page/${page}`}>
-              {page}
-            </Link>
-          </li>
-        );
-      });
-    };
+    const limit = 12;
 
+    const pages = Array.from(
+      {
+        length: heroesList && Math.ceil(count / limit),
+      },
+      (v, i) => i + 1
+    );
     return (
       <div className="px-3">
         <h1>Heroes</h1>
         <nav aria-label="Page navigation example">
-          {pageNumbers(heroesList.pages)}
+          <ul className="pagination">
+            <li className="page-item">
+              <Link className="page-link" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </Link>
+            </li>
+            {pages.map((page) => {
+              return (
+                <li className="page-item" key={page}>
+                  <Link className="page-link" onClick={() => load(page)} to={`/heroes/page/${page}`}>
+                    {page}
+                  </Link>
+                </li>
+              );
+            })}
+            <li class="page-item">
+              <Link class="page-link" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </Link>
+            </li>
+          </ul>
         </nav>
         <div className="row mt-5">
           <div className="col-md-3">
@@ -65,8 +75,8 @@ class Heroes extends Component {
           </div>
           <div className="col-md-9">
             <div className="heroes-list row row-cols-1 row-cols-md-3">
-              {heroesList.heroes
-                ? heroesList.heroes.map(({ id, imgURL, name, description }) => {
+              {heroesList.heroes &&
+                heroesList.heroes.map(({ id, imgURL, name, description }) => {
                   return (
                     <div className="col mb-4" key={id}>
                       <div className="card h-100 ">
@@ -90,14 +100,13 @@ class Heroes extends Component {
                             to={`/heroes/${id}`}
                             className="btn btn-primary"
                           >
-                              Book a hero
+                            Book a hero
                           </Link>
                         </div>
                       </div>
                     </div>
                   );
-                })
-                : null}
+                })}
             </div>
           </div>
         </div>
@@ -123,10 +132,17 @@ const mapDispatchToProps = (dispatch) => {
 
 Heroes.defaultProps = {
   heroesList: {},
+  match: {},
 };
 
 Heroes.propTypes = {
-  heroesList: PropTypes.arrayOf(PropTypes.object),
+  heroesList: PropTypes.objectOf(PropTypes.object),
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      page: PropTypes.string,
+    }),
+  }),
+  load: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Heroes);

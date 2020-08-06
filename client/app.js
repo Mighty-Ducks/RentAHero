@@ -25,7 +25,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/heroes/page/:page?" component={Heroes} />
-            <Route exact path="/hero/:id" component={Hero} />
+            <Route exact path="/heroes/:id" component={Hero} />
           </Switch>
         </div>
       </HashRouter>

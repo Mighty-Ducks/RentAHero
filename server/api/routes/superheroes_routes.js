@@ -10,9 +10,8 @@ superheroesRouter.get('/page/:page?', async (req, res) => {
   let offset = 0;
   try {
     await Superhero.findAndCountAll().then(async (data) => {
-      const pages = Math.ceil(data.count / limit);
       const { page } = req.params;
-      offset = limit * (page || 1);
+      offset = limit * (page - 1);
       await Superhero.findAll({
         limit,
         offset,
@@ -25,7 +24,7 @@ superheroesRouter.get('/page/:page?', async (req, res) => {
           },
         ],
       }).then((heroes) => {
-        return res.status(200).send({ count: data.count, pages, heroes });
+        return res.status(200).send({ count: data.count, heroes });
       });
     });
   } catch (e) {
@@ -37,7 +36,6 @@ superheroesRouter.get('/page/:page?', async (req, res) => {
 // get individual superhero
 superheroesRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   try {
     const superhero = await Superhero.findByPk(id, {
       include: [Act],
