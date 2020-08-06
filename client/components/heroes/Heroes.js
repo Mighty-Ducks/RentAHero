@@ -16,8 +16,8 @@ class Heroes extends Component {
     load(page);
   }
 
-  // because when a new page is clicked, props changes.
-  // this is necessary to listen for change in props, so the component rerenders
+  // because when a new page is clicked, props changes, but route and compoment remains the same
+  // this is necessary to listen for change in props, to rerender component and fetch new page
   componentDidUpdate(prevProps) {
     const {
       heroesList,
