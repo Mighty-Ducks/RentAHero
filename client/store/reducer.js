@@ -4,6 +4,7 @@ const { TYPES } = require('./types');
 
 const initialHeroState = {
   heroesList: [],
+  heroesTotal: 0,
   hero: {},
 };
 
@@ -18,6 +19,11 @@ const heroesReducer = (state = initialHeroState, action) => {
       return {
         ...state,
         heroesList: action.payload,
+      };
+    case TYPES.SET_TOTAL_HEROES:
+      return {
+        ...state,
+        heroesTotal: action.heroesTotal,
       };
     case TYPES.SET_HERO:
       return {

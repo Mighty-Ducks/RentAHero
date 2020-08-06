@@ -15,10 +15,19 @@ export const setHeroes = (heroes) => {
   };
 };
 
-export const fetchHeroes = () => async (dispatch) => {
-  const { data } = await axios.get('/api/superheroes/');
+export const setTotalHeroes = (heroesTotal) => {
+  return {
+    type: TYPES.SET_TOTAL_HEROES,
+    heroesTotal,
+  };
+};
 
-  return dispatch(setHeroes(data));
+export const fetchHeroes = (page) => {
+  return async (dispatch) => {
+    const { data } = await axios.get(`/api/superheroes/page/${page}`);
+    dispatch(setHeroes(data.heroes));
+    dispatch(setTotalHeroes(data.count));
+  };
 };
 
 export const setHero = (hero) => {
