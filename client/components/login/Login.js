@@ -55,7 +55,7 @@ class Login extends Component {
                 className="form-control"
                 name="email"
                 value={email}
-                onChange={(e) => this.setFieldToState(e)}
+                onChange={this.setFieldToState}
                 placeholder="Email"
                 required
               />
@@ -69,7 +69,7 @@ class Login extends Component {
                 className="form-control"
                 name="password"
                 value={password}
-                onChange={(e) => this.setFieldToState(e)}
+                onChange={this.setFieldToState}
                 id="inputPassword"
                 required
               />

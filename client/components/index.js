@@ -9,6 +9,8 @@ import Heroes from './heroes/Heroes';
 import Hero from './hero/Hero';
 import Acts from './acts/Acts';
 import Cart from './cart/Cart';
+import Popup from './popup/Popup';
+import AddHeroForm from './addHeroForm/AddHeroForm';
 
 export {
   Header,
@@ -22,4 +24,6 @@ export {
   Hero,
   Acts,
   Cart,
+  Popup,
+  AddHeroForm,
 };

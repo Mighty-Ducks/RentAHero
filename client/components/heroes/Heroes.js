@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import './heroes.scss';
+
+import Popup from '../popup/Popup';
+import AddHeroForm from '../addHeroForm/AddHeroForm';
 import { fetchHeroes } from '../../store/actions';
+import './heroes.scss';
 
 class Heroes extends Component {
   componentDidMount() {
@@ -35,11 +38,12 @@ class Heroes extends Component {
     const {
       heroesList,
       heroesTotal,
+      loggedIn,
       match: {
         params: { page },
       },
     } = this.props;
-    const limit = 12;
+    const limit = 6;
     const pages = Array.from(
       {
         length: Math.ceil(heroesTotal / limit),
@@ -106,6 +110,12 @@ class Heroes extends Component {
             </ul>
           </div>
           <div className="col-md-9">
+            <Popup
+              title="Create a Hero"
+              buttonText="Create"
+              BodyModal={AddHeroForm}
+            />
+            {loggedIn && <>Logged</>}
             <div className="heroes-list row row-cols-1 row-cols-md-3">
               {heroesList &&
                 heroesList.map(({ id, imgURL, name, description }) => {
@@ -151,6 +161,7 @@ const mapStateToProps = (state) => {
   return {
     heroesList: state.heroes.heroesList,
     heroesTotal: state.heroes.heroesTotal,
+    loggedIn: state.users.loggedIn,
   };
 };
 
@@ -165,6 +176,7 @@ const mapDispatchToProps = (dispatch) => {
 Heroes.defaultProps = {
   heroesList: [],
   match: {},
+  loggedIn: false,
 };
 
 Heroes.propTypes = {
@@ -176,6 +188,7 @@ Heroes.propTypes = {
     }),
   }),
   load: PropTypes.func.isRequired,
+  loggedIn: PropTypes.bool,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Heroes);

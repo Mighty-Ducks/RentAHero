@@ -18,21 +18,30 @@ body {
     color: #000;
   }
 }
-.form-control {
-  border-radius: 0;
-  box-shadow: 3px 3px 0 #999;
-}
+
 .label-full {
   width: 100%;
 }
 
+.form-control,
 .list-group,
 .card,
 .card-img,
-.card-img-bottom {
+.card-img-top,
+.card-img-bottom,
+.modal-content {
   border-radius: 0;
 }
 
+.form-control,
 .card {
   box-shadow: 3px 3px 0 #999;
+}
+
+.modal-content {
+  box-shadow: 3px 3px 0 #000;
+}
+
+.border-dash {
+  border-style: dashed !important;
 }

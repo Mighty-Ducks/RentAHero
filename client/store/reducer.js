@@ -34,6 +34,11 @@ const heroesReducer = (state = initialHeroState, action) => {
         ...state,
         hero: action.payload,
       };
+    case TYPES.CREATE_HERO:
+      return {
+        ...state,
+        heroesList: [action.payload, ...state.heroesList],
+      };
     default:
       return state;
   }
