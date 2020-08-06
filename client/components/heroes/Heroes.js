@@ -80,7 +80,7 @@ class Heroes extends Component {
                   aria-label="Next"
                   to={`/heroes/page/${
                     page * 1 + 1 >= pages.length ? pages.length : page * 1 + 1
-                    }`}
+                  }`}
                 >
                   <span aria-hidden="true">&raquo;</span>
                 </Link>
