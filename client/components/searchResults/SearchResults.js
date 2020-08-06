@@ -3,46 +3,44 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './searchResults.scss';
-import { fetchHeroes } from '../../store/actions';
+import { searchHeroes } from '../../store/actions';
 
 class SearchResults extends Component {
   componentDidMount() {
-    // const {
-    //   match: {
-    //     params: { page },
-    //   },
-    //   load,
-    // } = this.props;
-    // load(page);
+    const {
+      match: {
+        params: { term, page },
+      },
+      load,
+    } = this.props;
+    load(term, page);
   }
 
-  // because when a new page is clicked, props changes, but route and compoment remains the same
-  // this is necessary to listen for change in props, to rerender component and fetch new page
-  componentDidUpdate() {
-    // const {
-    //   heroesList,
-    //   match: {
-    //     params: { page },
-    //   },
-    //   load,
-    // } = this.props;
-    // if (prevProps.heroesList === heroesList) {
-    //   load(page);
-    // }
+  componentDidUpdate(prevProps) {
+    const {
+      searchResults,
+      match: {
+        params: { term, page },
+      },
+      load,
+    } = this.props;
+    if (prevProps.searchResults === searchResults) {
+      load(term, page);
+    }
   }
 
   render() {
     const {
-      heroesList,
-      heroesTotal,
+      searchResults,
+      searchTotal,
       match: {
-        params: { page },
+        params: { term, page },
       },
     } = this.props;
     const limit = 12;
     const pages = Array.from(
       {
-        length: Math.ceil(heroesTotal / limit),
+        length: Math.ceil(searchTotal / limit),
       },
       (v, i) => i + 1
     );
@@ -56,7 +54,7 @@ class SearchResults extends Component {
                 <Link
                   className="page-link"
                   aria-label="Previous"
-                  to={`/heroes/page/${page * 1 - 1 || 1}`}
+                  to={`/search/${term}/page/${page * 1 - 1 || 1}`}
                 >
                   <span aria-hidden="true">&laquo;</span>
                 </Link>
@@ -64,7 +62,10 @@ class SearchResults extends Component {
               {pages.map((pg) => {
                 return (
                   <li className="page-item" key={pg}>
-                    <Link className="page-link" to={`/heroes/page/${pg}`}>
+                    <Link
+                      className="page-link"
+                      to={`/search/${term}/page/${pg}`}
+                    >
                       {pg}
                     </Link>
                   </li>
@@ -74,7 +75,7 @@ class SearchResults extends Component {
                 <Link
                   className="page-link"
                   aria-label="Next"
-                  to={`/heroes/page/${page * 1 + 1 || pages.length}`}
+                  to={`/search/${term}/page/${page * 1 + 1 || pages.length}`}
                 >
                   <span aria-hidden="true">&raquo;</span>
                 </Link>
@@ -101,8 +102,8 @@ class SearchResults extends Component {
           </div>
           <div className="col-md-9">
             <div className="heroes-list row row-cols-1 row-cols-md-3">
-              {heroesList &&
-                heroesList.map(({ id, imgURL, name, description }) => {
+              {searchResults &&
+                searchResults.map(({ id, imgURL, name, description }) => {
                   return (
                     <div className="col mb-4" key={id}>
                       <div className="card h-100 ">
@@ -143,30 +144,31 @@ class SearchResults extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    heroesList: state.heroes.heroesList,
-    heroesTotal: state.heroes.heroesTotal,
+    searchResults: state.searchResults.heroes,
+    searchTotal: state.searchResults.heroesTotal,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    load: (page) => {
-      dispatch(fetchHeroes(page));
+    load: (term, page) => {
+      dispatch(searchHeroes(term, page));
     },
   };
 };
 
 SearchResults.defaultProps = {
-  heroesList: [],
+  searchResults: [],
   match: {},
 };
 
 SearchResults.propTypes = {
-  heroesList: PropTypes.arrayOf(PropTypes.object),
-  heroesTotal: PropTypes.number.isRequired,
+  searchResults: PropTypes.arrayOf(PropTypes.object),
+  searchTotal: PropTypes.number.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       page: PropTypes.string,
+      term: PropTypes.string,
     }),
   }),
   load: PropTypes.func.isRequired,
