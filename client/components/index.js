@@ -1,6 +1,7 @@
 import Header from './header/Header';
 import Logo from './logo/Logo';
 import Search from './search/Search';
+import SearchResults from './searchResults/SearchResults';
 import Home from './home/Home';
 import Banner from './banner/Banner';
 import Login from './login/Login';
@@ -26,4 +27,5 @@ export {
   Cart,
   Popup,
   AddHeroForm,
+  SearchResults,
 };

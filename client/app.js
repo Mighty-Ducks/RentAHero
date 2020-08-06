@@ -13,6 +13,7 @@ import {
   Heroes,
   Hero,
   Cart,
+  SearchResults,
 } from './components';
 import { fetchActs } from './store/actions';
 
@@ -35,6 +36,11 @@ class App extends Component {
             <Route exact path="/heroes/page/:page?" component={Heroes} />
             <Route exact path="/heroes/:id" component={Hero} />
             <Route exact path="/cart" component={Cart} />
+            <Route
+              exact
+              path="/search/:term?/page/:page?"
+              component={SearchResults}
+            />
           </Switch>
         </div>
       </HashRouter>

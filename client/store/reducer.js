@@ -85,11 +85,34 @@ const cartReducer = (state = initialCartState, action) => {
   }
 };
 
+const initialSearchState = {
+  heroes: [],
+  heroesTotal: 0,
+};
+
+const searchReducer = (state = initialSearchState, action) => {
+  switch (action.type) {
+    case TYPES.SET_SEARCH_HEROES:
+      return {
+        ...state,
+        heroes: action.searchResults,
+      };
+    case TYPES.SET_SEARCH_TOTAL:
+      return {
+        ...state,
+        heroesTotal: action.searchTotal,
+      };
+    default:
+      return state;
+  }
+};
+
 const reducer = combineReducers({
   heroes: heroesReducer,
   users: usersReducer,
   acts: actsReducer,
   cart: cartReducer,
+  searchResults: searchReducer,
 });
 
 export default reducer;

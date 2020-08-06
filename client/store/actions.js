@@ -30,6 +30,28 @@ export const fetchHeroes = (page) => {
   };
 };
 
+export const setSearchHeroes = (searchResults) => {
+  return {
+    type: TYPES.SET_SEARCH_HEROES,
+    searchResults,
+  };
+};
+
+export const setSearchTotal = (searchTotal) => {
+  return {
+    type: TYPES.SET_SEARCH_TOTAL,
+    searchTotal,
+  };
+};
+
+export const searchHeroes = (term, page) => {
+  return async (dispatch) => {
+    const { data } = await axios.get(`/api/search/${term}/page/${page}`);
+    dispatch(setSearchHeroes(data.searchResults));
+    dispatch(setSearchTotal(data.searchTotal));
+  };
+};
+
 export const setHero = (hero) => {
   return {
     type: TYPES.SET_HERO,
