@@ -47,6 +47,7 @@ class Heroes extends Component {
       (v, i) => i + 1
     );
     return (
+<<<<<<< HEAD
       <div className="px-3">
         <div className="header">
           <h1>Heroes</h1>
@@ -84,6 +85,10 @@ class Heroes extends Component {
             </ul>
           </nav>
         </div>
+=======
+      <div className="px-3 container-xl">
+        <h1>Heroes</h1>
+>>>>>>> 4d2caf74089107250cb9786e84a90240173cd21a
         <div className="row mt-5">
           <div className="col-md-3">
             <ul className="list-group">
