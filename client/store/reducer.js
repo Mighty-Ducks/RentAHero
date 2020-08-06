@@ -13,6 +13,10 @@ const initialUserState = {
   loggedIn: false,
 };
 
+const initialCartState = {
+  cart: [],
+};
+
 const heroesReducer = (state = initialHeroState, action) => {
   switch (action.type) {
     case TYPES.SET_HEROES:
@@ -57,7 +61,19 @@ const usersReducer = (state = initialUserState, action) => {
     case TYPES.SET_LOGGED_IN:
       return {
         ...state,
-        loggedIn: action.flag,
+        loggedIn: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+const cartReducer = (state = initialCartState, action) => {
+  switch (action.type) {
+    case TYPES.SET_CART:
+      return {
+        ...state,
+        cart: [...state.cart, action.payload],
       };
     default:
       return state;
@@ -68,6 +84,7 @@ const reducer = combineReducers({
   heroes: heroesReducer,
   users: usersReducer,
   acts: actsReducer,
+  cart: cartReducer,
 });
 
 export default reducer;

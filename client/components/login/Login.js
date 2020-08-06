@@ -10,9 +10,11 @@ class Login extends Component {
   state = {
     email: '',
     password: '',
+    error: '',
   };
 
   setFieldToState = (e) => {
+    this.setState({ error: '' });
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -20,18 +22,26 @@ class Login extends Component {
     e.preventDefault();
 
     const { email, password } = this.state;
-    const { data } = await axios.post('/api/users/login', { email, password });
+    try {
+      const { data } = await axios.post('/api/users/login', {
+        email,
+        password,
+      });
 
-    if (data) {
-      const { loggedIn, history } = this.props;
+      if (data) {
+        const { loggedIn, history } = this.props;
 
-      loggedIn(true);
-      history.push('/');
+        loggedIn(true);
+        history.push('/');
+      }
+    } catch (err) {
+      // console.log(err.response);
+      this.setState({ error: err.response.data.message });
     }
   };
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, error } = this.state;
 
     return (
       <div className="card p-5 col-md-6 m-auto">
@@ -65,6 +75,11 @@ class Login extends Component {
               />
             </label>
           </div>
+          {error && (
+            <div className="alert alert-warning" role="alert">
+              {error}
+            </div>
+          )}
           <div className="d-flex justify-content-between align-items-center">
             <button type="submit" className="btn btn-primary">
               Login

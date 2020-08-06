@@ -1,4 +1,4 @@
-const { UUID, UUIDV4, FLOAT } = require('sequelize');
+const { UUID, UUIDV4, FLOAT, BOOLEAN } = require('sequelize');
 const db = require('../db_index');
 
 const Cart = db.define(
@@ -12,6 +12,11 @@ const Cart = db.define(
     total: {
       type: FLOAT,
       allowNull: false,
+    },
+    status: {
+      type: BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     },
   },
   {
