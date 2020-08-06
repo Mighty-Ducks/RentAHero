@@ -1,51 +1,41 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import PropTypes from 'prop-types';
-import { setLoggedIn } from '../../store/actions';
+import { postUser } from '../../store/actions';
 import './login.scss';
 
 class Login extends Component {
   state = {
     email: '',
     password: '',
-    error: '',
   };
 
   setFieldToState = (e) => {
-    this.setState({ error: '' });
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  loginUser = async (e) => {
+  handleChange = (e) => {
     e.preventDefault();
 
+    const { logIn, history } = this.props;
     const { email, password } = this.state;
-    try {
-      const { data } = await axios.post('/api/users/login', {
-        email,
-        password,
-      });
 
-      if (data) {
-        const { loggedIn, history } = this.props;
-
-        loggedIn(true);
+    logIn(email, password, true).then((res) => {
+      if (res) {
         history.push('/');
       }
-    } catch (err) {
-      // console.log(err.response);
-      this.setState({ error: err.response.data.message });
-    }
+    });
   };
 
   render() {
-    const { email, password, error } = this.state;
+    const { handleChange } = this;
+    const { email, password } = this.state;
+    const { error } = this.props;
 
     return (
       <div className="card p-5 col-md-6 m-auto">
-        <form onSubmit={this.loginUser} className="auth-form">
+        <form onSubmit={handleChange} className="auth-form">
           <h1>Login User</h1>
           <div className="form-group">
             <label htmlFor="email" className="label-full">
@@ -95,25 +85,29 @@ class Login extends Component {
   }
 }
 
+Login.defaultProps = {
+  error: '',
+};
+
 Login.propTypes = {
-  loggedIn: PropTypes.func.isRequired,
+  logIn: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  error: PropTypes.string,
 };
 
 const mapStateToProps = (state) => {
   return {
     heroes: state.heroes,
     users: state.users,
+    error: state.users.error,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loggedIn: async (flag) => {
-      dispatch(setLoggedIn(flag));
-    },
+    logIn: (email, password, flag) => dispatch(postUser(email, password, flag)),
   };
 };
 

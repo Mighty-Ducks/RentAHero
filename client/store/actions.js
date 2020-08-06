@@ -1,10 +1,43 @@
 const axios = require('axios');
 const { TYPES } = require('./types');
 
+export const setUser = (user) => {
+  return {
+    type: TYPES.SET_USER,
+    payload: user,
+  };
+};
+
 export const setLoggedIn = (flag) => {
   return {
     type: TYPES.SET_LOGGED_IN,
     payload: flag,
+  };
+};
+
+export const setError = (err) => {
+  return {
+    type: TYPES.SET_ERROR,
+    payload: err,
+  };
+};
+
+export const postUser = (email, password, flag) => {
+  return async (dispatch) => {
+    try {
+      await axios.post('/api/users/login', {
+        email,
+        password,
+      });
+
+      dispatch(setUser({ email, password }));
+      dispatch(setLoggedIn(flag));
+      dispatch(setError(''));
+      return true;
+    } catch (e) {
+      dispatch(setError(e.response.data.message));
+      return false;
+    }
   };
 };
 
