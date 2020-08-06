@@ -95,7 +95,8 @@ usersRouter.delete('/:id', async (req, res) => {
 usersRouter.post(
   '/register',
   [
-    check('firstName', 'User name is required').not().isEmpty(),
+    check('firstName', 'User firstName is required').not().isEmpty(),
+    check('lastName', 'User lastName is required').not().isEmpty(),
     check('email', 'Include a valid email').isEmail(),
     check('password', 'Enter a password with 6 or more characters').isLength({
       min: 6,
@@ -140,20 +141,21 @@ usersRouter.post('/login', async (req, res) => {
   const user = await User.findOne({
     where: {
       email,
-      password: hash(password),
     },
   });
 
-  console.log('Login request from:', req.body, 'user', user);
+  // console.log('Login request from:', req.body, 'user', user);
 
   if (!user) {
-    res.status(401).send({ message: `User ${email} not found` });
-  } else {
+    res.status(401).send({ message: `User ${email} does not exist` });
+  } else if (hash(password) === user.password) {
     const usersSession = await Session.findByPk(req.session_id);
 
     await usersSession.setUser(user);
 
     res.sendStatus(201);
+  } else {
+    res.status(401).send({ message: `Password is incorrect` });
   }
 });
 

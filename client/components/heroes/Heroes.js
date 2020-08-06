@@ -96,7 +96,11 @@ class Heroes extends Component {
                 <span className="badge badge-primary badge-pill">2</span>
               </li>
               <li className="list-group-item d-flex justify-content-between align-items-center">
-                <Link to="categories/pets">Pets</Link>
+                <Link to="categories/pets">Human</Link>
+                <span className="badge badge-primary badge-pill">1</span>
+              </li>
+              <li className="list-group-item d-flex justify-content-between align-items-center">
+                <Link to="categories/pets">Non-Human</Link>
                 <span className="badge badge-primary badge-pill">1</span>
               </li>
             </ul>

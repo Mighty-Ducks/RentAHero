@@ -4,4 +4,5 @@ export const TYPES = {
   SET_TOTAL_HEROES: 'SET_TOTAL_HEROES',
   SET_HERO: 'SET_HERO',
   SET_ACTS: 'SET_ACTS',
+  SET_CART: 'SET_CART',
 };

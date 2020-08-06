@@ -8,6 +8,7 @@ import Register from './register/Register';
 import Heroes from './heroes/Heroes';
 import Hero from './hero/Hero';
 import Acts from './acts/Acts';
+import Cart from './cart/Cart';
 
 export {
   Header,
@@ -20,4 +21,5 @@ export {
   Heroes,
   Hero,
   Acts,
+  Cart,
 };

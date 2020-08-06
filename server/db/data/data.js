@@ -75,7 +75,7 @@ const captainAmerica = {
   hero: {
     name: 'Captian America',
     imgURL:
-      'https://cdn1.vectorstock.com/i/1000x1000/12/00/captain-america-logo-vector-4671200.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/8/8a/Bouclier_Captain_America_1018.png',
     description:
       'I believe in an idea, an idea that a single individual who has the right heart and the right mind that is consumed with a single purpose, that one man can win a war. Give that one man a group of soldiers with the same conviction, and you can change the world.',
   },

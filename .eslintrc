@@ -36,7 +36,8 @@
       "all",
       {
         "nestedBinaryExpressions": false,
-        "conditionalAssign": false
+        "conditionalAssign": false,
+        "ignoreJSX": "all"
       }
     ],
     "no-unused-vars": 2,

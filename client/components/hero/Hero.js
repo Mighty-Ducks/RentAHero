@@ -30,12 +30,13 @@ class Hero extends Component {
   render() {
     const {
       hero: { name, imgURL, description, acts = [] },
+      addToCart,
     } = this.props;
 
     const { total } = this.state;
 
     return (
-      <div className="px-3 hero-view">
+      <div className="px-3 hero-view container-xl">
         <h1>
           Hero:&nbsp;
           <strong>{name}</strong>
@@ -88,12 +89,13 @@ class Hero extends Component {
                       </strong>
                     </div>
                     <p className="card-text">
-                      <a
-                        href="https://calendly.com/rentaheroinfo/rent-a-batman?month=2020-07"
+                      <button
+                        type="submit"
                         className="btn btn-primary"
+                        onClick={(ev) => addToCart(ev)}
                       >
                         Book a hero
-                      </a>
+                      </button>
                     </p>
                   </div>
                 </form>
@@ -117,6 +119,9 @@ const mapDispatchToProps = (dispatch) => {
     load: (id) => {
       dispatch(fetchHero(id));
     },
+    addToCart: (ev) => {
+      ev.preventDefault();
+    },
   };
 };
 
@@ -132,6 +137,7 @@ Hero.propTypes = {
     }),
   }),
   load: PropTypes.func.isRequired,
+  addToCart: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Hero);

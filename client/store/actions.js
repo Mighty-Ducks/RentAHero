@@ -4,7 +4,7 @@ const { TYPES } = require('./types');
 export const setLoggedIn = (flag) => {
   return {
     type: TYPES.SET_LOGGED_IN,
-    flag,
+    payload: flag,
   };
 };
 
@@ -54,4 +54,17 @@ export const fetchActs = () => async (dispatch) => {
   const { data } = await axios.get('/api/acts/');
 
   return dispatch(setActs(data));
+};
+
+export const setCart = (cart) => {
+  return {
+    type: TYPES.SET_CART,
+    payload: cart,
+  };
+};
+
+export const fetchCart = () => async (dispatch) => {
+  const { data } = await axios.get('/api/cart/');
+
+  return dispatch(setCart(data));
 };
