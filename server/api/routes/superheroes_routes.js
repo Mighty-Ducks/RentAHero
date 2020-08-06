@@ -5,8 +5,8 @@ const { Act, Superhero, Category } = require('../../db/models/models_index.js');
 // app.use('/api/superheroes', superheroesRouter) in routes_index.js
 
 // get all superheroes
-superheroesRouter.get('/page/:page', async (req, res) => {
-  const limit = 6;
+superheroesRouter.get('/page/:page?', async (req, res) => {
+  const limit = 12;
   let offset = 0;
   try {
     await Superhero.findAndCountAll().then(async (data) => {
@@ -37,7 +37,7 @@ superheroesRouter.get('/page/:page', async (req, res) => {
 // get individual superhero
 superheroesRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
-
+  console.log(id);
   try {
     const superhero = await Superhero.findByPk(id, {
       include: [Act],

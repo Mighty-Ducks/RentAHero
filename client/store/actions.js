@@ -46,3 +46,10 @@ export const fetchActs = () => async (dispatch) => {
 
   return dispatch(setActs(data));
 };
+
+export const setPage = (page) => {
+  return {
+    type: TYPES.SET_PAGE,
+    payload: page,
+  };
+};
