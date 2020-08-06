@@ -1,3 +1,7 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+}
 .heroes-list {
   .card-img-body {
     background-color: #000;

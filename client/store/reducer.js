@@ -58,27 +58,10 @@ const usersReducer = (state = initialUserState, action) => {
   }
 };
 
-const initialStoreState = {
-  page: 0,
-};
-
-const pageReducer = (state = initialStoreState, action) => {
-  switch (action.type) {
-    case TYPES.SET_PAGE:
-      return {
-        ...state,
-        page: action.page,
-      };
-    default:
-      return state;
-  }
-};
-
 const reducer = combineReducers({
   heroes: heroesReducer,
   users: usersReducer,
   acts: actsReducer,
-  page: pageReducer,
 });
 
 export default reducer;

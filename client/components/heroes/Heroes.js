@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './heroes.scss';
-import { fetchHeroes, setPage } from '../../store/actions';
+import { fetchHeroes } from '../../store/actions';
 
 class Heroes extends Component {
   componentDidMount() {
@@ -16,14 +16,30 @@ class Heroes extends Component {
     load(page);
   }
 
+  // because when a new page is clicked, props changes.
+  // this is necessary to listen for change in props, so the component rerenders
+  componentDidUpdate(prevProps) {
+    const {
+      heroesList,
+      match: {
+        params: { page },
+      },
+      load,
+    } = this.props;
+    if (prevProps.heroesList === heroesList) {
+      load(page);
+    }
+  }
+
   render() {
     const {
       heroesList,
       heroesList: { count },
-      load,
+      match: {
+        params: { page },
+      },
     } = this.props;
     const limit = 12;
-
     const pages = Array.from(
       {
         length: heroesList && Math.ceil(count / limit),
@@ -32,30 +48,40 @@ class Heroes extends Component {
     );
     return (
       <div className="px-3">
-        <h1>Heroes</h1>
-        <nav aria-label="Page navigation example">
-          <ul className="pagination">
-            <li className="page-item">
-              <Link className="page-link" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </Link>
-            </li>
-            {pages.map((page) => {
-              return (
-                <li className="page-item" key={page}>
-                  <Link className="page-link" onClick={() => load(page)} to={`/heroes/page/${page}`}>
-                    {page}
-                  </Link>
-                </li>
-              );
-            })}
-            <li class="page-item">
-              <Link class="page-link" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </Link>
-            </li>
-          </ul>
-        </nav>
+        <div className="header">
+          <h1>Heroes</h1>
+          <nav className="pages">
+            <ul className="pagination">
+              <li className="page-item">
+                <Link
+                  className="page-link"
+                  aria-label="Previous"
+                  to={`/heroes/page/${page * 1 - 1 || 1}`}
+                >
+                  <span aria-hidden="true">&laquo;</span>
+                </Link>
+              </li>
+              {pages.map((pg) => {
+                return (
+                  <li className="page-item" key={pg}>
+                    <Link className="page-link" to={`/heroes/page/${pg}`}>
+                      {pg}
+                    </Link>
+                  </li>
+                );
+              })}
+              <li className="page-item">
+                <Link
+                  className="page-link"
+                  aria-label="Next"
+                  to={`/heroes/page/${page * 1 + 1 || pages.length}`}
+                >
+                  <span aria-hidden="true">&raquo;</span>
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
         <div className="row mt-5">
           <div className="col-md-3">
             <ul className="list-group">
@@ -125,7 +151,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     load: (page) => {
       dispatch(fetchHeroes(page));
-      dispatch(setPage(page));
     },
   };
 };
@@ -136,7 +161,10 @@ Heroes.defaultProps = {
 };
 
 Heroes.propTypes = {
-  heroesList: PropTypes.objectOf(PropTypes.object),
+  heroesList: PropTypes.shape({
+    heroes: PropTypes.arrayOf(PropTypes.object),
+    count: PropTypes.number,
+  }),
   match: PropTypes.shape({
     params: PropTypes.shape({
       page: PropTypes.string,
