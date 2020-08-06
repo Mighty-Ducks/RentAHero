@@ -7,7 +7,7 @@ searchRouter.get('/:term/page/:page', async (req, res) => {
   const limit = 12;
   let offset = 0;
   try {
-    await Superhero.findAndCountAll().then(async (data) => {
+    await Superhero.findAndCountAll().then(async () => {
       const { page, term } = req.params;
       offset = limit * (page - 1);
       await Superhero.findAll({
@@ -29,7 +29,7 @@ searchRouter.get('/:term/page/:page', async (req, res) => {
       }).then((heroes) => {
         return res
           .status(200)
-          .send({ searchResults: heroes, searchTotal: data.count });
+          .send({ searchResults: heroes, searchTotal: heroes.length });
       });
     });
   } catch (e) {
