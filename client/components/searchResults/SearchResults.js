@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import './searchResults.scss';
 import { searchHeroes } from '../../store/actions';
+import Paginator from '../paginator/Paginator';
 
 class SearchResults extends Component {
   componentDidMount() {
@@ -48,42 +48,7 @@ class SearchResults extends Component {
       <div className="px-3">
         <div className="header">
           <h1>{`Showing ${searchTotal || 0} Results For "${term}"`}</h1>
-          <nav className="pages">
-            <ul className="pagination">
-              <li className="page-item">
-                <Link
-                  className="page-link"
-                  aria-label="Previous"
-                  to={`/search/${term}/page/${page * 1 - 1 || 1}`}
-                >
-                  <span aria-hidden="true">&laquo;</span>
-                </Link>
-              </li>
-              {pages.map((pg) => {
-                return (
-                  <li className="page-item" key={pg}>
-                    <Link
-                      className="page-link"
-                      to={`/search/${term}/page/${pg}`}
-                    >
-                      {pg}
-                    </Link>
-                  </li>
-                );
-              })}
-              <li className="page-item">
-                <Link
-                  className="page-link"
-                  aria-label="Next"
-                  to={`/search/${term}/page/${
-                    page * 1 + 1 >= pages.length ? pages.length : page * 1 + 1
-                  }`}
-                >
-                  <span aria-hidden="true">&raquo;</span>
-                </Link>
-              </li>
-            </ul>
-          </nav>
+          <Paginator pages={pages || []} page={+page || 1} />
         </div>
         <div className="row mt-5">
           <div className="col-md-3">

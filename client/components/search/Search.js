@@ -14,7 +14,7 @@ export default class Search extends Component {
   render() {
     const { input } = this.state;
     return (
-      <form className="input-group input-group-sm" id="header-search">
+      <form className="input-group input-group" id="header-search">
         <input
           onChange={this.inputHandler.bind(this)}
           type="text"
