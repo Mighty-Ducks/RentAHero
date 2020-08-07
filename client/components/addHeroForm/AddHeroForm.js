@@ -9,10 +9,20 @@ class AddHeroForm extends Component {
     name: '',
     imgURL: '',
     description: '',
+    acts: [],
   };
 
   setFieldToState = (e) => {
     this.setState({ [e.target.name]: e.target.value });
+  };
+
+  setActsToState = (e) => {
+    const acts = [];
+    const inputs = document.querySelectorAll('input[type=checkbox]');
+    inputs.forEach((el) => {
+      if (el.checked) acts.push(el.value);
+    });
+    this.setState({ [e.target.name]: acts });
   };
 
   createHero = async (e) => {
@@ -24,7 +34,7 @@ class AddHeroForm extends Component {
 
   render() {
     const { name, imgURL, description } = this.state;
-
+    const { acts } = this.props;
     return (
       <form onSubmit={this.createHero} className="add-hero-form">
         <div className="form-group">
@@ -63,18 +73,57 @@ class AddHeroForm extends Component {
               name="description"
               value={description}
               onChange={this.setFieldToState}
-              placeholder="description"
+              placeholder="Description"
               required
             />
           </label>
         </div>
+        <div className="mb-3 pb-3 border-bottom">
+          <h5 htmlFor="acts" className="label-full">
+            Add Acts to Hero
+          </h5>
+          <div className="acts-container">
+            {acts &&
+              acts.map((act) => {
+                return (
+                  <div key={act.id} className="form-check">
+                    <label
+                      className="form-check-label d-flex justify-content-between"
+                      htmlFor={`check-${act.id}`}
+                    >
+                      <input
+                        className="form-check-input"
+                        name="acts"
+                        type="checkbox"
+                        value={act.id}
+                        id={`check-${act.id}`}
+                        onChange={this.setActsToState}
+                      />
+                      {act.name}
+                      <span className="space-dots"></span>
+                    </label>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
         <div className="card-footer add-hero-footer text-center">
-          <input type="submit" className="btn btn-primary" value="Save" />
+          <input
+            type="submit"
+            className="btn btn-primary"
+            value="Create Hero"
+          />
         </div>
       </form>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    acts: state.acts.actsList,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -84,8 +133,13 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+AddHeroForm.defaultProps = {
+  acts: [],
+};
+
 AddHeroForm.propTypes = {
+  acts: PropTypes.arrayOf(PropTypes.object),
   post: PropTypes.func.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(AddHeroForm);
+export default connect(mapStateToProps, mapDispatchToProps)(AddHeroForm);
