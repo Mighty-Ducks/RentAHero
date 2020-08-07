@@ -47,7 +47,7 @@ class SearchResults extends Component {
     return (
       <div className="px-3">
         <div className="header">
-          <h1>Heroes</h1>
+          <h1>{`Showing ${searchTotal || 0} Results For "${term}"`}</h1>
           <nav className="pages">
             <ul className="pagination">
               <li className="page-item">
