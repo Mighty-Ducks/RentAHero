@@ -139,7 +139,7 @@ superheroesRouter.post(
       });
     }
 
-    const { name, imgURL, description, actIds, categoryIds } = req.body;
+    const { name, imgURL, description, acts, categories } = req.body;
 
     try {
       const superhero = await Superhero.create({
@@ -148,8 +148,8 @@ superheroesRouter.post(
         description,
       });
       // use magic method to add Acts when creating a new Hero
-      await superhero.addActs(actIds);
-      await superhero.addCategories(categoryIds);
+      await superhero.addActs(acts);
+      await superhero.addCategories(categories);
       // then FIND the same hero AGAIN after the acts are added. The superhero object above doesn't include the added acts.
       const findSuperhero = await Superhero.findByPk(superhero.id, {
         include: [
