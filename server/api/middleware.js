@@ -18,7 +18,7 @@ app.use(cookieParser());
 // Checking for cookie and assigning one if not exist.
 app.use(async (req, res, next) => {
   // To make sure cookie is in db
-  const sessionId = Session.findByPk(req.cookies.session_id);
+  const sessionId = await Session.findByPk(req.cookies.session_id);
 
   if (!req.cookies.session_id || !sessionId) {
     const session = await Session.create();

@@ -9,8 +9,9 @@ const initialHeroState = {
 };
 
 const initialUserState = {
-  email: '',
+  user: {},
   loggedIn: false,
+  error: '',
 };
 
 const initialCartState = {
@@ -63,10 +64,20 @@ const actsReducer = (state = initialActState, action) => {
 
 const usersReducer = (state = initialUserState, action) => {
   switch (action.type) {
+    case TYPES.SET_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
     case TYPES.SET_LOGGED_IN:
       return {
         ...state,
         loggedIn: action.payload,
+      };
+    case TYPES.SET_ERROR:
+      return {
+        ...state,
+        error: action.payload,
       };
     default:
       return state;
