@@ -18,8 +18,8 @@ class AddHeroForm extends Component {
 
   setActsToState = (e) => {
     const acts = [];
-    const input = document.querySelectorAll('input[type=checkbox]');
-    input.forEach((el) => {
+    const inputs = document.querySelectorAll('input[type=checkbox]');
+    inputs.forEach((el) => {
       if (el.checked) acts.push(el.value);
     });
     this.setState({ [e.target.name]: acts });
@@ -134,7 +134,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 AddHeroForm.defaultProps = {
-  acts: PropTypes.arrayOf(PropTypes.object),
+  acts: [],
 };
 
 AddHeroForm.propTypes = {
