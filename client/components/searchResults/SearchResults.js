@@ -47,7 +47,7 @@ class SearchResults extends Component {
     return (
       <div className="px-3">
         <div className="header">
-          <h1>{`Showing ${searchTotal || 0} Results For "${term}"`}</h1>
+          <h1>Showing <strong>{searchTotal || 0}</strong> Results For <strong>"{term}"</strong></h1>
           <Paginator pages={pages || []} page={+page || 1} />
         </div>
         <div className="row mt-5">

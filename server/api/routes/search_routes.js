@@ -21,7 +21,7 @@ searchRouter.get('/:term/page/:page', async (req, res) => {
         offset,
         where: {
           name: {
-            [Op.iLike]: `${term}%`,
+            [Op.iLike]: `%${term}%`,
           },
         },
         include: [

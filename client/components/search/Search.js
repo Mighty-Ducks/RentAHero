@@ -7,29 +7,31 @@ export default class Search extends Component {
     input: '',
   };
 
-  inputHandler(event) {
-    this.setState({ input: event.target.value });
+  inputHandler = (event) => {
+    if (event.target.value.length >=3 ) {
+      this.setState({ input: event.target.value });
+    }
   }
 
   render() {
     const { input } = this.state;
     return (
-      <form className="input-group input-group" id="header-search">
+      <form className="input-group input-group" id="header-search" action={`#/search/${input}/page/1`}>
         <input
-          onChange={this.inputHandler.bind(this)}
+          onChange={this.inputHandler}
           type="text"
           className="form-control"
-          placeholder="Search a superhero "
+          placeholder="Search a superhero"
+          required
         />
         <div className="input-group-append">
-          <Link
-            to={`/search/${input}/page/1`}
+          <button
             className="btn btn-primary"
-            type="button"
+            type="submit"
             id="button-search"
           >
             <i className="fas fa-search"></i>
-          </Link>
+          </button>
         </div>
       </form>
     );
