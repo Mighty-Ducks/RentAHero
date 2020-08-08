@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './search.scss';
-import { Link } from 'react-router-dom';
 
 export default class Search extends Component {
   state = {
@@ -8,15 +7,19 @@ export default class Search extends Component {
   };
 
   inputHandler = (event) => {
-    if (event.target.value.length >=3 ) {
+    if (event.target.value.length >= 3) {
       this.setState({ input: event.target.value });
     }
-  }
+  };
 
   render() {
     const { input } = this.state;
     return (
-      <form className="input-group input-group" id="header-search" action={`#/search/${input}/page/1`}>
+      <form
+        className="input-group input-group"
+        id="header-search"
+        action={`#/search/${input}/page/1`}
+      >
         <input
           onChange={this.inputHandler}
           type="text"
@@ -25,11 +28,7 @@ export default class Search extends Component {
           required
         />
         <div className="input-group-append">
-          <button
-            className="btn btn-primary"
-            type="submit"
-            id="button-search"
-          >
+          <button className="btn btn-primary" type="submit" id="button-search">
             <i className="fas fa-search"></i>
           </button>
         </div>
