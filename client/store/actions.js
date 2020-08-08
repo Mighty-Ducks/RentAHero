@@ -132,7 +132,27 @@ export const setCart = (cart) => {
 };
 
 export const fetchCart = () => async (dispatch) => {
-  const { data } = await axios.get('/api/cart/');
+  const { data } = await axios.get(`/api/cart`);
+
+  return dispatch(setCart(data));
+};
+
+export const setItem = (item) => {
+  return {
+    type: TYPES.CREATE_ITEM,
+    payload: item,
+  };
+};
+
+export const createItem = (item) => async (dispatch) => {
+  const { data } = await axios.post('/api/cart/item', item);
+
+  return dispatch(setItem(data));
+};
+
+export const removeItem = (id) => async (dispatch) => {
+  await axios.delete(`/api/cart/item/${id}`);
+  const { data } = await axios.get(`/api/cart`);
 
   return dispatch(setCart(data));
 };

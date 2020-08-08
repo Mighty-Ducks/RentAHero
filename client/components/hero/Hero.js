@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchHero } from '../../store/actions';
+import { fetchHero, createItem } from '../../store/actions';
 import './hero.scss';
 
 class Hero extends Component {
   state = {
     total: 0,
+    actId: '',
+    actName: '',
+    actPrice: '',
   };
 
   componentDidMount() {
@@ -20,20 +23,25 @@ class Hero extends Component {
     load(id);
   }
 
-  setFieldToState = ({ target: { value, checked } }) => {
+  setFieldToState = (ev) => {
+    const {
+      target: { value, checked },
+    } = ev;
     const { total } = this.state;
     const updatedTotal = checked ? total + +value : total - +value;
 
-    this.setState({ total: updatedTotal });
+    this.setState({
+      total: updatedTotal,
+    });
   };
 
   render() {
     const {
-      hero: { name, imgURL, description, acts = [] },
+      hero: { id, name, imgURL, description, acts = [] },
       addToCart,
     } = this.props;
 
-    const { total } = this.state;
+    const { total, actId, actName, actPrice } = this.state;
 
     return (
       <div className="px-3 hero-view container-xl">
@@ -60,14 +68,21 @@ class Hero extends Component {
                         <div key={act.id} className="form-check">
                           <label
                             className="form-check-label d-flex justify-content-between"
-                            htmlFor={`check-${act.id}`}
+                            htmlFor={`${act.id}`}
                           >
                             <input
                               className="form-check-input"
                               type="checkbox"
                               value={act.price}
-                              id={`check-${act.id}`}
-                              onChange={this.setFieldToState}
+                              id={`${act.id}`}
+                              onChange={(ev) => {
+                                this.setState({
+                                  actId: ev.target.id,
+                                  actName: act.name,
+                                  actPrice: act.price,
+                                });
+                                this.setFieldToState(ev);
+                              }}
                             />
                             {act.name}
                             <span className="space-dots"></span>
@@ -92,7 +107,18 @@ class Hero extends Component {
                       <button
                         type="submit"
                         className="btn btn-primary"
-                        onClick={(ev) => addToCart(ev)}
+                        onClick={(ev) => {
+                          addToCart(
+                            ev,
+                            id,
+                            name,
+                            imgURL,
+                            actId,
+                            actName,
+                            actPrice,
+                            total
+                          );
+                        }}
                       >
                         Book a hero
                       </button>
@@ -119,8 +145,19 @@ const mapDispatchToProps = (dispatch) => {
     load: (id) => {
       dispatch(fetchHero(id));
     },
-    addToCart: (ev) => {
+    addToCart: (ev, id, name, imgURL, actId, actName, actPrice, total) => {
       ev.preventDefault();
+      const item = {
+        heroId: id,
+        heroName: name,
+        heroImgURL: imgURL,
+        actId,
+        actName,
+        price: actPrice,
+        total,
+      };
+
+      dispatch(createItem(item));
     },
   };
 };
