@@ -12,6 +12,7 @@ import Acts from './acts/Acts';
 import Cart from './cart/Cart';
 import Popup from './popup/Popup';
 import AddHeroForm from './addHeroForm/AddHeroForm';
+import Paginator from './paginator/Paginator';
 
 export {
   Header,
@@ -28,4 +29,5 @@ export {
   Popup,
   AddHeroForm,
   SearchResults,
+  Paginator,
 };

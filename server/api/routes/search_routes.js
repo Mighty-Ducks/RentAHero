@@ -10,9 +10,18 @@ searchRouter.get('/:term/page/:page', async (req, res) => {
     const { page, term } = req.params;
     await Superhero.findAndCountAll({
       where: {
-        name: {
-          [Op.iLike]: `${term}%`,
-        },
+        [Op.or]: [
+          {
+            name: {
+              [Op.iLike]: `%${term}%`,
+            },
+          },
+          {
+            description: {
+              [Op.iLike]: `%${term}%`,
+            },
+          },
+        ],
       },
     }).then(async (data) => {
       offset = limit * (page - 1);
@@ -20,9 +29,18 @@ searchRouter.get('/:term/page/:page', async (req, res) => {
         limit,
         offset,
         where: {
-          name: {
-            [Op.iLike]: `${term}%`,
-          },
+          [Op.or]: [
+            {
+              name: {
+                [Op.iLike]: `%${term}%`,
+              },
+            },
+            {
+              description: {
+                [Op.iLike]: `%${term}%`,
+              },
+            },
+          ],
         },
         include: [
           {

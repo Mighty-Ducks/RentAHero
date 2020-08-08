@@ -6,8 +6,21 @@ $theme-colors: ('primary': #000);
 body {
   font-family: 'Roboto';
 }
-.btn {
+
+.btn,
+.form-control,
+.list-group,
+.card,
+.card-img,
+.card-img-top,
+.card-img-bottom,
+.modal-content,
+.page-item:first-child .page-link,
+.page-item:last-child .page-link {
   border-radius: 0;
+}
+
+.btn {
   box-shadow: 3px 3px 0 #999;
   font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
@@ -21,16 +34,6 @@ body {
 
 .label-full {
   width: 100%;
-}
-
-.form-control,
-.list-group,
-.card,
-.card-img,
-.card-img-top,
-.card-img-bottom,
-.modal-content {
-  border-radius: 0;
 }
 
 .form-control,

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import Popup from '../popup/Popup';
 import AddHeroForm from '../addHeroForm/AddHeroForm';
+import Paginator from '../paginator/Paginator';
 import { fetchHeroes } from '../../store/actions';
 import './heroes.scss';
 
@@ -54,39 +55,6 @@ class Heroes extends Component {
       <div className="px-3">
         <div className="header">
           <h1>Heroes</h1>
-          <nav className="pages">
-            <ul className="pagination">
-              <li className="page-item">
-                <Link
-                  className="page-link"
-                  aria-label="Previous"
-                  to={`/heroes/page/${page * 1 - 1 || 1}`}
-                >
-                  <span aria-hidden="true">&laquo;</span>
-                </Link>
-              </li>
-              {pages.map((pg) => {
-                return (
-                  <li className="page-item" key={pg}>
-                    <Link className="page-link" to={`/heroes/page/${pg}`}>
-                      {pg}
-                    </Link>
-                  </li>
-                );
-              })}
-              <li className="page-item">
-                <Link
-                  className="page-link"
-                  aria-label="Next"
-                  to={`/heroes/page/${
-                    page * 1 + 1 >= pages.length ? pages.length : page * 1 + 1
-                  }`}
-                >
-                  <span aria-hidden="true">&raquo;</span>
-                </Link>
-              </li>
-            </ul>
-          </nav>
         </div>
         <div className="row mt-5">
           <div className="col-md-3">
@@ -116,6 +84,7 @@ class Heroes extends Component {
               BodyModal={AddHeroForm}
             />
             {loggedIn && <>Logged</>}
+            <Paginator pages={pages || []} page={+page || 1} />
             <div className="heroes-list row row-cols-1 row-cols-md-3">
               {heroesList &&
                 heroesList.map(({ id, imgURL, name, description }) => {
@@ -150,6 +119,7 @@ class Heroes extends Component {
                   );
                 })}
             </div>
+            <Paginator pages={pages || []} page={+page || 1} />
           </div>
         </div>
       </div>
