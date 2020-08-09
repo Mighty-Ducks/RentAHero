@@ -69,25 +69,24 @@ superheroesRouter.put('/:id', async (req, res) => {
       include: [Act],
     });
 
+    // find all acts that are in the actId array from req.body.
+    const updatedActs = await Act.findAll({
+      where: {
+        id: actIds || null,
+      },
+    });
+
+    const updatedCategories = await Category.findAll({
+      where: {
+        id: categoryIds || null,
+      },
+    });
     if (superhero) {
       const updatedSuperhero = await superhero.update(updParams);
-
-      // find all acts that are in the actId array from req.body.
-      const updatedActs = await Act.findAll({
-        where: {
-          id: actIds || null,
-        },
-      });
 
       if (updatedActs) {
         await updatedSuperhero.setActs(updatedActs);
       }
-
-      const updatedCategories = await Act.findAll({
-        where: {
-          id: categoryIds || null,
-        },
-      });
 
       if (updatedCategories) {
         await updatedSuperhero.setCategories(updatedCategories);
@@ -148,7 +147,7 @@ superheroesRouter.post(
       });
     }
 
-    const { name, imgURL, description, acts, categories } = req.body;
+    const { name, imgURL, description, actIds, categoryIds } = req.body;
 
     try {
       const superhero = await Superhero.create({
@@ -157,8 +156,8 @@ superheroesRouter.post(
         description,
       });
       // use magic method to add Acts when creating a new Hero
-      await superhero.addActs(acts);
-      await superhero.addCategories(categories);
+      await superhero.addActs(actIds);
+      await superhero.addCategories(categoryIds);
       // then FIND the same hero AGAIN after the acts are added. The superhero object above doesn't include the added acts.
       const findSuperhero = await Superhero.findByPk(superhero.id, {
         include: [

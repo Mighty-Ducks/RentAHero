@@ -195,3 +195,40 @@ export const removeItem = (id) => async (dispatch) => {
 
   return dispatch(setCart(data));
 };
+
+export const setCategories = (categoriesList) => {
+  return {
+    type: TYPES.SET_CATEGORIES,
+    categoriesList,
+  };
+};
+
+export const setCategoryHeroes = (heroes) => {
+  return {
+    type: TYPES.SET_CATEGORIES_HEROES,
+    heroes,
+  };
+};
+
+export const setCategoryHeroesTotal = (categoryTotal) => {
+  return {
+    type: TYPES.SET_CATEGORIES_HEROES_TOTAL,
+    categoryTotal,
+  };
+};
+
+export const fetchCategories = () => async (dispatch) => {
+  const { data } = await axios.get(`/api/categories`);
+
+  return dispatch(setCategories(data));
+};
+
+export const fetchCategoryHeroes = (categoryName, page) => {
+  return async (dispatch) => {
+    const { data } = await axios.get(
+      `/api/categories/${categoryName}/page/${page}`
+    );
+    dispatch(setCategoryHeroes(data.categoryHeroes));
+    dispatch(setCategoryHeroesTotal(data.categoryHeroesTotal));
+  };
+};

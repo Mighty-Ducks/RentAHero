@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { searchHeroes } from '../../store/actions';
 import Paginator from '../paginator/Paginator';
+import CategoriesLinks from '../categoriesLinks/CategoriesLinks';
 
 class SearchResults extends Component {
   componentDidMount() {
@@ -37,7 +38,7 @@ class SearchResults extends Component {
         params: { term, page },
       },
     } = this.props;
-    const limit = 12;
+    const limit = 6;
     const pages = Array.from(
       {
         length: Math.ceil(searchTotal / limit),
@@ -60,22 +61,7 @@ class SearchResults extends Component {
           <Paginator pages={pages || []} page={+page || 1} />
         </div>
         <div className="row mt-5">
-          <div className="col-md-3">
-            <ul className="list-group">
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                <Link to="categories/female">Female</Link>
-                <span className="badge badge-primary badge-pill">14</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                <Link to="categories/male">Male</Link>
-                <span className="badge badge-primary badge-pill">2</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                <Link to="categories/pets">Pets</Link>
-                <span className="badge badge-primary badge-pill">1</span>
-              </li>
-            </ul>
-          </div>
+          <CategoriesLinks />
           <div className="col-md-9">
             <div className="heroes-list row row-cols-1 row-cols-md-3">
               {searchResults &&

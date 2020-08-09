@@ -5,46 +5,39 @@ import { connect } from 'react-redux';
 
 import Popup from '../popup/Popup';
 import AddHeroForm from '../addHeroForm/AddHeroForm';
-import UpdateHeroForm from '../updateHeroForm/UpdateHeroForm';
-import AddFullButton from '../buttons/AddFullButton';
-import EditButton from '../buttons/EditButton';
 import Paginator from '../paginator/Paginator';
 import CategoriesLinks from '../categoriesLinks/CategoriesLinks';
-import { fetchHeroes } from '../../store/actions';
-import './heroes.scss';
+import { fetchCategoryHeroes } from '../../store/actions';
+import './categories.scss';
 
-class Heroes extends Component {
+class Categories extends Component {
   componentDidMount() {
     const {
       match: {
-        params: { page },
+        params: { categoryName, page },
       },
       load,
     } = this.props;
-    load(page);
+    load(categoryName, page);
   }
 
-  // because when a new page is clicked, props changes, but route and compoment remains the same
-  // this is necessary to listen for change in props, to rerender component and fetch new page
   componentDidUpdate(prevProps) {
     const {
-      heroesList,
+      heroes,
       match: {
-        params: { page },
+        params: { categoryName, page },
       },
       load,
     } = this.props;
-    if (prevProps.heroesList === heroesList) {
-      load(page);
+    if (prevProps.heroes === heroes) {
+      load(categoryName, page);
     }
   }
 
   render() {
     const {
-      heroesList,
-      heroesTotal,
-      loggedIn,
-      isAdmin,
+      heroes,
+      categoryTotal,
       match: {
         params: { page },
       },
@@ -52,40 +45,30 @@ class Heroes extends Component {
     const limit = 6;
     const pages = Array.from(
       {
-        length: Math.ceil(heroesTotal / limit),
+        length: Math.ceil(categoryTotal / limit),
       },
       (v, i) => i + 1
     );
     return (
-      <div className="px-3 container-xl">
+      <div className="px-3">
         <div className="header">
-          <h1>Heroes</h1>
+          <h1>Test</h1>
         </div>
         <div className="row mt-5">
           <CategoriesLinks />
           <div className="col-md-9">
-            {loggedIn && isAdmin && (
-              <Popup
-                title="Create a Hero"
-                BodyModal={AddHeroForm}
-                ButtonModal={AddFullButton}
-              />
-            )}
+            <Popup
+              title="Create a Hero"
+              buttonText="Create"
+              BodyModal={AddHeroForm}
+            />
             <Paginator pages={pages || []} page={+page || 1} />
             <div className="heroes-list row row-cols-1 row-cols-md-3">
-              {heroesList &&
-                heroesList.map(({ id, imgURL, name, description, acts }) => {
+              {heroes &&
+                heroes.map(({ id, imgURL, name, description }) => {
                   return (
                     <div className="col mb-4" key={id}>
                       <div className="card h-100 ">
-                        {loggedIn && isAdmin && (
-                          <Popup
-                            title="Edit Hero"
-                            BodyModal={UpdateHeroForm}
-                            ButtonModal={EditButton}
-                            data={{ id, imgURL, name, description, acts }}
-                          />
-                        )}
                         <div className="card-img-body border-bottom">
                           <Link to={`/heroes/${id}`}>
                             <img
@@ -124,39 +107,34 @@ class Heroes extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    heroesList: state.heroes.heroesList,
-    heroesTotal: state.heroes.heroesTotal,
-    loggedIn: state.users.loggedIn,
-    isAdmin: state.users.user.admin,
+    heroes: state.categories.heroes,
+    categoryTotal: state.categories.categoryTotal,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    load: (page) => {
-      dispatch(fetchHeroes(page));
+    load: (categoryName, page) => {
+      dispatch(fetchCategoryHeroes(categoryName, page));
     },
   };
 };
 
-Heroes.defaultProps = {
-  heroesList: [],
+Categories.defaultProps = {
+  heroes: [],
   match: {},
-  loggedIn: false,
-  isAdmin: false,
 };
 
-Heroes.propTypes = {
-  heroesList: PropTypes.arrayOf(PropTypes.object),
-  heroesTotal: PropTypes.number.isRequired,
+Categories.propTypes = {
+  heroes: PropTypes.arrayOf(PropTypes.object),
+  categoryTotal: PropTypes.number.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
+      categoryName: PropTypes.string,
       page: PropTypes.string,
     }),
   }),
   load: PropTypes.func.isRequired,
-  loggedIn: PropTypes.bool,
-  isAdmin: PropTypes.bool,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Heroes);
+export default connect(mapStateToProps, mapDispatchToProps)(Categories);

@@ -15,6 +15,45 @@ categoriesRouter.get('/', async (req, res) => {
   }
 });
 
+categoriesRouter.get('/:categoryName/page/:page', async (req, res) => {
+  const limit = 6;
+  let offset = 0;
+  try {
+    const { categoryName, page } = req.params;
+    await Superhero.findAndCountAll({
+      include: [
+        {
+          model: Category,
+          where: {
+            name: categoryName,
+          },
+        },
+      ],
+    }).then(async (data) => {
+      offset = limit * (page - 1);
+      await Superhero.findAll({
+        limit,
+        offset,
+        include: [
+          {
+            model: Category,
+            where: {
+              name: categoryName,
+            },
+          },
+        ],
+      }).then((heroes) => {
+        return res
+          .status(200)
+          .send({ categoryHeroes: heroes, categoryHeroesTotal: data.count });
+      });
+    });
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({ message: 'Server error' });
+  }
+});
+
 // get individual category
 categoriesRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
