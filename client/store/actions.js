@@ -41,6 +41,19 @@ export const postUser = (email, password, flag) => {
   };
 };
 
+export const logInWithSession = () => {
+  return async (dispatch) => {
+    const { data } = await axios.get('/api/users/session');
+
+    if (data) {
+      dispatch(setUser({ user: data.email }));
+      dispatch(setLoggedIn(true));
+    } else {
+      dispatch(setLoggedIn(false));
+    }
+  };
+};
+
 export const setHeroes = (heroes) => {
   return {
     type: TYPES.SET_HEROES,

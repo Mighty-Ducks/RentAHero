@@ -34,13 +34,19 @@ class Cart extends Component {
                 <ul className="list-group list-group-flush">
                   {cart.map((item) => {
                     return (
-                      <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                      <li
+                        key={item.id}
+                        className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"
+                      >
                         {item.actName}
                         <span>{`$${item.price}`}</span>
                       </li>
                     );
                   })}
-                  <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                  <li
+                    key="totalAmount"
+                    className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"
+                  >
                     Total Amount
                     <span>
                       {`$${cart.reduce((acc, curr) => {

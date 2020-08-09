@@ -16,6 +16,23 @@ usersRouter.get('/', async (req, res) => {
   }
 });
 
+// get user by session
+usersRouter.get('/session', async (req, res) => {
+  try {
+    const session = await Session.findByPk(req.session_id);
+
+    if (session.userId) {
+      const user = await User.findByPk(session.userId);
+      res.status(200).send(user);
+    } else {
+      res.status(404).send({ message: 'not found' });
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({ message: 'Server error' });
+  }
+});
+
 // get individual user
 usersRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
