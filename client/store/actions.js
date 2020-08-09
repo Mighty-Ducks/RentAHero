@@ -145,7 +145,7 @@ export const removeHero = (id) => {
 };
 
 export const deleteHero = (id) => async (dispatch) => {
-  const { data } = await axios.delete(`/api/superheroes/${id}`);
+  await axios.delete(`/api/superheroes/${id}`);
 
   return dispatch(removeHero(id));
 };
