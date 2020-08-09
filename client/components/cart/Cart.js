@@ -2,11 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import heroCard from './heroCard';
+import { fetchCart, removeItem } from '../../store/actions';
 import './cart.scss';
 
 class Cart extends Component {
+  componentDidMount() {
+    const { load } = this.props;
+    load();
+  }
+
   render() {
-    const { heroesList } = this.props;
+    const { cart, deleteItem } = this.props;
 
     return (
       <section>
@@ -14,8 +20,10 @@ class Cart extends Component {
           <div className="col-lg-8">
             <div className="card wish-list mb-3">
               <div className="card-body">
-                <h5 className="mb-4">{`Cart (${heroesList.length} items)`}</h5>
-                {heroesList.map((hero) => heroCard(hero))}
+                <h5 className="mb-4">{`Cart (${cart.length} items)`}</h5>
+                {cart.map((item) => {
+                  return heroCard(item, deleteItem);
+                })}
               </div>
             </div>
           </div>
@@ -24,23 +32,26 @@ class Cart extends Component {
               <div className="card-body">
                 <h5 className="mb-3">The total amount of</h5>
                 <ul className="list-group list-group-flush">
-                  <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                    Temporary amount
-                    <span>$25.98</span>
-                  </li>
-                  <li className="list-group-item d-flex justify-content-between align-items-center px-0">
-                    Shipping
-                    <span>Gratis</span>
-                  </li>
-                  <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                    <div>
-                      <strong>The total amount of</strong>
-                      <strong>
-                        <p className="mb-0">(including VAT)</p>
-                      </strong>
-                    </div>
+                  {cart.map((item) => {
+                    return (
+                      <li
+                        key={item.id}
+                        className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"
+                      >
+                        {item.actName}
+                        <span>{`$${item.price}`}</span>
+                      </li>
+                    );
+                  })}
+                  <li
+                    key="totalAmount"
+                    className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"
+                  >
+                    Total Amount
                     <span>
-                      <strong>$53.98</strong>
+                      {`$${cart.reduce((acc, curr) => {
+                        return acc + curr.price;
+                      }, 0)}`}
                     </span>
                   </li>
                 </ul>
@@ -61,16 +72,25 @@ class Cart extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    heroesList: state.heroes.heroesList,
+    cart: state.cart.cart,
   };
 };
 
-Cart.defaultProps = {
-  heroesList: [],
+const mapDispatchToProps = (dispatch) => {
+  return {
+    load: () => {
+      dispatch(fetchCart());
+    },
+    deleteItem: (id) => {
+      dispatch(removeItem(id));
+    },
+  };
 };
 
 Cart.propTypes = {
-  heroesList: PropTypes.arrayOf(PropTypes.object),
+  cart: PropTypes.arrayOf(PropTypes.object).isRequired,
+  load: PropTypes.func.isRequired,
+  deleteItem: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Cart);
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

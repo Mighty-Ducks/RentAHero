@@ -5,38 +5,45 @@ const { Cart, Item } = require('../../db/models/models_index.js');
 
 // app.use('/api/cart', cartRouter) in routes_index.js
 
-// get all items in cart
-// cartRouter.get('/items/:id', async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const users = await Cart.findAll();
-//     res.status(200).send(users);
-//   } catch (e) {
-//     console.error(e);
-//     res.status(500).send({ message: 'Server error' });
-//   }
-// });
+// get all items in cart '/api/cart/'
+cartRouter.get('/', async (req, res) => {
+  // id belongs to cart
+  const cart = await Cart.findOne({ where: { sessionId: req.session_id } });
+  try {
+    const items = await Item.findAll({ where: { cartId: cart.id } });
+    res.status(200).send(items);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({ message: 'Server error' });
+  }
+});
 
-// delete an item - needs to be edit!
-// cartRouter.delete('/:id', async (req, res) => {
-//   const { id } = req.params;
+// delete an item from cart '/api/cart/item/:id'
+cartRouter.delete('/item/:id', async (req, res) => {
+  const { id } = req.params;
 
-//   try {
-//     const user = await User.findByPk(id);
+  try {
+    const item = await Item.findByPk(id);
+    const cart = await Cart.findByPk(item.cartId);
 
-//     if (user) {
-//       user.destroy();
-//       res.status(204).send({ message: `User id: ${id} succesfully deleted.` });
-//     } else {
-//       res.status(404).send({ message: `User id: ${id} not found.` });
-//     }
-//   } catch (e) {
-//     console.error(e);
-//     res.status(500).send({ message: 'Server error' });
-//   }
-// });
+    if (item) {
+      item.destroy();
+      const items = await Item.findAll({ where: { cartId: cart.id } });
+      if (!items) {
+        cart.destroy();
+      }
+      res.status(204).send({ message: `Item id: ${id} succesfully deleted.` });
+    } else {
+      res.status(404).send({ message: `Item id: ${id} not found.` });
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({ message: 'Server error' });
+  }
+});
 
 // add an item to cart - if a cart does not exist create one!
+// '/api/cart/item'
 cartRouter.post('/item', async (req, res) => {
   console.log(chalk.yellow(`request was made to ${req.path}`));
   const isCart = await Cart.findOne({
@@ -45,16 +52,28 @@ cartRouter.post('/item', async (req, res) => {
     },
   });
 
-  const { heroId, actId, price, total } = req.body;
+  const {
+    heroId,
+    heroName,
+    heroImgURL,
+    actId,
+    actName,
+    price,
+    total,
+  } = req.body;
 
   if (isCart) {
     try {
+      console.log(req.body);
       const item = await Item.create({
-        price,
         heroId,
+        heroName,
+        heroImgURL,
         actId,
+        actName,
+        price,
+        cartId: isCart.id,
       });
-      isCart.setItems(item);
       res.status(200).send(item);
     } catch (e) {
       console.error(e);
@@ -69,11 +88,14 @@ cartRouter.post('/item', async (req, res) => {
         sessionId: req.session_id,
       });
       const item = await Item.create({
-        price,
         heroId,
+        heroName,
+        heroImgURL,
         actId,
+        actName,
+        price,
+        cartId: cart.id,
       });
-      cart.setItems(item);
       res.status(200).send(item);
     } catch (e) {
       console.error(e);

@@ -15,13 +15,14 @@ import {
   Cart,
   SearchResults,
 } from './components';
-import { fetchActs } from './store/actions';
+import { fetchActs, logInWithSession } from './store/actions';
 
 class App extends Component {
   componentDidMount() {
-    const { load } = this.props;
+    const { load, logIn } = this.props;
 
     load();
+    logIn();
   }
 
   render() {
@@ -50,12 +51,16 @@ class App extends Component {
 
 App.propTypes = {
   load: PropTypes.func.isRequired,
+  logIn: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     load: () => {
       dispatch(fetchActs());
+    },
+    logIn: () => {
+      dispatch(logInWithSession());
     },
   };
 };

@@ -8,16 +8,6 @@ const initialHeroState = {
   hero: {},
 };
 
-const initialUserState = {
-  user: {},
-  loggedIn: false,
-  error: '',
-};
-
-const initialCartState = {
-  cart: [],
-};
-
 const heroesReducer = (state = initialHeroState, action) => {
   switch (action.type) {
     case TYPES.SET_HEROES:
@@ -62,6 +52,12 @@ const actsReducer = (state = initialActState, action) => {
   }
 };
 
+const initialUserState = {
+  user: {},
+  loggedIn: false,
+  error: '',
+};
+
 const usersReducer = (state = initialUserState, action) => {
   switch (action.type) {
     case TYPES.SET_USER:
@@ -84,12 +80,22 @@ const usersReducer = (state = initialUserState, action) => {
   }
 };
 
+const initialCartState = {
+  cart: [],
+  newItem: {},
+};
+
 const cartReducer = (state = initialCartState, action) => {
   switch (action.type) {
     case TYPES.SET_CART:
       return {
         ...state,
-        cart: [...state.cart, action.payload],
+        cart: action.payload,
+      };
+    case TYPES.CREATE_ITEM:
+      return {
+        ...state,
+        newItem: action.payload,
       };
     default:
       return state;

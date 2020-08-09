@@ -30,13 +30,26 @@ export const postUser = (email, password, flag) => {
         password,
       });
 
-      dispatch(setUser({ email, password }));
+      dispatch(setUser({ email }));
       dispatch(setLoggedIn(flag));
       dispatch(setError(''));
       return true;
     } catch (e) {
       dispatch(setError(e.response.data.message));
       return false;
+    }
+  };
+};
+
+export const logInWithSession = () => {
+  return async (dispatch) => {
+    const { data } = await axios.get('/api/users/session');
+
+    if (data) {
+      dispatch(setUser({ user: data.email }));
+      dispatch(setLoggedIn(true));
+    } else {
+      dispatch(setLoggedIn(false));
     }
   };
 };
@@ -132,7 +145,27 @@ export const setCart = (cart) => {
 };
 
 export const fetchCart = () => async (dispatch) => {
-  const { data } = await axios.get('/api/cart/');
+  const { data } = await axios.get(`/api/cart`);
+
+  return dispatch(setCart(data));
+};
+
+export const setItem = (item) => {
+  return {
+    type: TYPES.CREATE_ITEM,
+    payload: item,
+  };
+};
+
+export const createItem = (item) => async (dispatch) => {
+  const { data } = await axios.post('/api/cart/item', item);
+
+  return dispatch(setItem(data));
+};
+
+export const removeItem = (id) => async (dispatch) => {
+  await axios.delete(`/api/cart/item/${id}`);
+  const { data } = await axios.get(`/api/cart`);
 
   return dispatch(setCart(data));
 };

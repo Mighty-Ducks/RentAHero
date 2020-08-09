@@ -1,20 +1,31 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import './header.scss';
 import Search from '../search/Search';
 import Logo from '../logo/Logo';
+import { setLoggedIn } from '../../store/actions';
 
-export default class Header extends Component {
+class Header extends Component {
   render() {
+    const { loggedIn, logOut } = this.props;
+
     return (
       <header>
         <div className="border-bottom d-flex justify-content-between align-items-center py-2 pl-3">
           <Logo />
           <ul className="pr-1">
             <li>
-              <Link to="/login">
-                <i className="fas fa-user"></i>
-              </Link>
+              {loggedIn ? (
+                <Link to="/" onClick={() => logOut()}>
+                  <i className="fas fa-sign-out-alt"></i>
+                </Link>
+              ) : (
+                <Link to="/login">
+                  <i className="fas fa-user"></i>
+                </Link>
+              )}
             </li>
             <li>
               <Link to="/cart">
@@ -48,3 +59,24 @@ export default class Header extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    loggedIn: state.users.loggedIn,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logOut: () => {
+      dispatch(setLoggedIn(false));
+    },
+  };
+};
+
+Header.propTypes = {
+  loggedIn: PropTypes.bool.isRequired,
+  logOut: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

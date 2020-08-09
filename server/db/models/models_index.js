@@ -29,11 +29,4 @@ Cart.belongsTo(Session);
 Cart.hasMany(Item);
 Item.belongsTo(Cart);
 
-// Relations between items and superhero, act
-Superhero.hasMany(Item);
-Item.belongsTo(Superhero);
-
-Act.hasMany(Item);
-Item.belongsTo(Act);
-
 module.exports = { Superhero, Act, Category, User, Session, Item, Cart };
