@@ -124,6 +124,32 @@ export const postHero = (newHero) => async (dispatch) => {
   return dispatch(createHero(data));
 };
 
+export const updHero = (updatedHero) => {
+  return {
+    type: TYPES.UPDATE_HERO,
+    payload: updatedHero,
+  };
+};
+
+export const updateHero = (id, payload) => async (dispatch) => {
+  const { data } = await axios.put(`/api/superheroes/${id}`, payload);
+
+  return dispatch(updHero(data));
+};
+
+export const removeHero = (id) => {
+  return {
+    type: TYPES.DELETE_HERO,
+    payload: id,
+  };
+};
+
+export const deleteHero = (id) => async (dispatch) => {
+  await axios.delete(`/api/superheroes/${id}`);
+
+  return dispatch(removeHero(id));
+};
+
 export const setActs = (acts) => {
   return {
     type: TYPES.SET_ACTS,

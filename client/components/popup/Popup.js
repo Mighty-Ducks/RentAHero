@@ -17,24 +17,18 @@ export default class Popup extends Component {
 
   render() {
     const { show } = this.state;
-    const { BodyModal, title } = this.props;
+    const { BodyModal, ButtonModal, title, data } = this.props;
     const { handleClose, handleShow } = this;
 
     return (
       <>
-        <button
-          className="mb-3 p-3 w-100 d-flex justify-content-center align-items-center bg-light border border-dash"
-          onClick={handleShow}
-          type="button"
-        >
-          <i className="fas fa-plus-circle"></i>
-        </button>
+        {ButtonModal && <ButtonModal onClick={handleShow} />}
         <Modal show={show} onHide={handleClose} animation centered>
           <Modal.Header closeButton>
             <Modal.Title>{title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <BodyModal />
+            <BodyModal data={data} />
           </Modal.Body>
         </Modal>
       </>
@@ -44,9 +38,14 @@ export default class Popup extends Component {
 
 Popup.defaultProps = {
   title: '',
+  data: {},
+  BodyModal: null,
+  ButtonModal: null,
 };
 
 Popup.propTypes = {
-  BodyModal: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  BodyModal: PropTypes.oneOfType([PropTypes.object]),
+  ButtonModal: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   title: PropTypes.string,
+  data: PropTypes.oneOfType([PropTypes.object]),
 };

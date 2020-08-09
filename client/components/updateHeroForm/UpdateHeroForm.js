@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { postHero } from '../../store/actions';
-import './addHeroForm.scss';
+import { updateHero, deleteHero } from '../../store/actions';
+import './updateHeroForm.scss';
 
 class AddHeroForm extends Component {
-  state = {
-    name: '',
-    imgURL: '',
-    description: '',
-    acts: [],
-  };
+  constructor({ data }) {
+    super();
+
+    const { id, name, imgURL, description, acts } = data;
+
+    this.state = {
+      id,
+      name,
+      imgURL,
+      description,
+      acts,
+    };
+  }
 
   setFieldToState = (e) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -25,18 +32,28 @@ class AddHeroForm extends Component {
     this.setState({ [e.target.name]: acts });
   };
 
-  createHero = async (e) => {
+  updateHero = async (e) => {
     e.preventDefault();
     const { post } = this.props;
+    const { id, name, imgURL, description, acts } = this.state;
 
-    post(this.state);
+    post(id, { name, imgURL, description, acts });
+  };
+
+  deleteHero = (e) => {
+    e.preventDefault();
+    const { remove } = this.props;
+    const { id } = this.state;
+
+    remove(id);
   };
 
   render() {
-    const { name, imgURL, description } = this.state;
     const { acts } = this.props;
+    const { name, imgURL, description } = this.state;
+
     return (
-      <form onSubmit={this.createHero} className="add-hero-form">
+      <form className="add-hero-form">
         <div className="form-group">
           <label htmlFor="name" className="label-full">
             Hero Name
@@ -108,7 +125,18 @@ class AddHeroForm extends Component {
           </div>
         </div>
         <div className="card-footer add-hero-footer text-center">
-          <input type="submit" className="btn btn-success" value="Save" />
+          <input
+            type="button"
+            className="btn btn-danger"
+            value="Delete"
+            onClick={this.deleteHero}
+          />
+          <input
+            type="button"
+            className="btn btn-success"
+            value="Save"
+            onClick={this.updateHero}
+          />
         </div>
       </form>
     );
@@ -118,13 +146,17 @@ class AddHeroForm extends Component {
 const mapStateToProps = (state) => {
   return {
     acts: state.acts.actsList,
+    hero: state.heroes.hero,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    post: (newHero) => {
-      dispatch(postHero(newHero));
+    post: (id, updatedHero) => {
+      dispatch(updateHero(id, updatedHero));
+    },
+    remove: (id) => {
+      dispatch(deleteHero(id));
     },
   };
 };
@@ -136,6 +168,8 @@ AddHeroForm.defaultProps = {
 AddHeroForm.propTypes = {
   acts: PropTypes.arrayOf(PropTypes.object),
   post: PropTypes.func.isRequired,
+  remove: PropTypes.func.isRequired,
+  data: PropTypes.oneOfType([PropTypes.object]).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddHeroForm);
