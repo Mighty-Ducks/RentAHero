@@ -54,7 +54,7 @@ class Categories extends Component {
         <div className="header">
           <h1>
             {categoryName}
-            Heroes
+            &nbsp;Heroes
           </h1>
         </div>
         <div className="row mt-5">
