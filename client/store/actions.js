@@ -30,7 +30,7 @@ export const postUser = (email, password, flag) => {
         password,
       });
 
-      dispatch(setUser({ email, password }));
+      dispatch(setUser({ email }));
       dispatch(setLoggedIn(flag));
       dispatch(setError(''));
       return true;
