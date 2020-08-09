@@ -1,10 +1,10 @@
 const axios = require('axios');
 const { TYPES } = require('./types');
 
-export const setUser = (user) => {
+export const setUser = ({ user, admin }) => {
   return {
     type: TYPES.SET_USER,
-    payload: user,
+    payload: { user, admin },
   };
 };
 
@@ -46,7 +46,7 @@ export const logInWithSession = () => {
     const { data } = await axios.get('/api/users/session');
 
     if (data) {
-      dispatch(setUser({ user: data.email }));
+      dispatch(setUser({ user: data.email, admin: data.admin }));
       dispatch(setLoggedIn(true));
     } else {
       dispatch(setLoggedIn(false));
@@ -145,7 +145,7 @@ export const removeHero = (id) => {
 };
 
 export const deleteHero = (id) => async (dispatch) => {
-  const { data } = await axios.delete(`/api/superheroes/${id}`);
+  await axios.delete(`/api/superheroes/${id}`);
 
   return dispatch(removeHero(id));
 };

@@ -3,17 +3,6 @@
   justify-content: space-between;
 }
 .heroes-list {
-  .edit-hero {
-    display: none;
-    position: absolute;
-  }
-  .card:hover {
-    .edit-hero {
-      display: inline-block;
-      right: 0;
-      z-index: 1;
-    }
-  }
   .card-img-body {
     background-color: #000;
     max-height: 200px;

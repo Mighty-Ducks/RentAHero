@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import Popup from '../popup/Popup';
+import UpdateHeroForm from '../updateHeroForm/UpdateHeroForm';
+import EditButton from '../buttons/EditButton';
 import { fetchHero, createItem } from '../../store/actions';
 import './hero.scss';
 
@@ -39,6 +43,8 @@ class Hero extends Component {
     const {
       hero: { id, name, imgURL, description, acts = [] },
       addToCart,
+      loggedIn,
+      isAdmin,
     } = this.props;
 
     const { total, actId, actName, actPrice } = this.state;
@@ -50,6 +56,14 @@ class Hero extends Component {
           <strong>{name}</strong>
         </h1>
         <div className="card mb-3">
+          {loggedIn && isAdmin && (
+            <Popup
+              title="Edit Hero"
+              BodyModal={UpdateHeroForm}
+              ButtonModal={EditButton}
+              data={{ id, imgURL, name, description, acts }}
+            />
+          )}
           <div className="row no-gutters">
             <div className="col-md-4">
               {imgURL && <img src={imgURL} className="card-img" alt="" />}
@@ -137,6 +151,8 @@ class Hero extends Component {
 const mapStateToProps = (state) => {
   return {
     hero: state.heroes.hero,
+    loggedIn: state.users.loggedIn,
+    isAdmin: state.users.user.admin,
   };
 };
 
@@ -164,6 +180,8 @@ const mapDispatchToProps = (dispatch) => {
 
 Hero.defaultProps = {
   match: {},
+  loggedIn: false,
+  isAdmin: false,
 };
 
 Hero.propTypes = {
@@ -175,6 +193,8 @@ Hero.propTypes = {
   }),
   load: PropTypes.func.isRequired,
   addToCart: PropTypes.func.isRequired,
+  loggedIn: PropTypes.bool,
+  isAdmin: PropTypes.bool,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Hero);

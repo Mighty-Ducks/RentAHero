@@ -125,8 +125,18 @@ class AddHeroForm extends Component {
           </div>
         </div>
         <div className="card-footer add-hero-footer text-center">
-          <input type="button" className="btn btn-danger" value="Delete" onClick={this.deleteHero} />
-          <input type="button" className="btn btn-success" value="Save" onClick={this.updateHero} />
+          <input
+            type="button"
+            className="btn btn-danger"
+            value="Delete"
+            onClick={this.deleteHero}
+          />
+          <input
+            type="button"
+            className="btn btn-success"
+            value="Save"
+            onClick={this.updateHero}
+          />
         </div>
       </form>
     );

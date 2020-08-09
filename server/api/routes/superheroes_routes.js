@@ -58,10 +58,6 @@ superheroesRouter.put('/:id', async (req, res) => {
   const { name, imgURL, description, actIds, categoryIds } = req.body;
   const updParams = {};
 
-  console.log('----- id -----');
-  console.log(id);
-  console.log(name, imgURL, description, actIds, categoryIds);
-
   if (name) updParams.name = name;
   if (imgURL) updParams.imgURL = imgURL;
   if (description) updParams.description = description;

@@ -43,6 +43,7 @@ class Heroes extends Component {
       heroesList,
       heroesTotal,
       loggedIn,
+      isAdmin,
       match: {
         params: { page },
       },
@@ -81,12 +82,13 @@ class Heroes extends Component {
             </ul>
           </div>
           <div className="col-md-9">
-            <Popup
-              title="Create a Hero"
-              BodyModal={AddHeroForm}
-              ButtonModal={AddFullButton}
-            />
-            {loggedIn && <>Logged</>}
+            {loggedIn && isAdmin && (
+              <Popup
+                title="Create a Hero"
+                BodyModal={AddHeroForm}
+                ButtonModal={AddFullButton}
+              />
+            )}
             <Paginator pages={pages || []} page={+page || 1} />
             <div className="heroes-list row row-cols-1 row-cols-md-3">
               {heroesList &&
@@ -94,12 +96,14 @@ class Heroes extends Component {
                   return (
                     <div className="col mb-4" key={id}>
                       <div className="card h-100 ">
-                        <Popup
-                          title="Edit Hero"
-                          BodyModal={UpdateHeroForm}
-                          ButtonModal={EditButton}
-                          data={{ id, imgURL, name, description, acts }}
-                        />
+                        {loggedIn && isAdmin && (
+                          <Popup
+                            title="Edit Hero"
+                            BodyModal={UpdateHeroForm}
+                            ButtonModal={EditButton}
+                            data={{ id, imgURL, name, description, acts }}
+                          />
+                        )}
                         <div className="card-img-body border-bottom">
                           <Link to={`/heroes/${id}`}>
                             <img
@@ -141,6 +145,7 @@ const mapStateToProps = (state) => {
     heroesList: state.heroes.heroesList,
     heroesTotal: state.heroes.heroesTotal,
     loggedIn: state.users.loggedIn,
+    isAdmin: state.users.user.admin,
   };
 };
 
@@ -156,6 +161,7 @@ Heroes.defaultProps = {
   heroesList: [],
   match: {},
   loggedIn: false,
+  isAdmin: false,
 };
 
 Heroes.propTypes = {
@@ -168,6 +174,7 @@ Heroes.propTypes = {
   }),
   load: PropTypes.func.isRequired,
   loggedIn: PropTypes.bool,
+  isAdmin: PropTypes.bool,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Heroes);
