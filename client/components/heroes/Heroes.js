@@ -65,19 +65,19 @@ class Heroes extends Component {
             <ul className="list-group">
               <li className="list-group-item d-flex justify-content-between align-items-center">
                 <Link to="categories/female">Female</Link>
-                <span className="badge badge-primary badge-pill">14</span>
+                <span className="badge badge-primary">14</span>
               </li>
               <li className="list-group-item d-flex justify-content-between align-items-center">
                 <Link to="categories/male">Male</Link>
-                <span className="badge badge-primary badge-pill">2</span>
+                <span className="badge badge-primary">2</span>
               </li>
               <li className="list-group-item d-flex justify-content-between align-items-center">
                 <Link to="categories/pets">Human</Link>
-                <span className="badge badge-primary badge-pill">1</span>
+                <span className="badge badge-primary">1</span>
               </li>
               <li className="list-group-item d-flex justify-content-between align-items-center">
                 <Link to="categories/pets">Non-Human</Link>
-                <span className="badge badge-primary badge-pill">1</span>
+                <span className="badge badge-primary">1</span>
               </li>
             </ul>
           </div>
