@@ -20,10 +20,8 @@ class Cart extends Component {
           <div className="col-lg-8">
             <div className="card wish-list mb-3">
               <div className="card-body">
-                <h5 className="mb-4">{`Cart (${cart.length} items)`}</h5>
-                {cart.map((item) => {
-                  return heroCard(item, deleteItem);
-                })}
+                <h1 className="mb-4">{`Cart (${cart.length} items)`}</h1>
+                {cart.map((item) => heroCard(item, deleteItem))}
               </div>
             </div>
           </div>
