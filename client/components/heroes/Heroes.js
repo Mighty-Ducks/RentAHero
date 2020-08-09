@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 
 import Popup from '../popup/Popup';
 import AddHeroForm from '../addHeroForm/AddHeroForm';
+import UpdateHeroForm from '../updateHeroForm/UpdateHeroForm';
+import AddFullButton from '../buttons/AddFullButton';
+import EditButton from '../buttons/EditButton';
 import Paginator from '../paginator/Paginator';
 import { fetchHeroes } from '../../store/actions';
 import './heroes.scss';
@@ -52,7 +55,7 @@ class Heroes extends Component {
       (v, i) => i + 1
     );
     return (
-      <div className="px-3">
+      <div className="px-3 container-xl">
         <div className="header">
           <h1>Heroes</h1>
         </div>
@@ -80,17 +83,23 @@ class Heroes extends Component {
           <div className="col-md-9">
             <Popup
               title="Create a Hero"
-              buttonText="Create"
               BodyModal={AddHeroForm}
+              ButtonModal={AddFullButton}
             />
             {loggedIn && <>Logged</>}
             <Paginator pages={pages || []} page={+page || 1} />
             <div className="heroes-list row row-cols-1 row-cols-md-3">
               {heroesList &&
-                heroesList.map(({ id, imgURL, name, description }) => {
+                heroesList.map(({ id, imgURL, name, description, acts }) => {
                   return (
                     <div className="col mb-4" key={id}>
                       <div className="card h-100 ">
+                        <Popup
+                          title="Edit Hero"
+                          BodyModal={UpdateHeroForm}
+                          ButtonModal={EditButton}
+                          data={{ id, imgURL, name, description, acts }}
+                        />
                         <div className="card-img-body border-bottom">
                           <Link to={`/heroes/${id}`}>
                             <img
