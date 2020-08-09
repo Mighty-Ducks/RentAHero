@@ -40,6 +40,20 @@ const heroesReducer = (state = initialHeroState, action) => {
         ...state,
         heroesList: [action.payload, ...state.heroesList],
       };
+    case TYPES.UPDATE_HERO:
+      return {
+        ...state,
+        heroesList: state.heroesList.map((hero) =>
+          hero.id === action.payload.id ? action.payload : hero
+        ),
+      };
+    case TYPES.DELETE_HERO:
+      return {
+        ...state,
+        heroesList: state.heroesList.filter(
+          (hero) => hero.id !== action.payload
+        ),
+      };
     default:
       return state;
   }
