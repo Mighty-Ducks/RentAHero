@@ -34,7 +34,7 @@ usersRouter.get('/session', async (req, res) => {
 });
 
 // get individual user
-usersRouter.get('/:id', async (req, res) => {
+usersRouter.get('/user/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -53,7 +53,7 @@ usersRouter.get('/:id', async (req, res) => {
 
 // update/edit user
 usersRouter.put(
-  '/:id',
+  '/user/:id',
   [check('email', 'email is required').not().isEmpty()],
   async (req, res) => {
     const errors = validationResult(req);
@@ -90,7 +90,7 @@ usersRouter.put(
 );
 
 // delete a user
-usersRouter.delete('/:id', async (req, res) => {
+usersRouter.delete('/user/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -173,6 +173,17 @@ usersRouter.post('/login', async (req, res) => {
     res.sendStatus(201);
   } else {
     res.status(401).send({ message: `Password is incorrect` });
+  }
+});
+
+// User logout
+usersRouter.put('/logout', async (req, res) => {
+  const session = await Session.findByPk(req.session_id);
+  try {
+    await session.update({ userId: null });
+    res.status(201).send({ message: `user loggedout` });
+  } catch (e) {
+    res.status(500).send({ message: 'Server error' });
   }
 });
 

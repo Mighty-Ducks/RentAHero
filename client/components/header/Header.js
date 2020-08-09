@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import './header.scss';
 import Search from '../search/Search';
 import Logo from '../logo/Logo';
-import { setLoggedIn } from '../../store/actions';
+import { setLoggedOut } from '../../store/actions';
 
 class Header extends Component {
   render() {
@@ -69,7 +69,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     logOut: () => {
-      dispatch(setLoggedIn(false));
+      dispatch(setLoggedOut(false));
     },
   };
 };
