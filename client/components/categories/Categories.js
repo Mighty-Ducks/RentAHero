@@ -39,7 +39,7 @@ class Categories extends Component {
       heroes,
       categoryTotal,
       match: {
-        params: { page },
+        params: { categoryName, page },
       },
     } = this.props;
     const limit = 6;
@@ -52,7 +52,10 @@ class Categories extends Component {
     return (
       <div className="px-3">
         <div className="header">
-          <h1>Test</h1>
+          <h1>
+            {categoryName}
+            Heroes
+          </h1>
         </div>
         <div className="row mt-5">
           <CategoriesLinks />
