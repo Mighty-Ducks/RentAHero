@@ -81,6 +81,7 @@ const initialUserState = {
   loggedIn: false,
   error: '',
   loading: true,
+  orders: [],
 };
 
 const usersReducer = (state = initialUserState, action) => {
@@ -109,6 +110,11 @@ const usersReducer = (state = initialUserState, action) => {
         ...state,
         error: action.payload,
         loading: false,
+      };
+    case TYPES.SET_USER_ORDERS:
+      return {
+        ...state,
+        orders: action.payload,
       };
     default:
       return state;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import UserOrders from '../userOrders/UserOrders';
 import './userPage.scss';
 
 class UserPage extends Component {
@@ -23,6 +24,7 @@ class UserPage extends Component {
             {user}
           </li>
         </ul>
+        <UserOrders {...this.props}/>
       </div>
     );
   }

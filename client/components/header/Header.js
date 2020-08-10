@@ -76,11 +76,16 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+Header.defaultProps = {
+  id: '',
+  user: '',
+};
+
 Header.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
   logOut: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
-  user: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  user: PropTypes.string,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

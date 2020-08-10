@@ -21,6 +21,7 @@ import Categories from './categories/Categories';
 import CategoriesLinks from './categoriesLinks/CategoriesLinks';
 import Users from './users/Users';
 import UserPage from './userPage/UserPage';
+import UserOrders from './userOrders/UserOrders';
 
 export {
   PrivateRoute,
@@ -46,4 +47,5 @@ export {
   CategoriesLinks,
   Users,
   UserPage,
+  UserOrders,
 };

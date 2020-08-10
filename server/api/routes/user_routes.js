@@ -1,6 +1,6 @@
 const usersRouter = require('express').Router();
 const { check, validationResult } = require('express-validator');
-const { User, Session } = require('../../db/models/models_index.js');
+const { Cart, Item, User, Session } = require('../../db/models/models_index.js');
 const hash = require('../../utilities/index');
 
 // app.use('/api/users', usersRouter) in routes_index.js
@@ -53,12 +53,16 @@ usersRouter.get('/:id', async (req, res) => {
 usersRouter.get('/:id/orders', async (req, res) => {
   const { id } = req.params;
   try {
-    const user = await User.findByPk(id);
-
-    if (user) {
-      res.status(200).send(user);
+    const orders = await Cart.findAll({
+      where: {
+        userId: id,
+      },
+      include: [Item],
+    });
+    if (orders) {
+      res.status(200).send(orders);
     } else {
-      res.status(404).send({ message: `user id: ${id} not found.` });
+      res.status(404).send({ message: `Orders not found.` });
     }
   } catch (e) {
     console.error(e);

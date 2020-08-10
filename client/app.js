@@ -31,6 +31,7 @@ class App extends Component {
   }
 
   render() {
+    const { loggedIn } = this.props;
     return (
       <HashRouter>
         <Header />
@@ -55,6 +56,11 @@ class App extends Component {
             />
             <PrivateRoute exact path="/users" component={Users} />
             <Route exact path="/user/:id" component={UserPage} />
+            <Route
+              exact
+              path="/user/:id"
+              render={(props) => loggedIn && <UserPage {...props} />}
+            />
           </Switch>
         </div>
       </HashRouter>
@@ -65,6 +71,12 @@ class App extends Component {
 App.propTypes = {
   load: PropTypes.func.isRequired,
   logIn: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    loggedIn: state.users.loggedIn,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -78,4 +90,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

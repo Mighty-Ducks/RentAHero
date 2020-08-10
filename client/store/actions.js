@@ -22,6 +22,13 @@ export const setUser = ({ id, firstName, lastName, user, admin }) => {
   };
 };
 
+export const setUserOrders = (orders) => {
+  return {
+    type: TYPES.SET_USER_ORDERS,
+    payload: orders,
+  };
+};
+
 export const setLoggedIn = (flag) => {
   return {
     type: TYPES.SET_LOGGED_IN,
@@ -45,6 +52,11 @@ export const setLoggedOut = (flag) => async (dispatch) => {
 export const fetchUser = (id) => async (dispatch) => {
   const { data } = await axios.get(`/api/users/${id}`);
   return dispatch(setUser(data));
+};
+
+export const fetchUserOrders = (id) => async (dispatch) => {
+  const { data } = await axios.get(`/api/users/${id}/orders`);
+  return dispatch(setUserOrders(data));
 };
 
 export const postUser = (email, password, flag) => {
