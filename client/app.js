@@ -18,6 +18,7 @@ import {
   Categories,
   CategoriesLinks,
   Users,
+  UserPage,
 } from './components';
 import { fetchActs, logInWithSession } from './store/actions';
 
@@ -53,6 +54,7 @@ class App extends Component {
               component={SearchResults}
             />
             <PrivateRoute exact path="/users" component={Users} />
+            <Route exact path="/user/:id" component={UserPage} />
           </Switch>
         </div>
       </HashRouter>

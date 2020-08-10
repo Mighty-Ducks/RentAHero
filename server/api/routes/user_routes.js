@@ -34,9 +34,24 @@ usersRouter.get('/session', async (req, res) => {
 });
 
 // get individual user
-usersRouter.get('/user/:id', async (req, res) => {
+usersRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
+  try {
+    const user = await User.findByPk(id);
 
+    if (user) {
+      res.status(200).send(user);
+    } else {
+      res.status(404).send({ message: `user id: ${id} not found.` });
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({ message: 'Server error' });
+  }
+});
+
+usersRouter.get('/:id/orders', async (req, res) => {
+  const { id } = req.params;
   try {
     const user = await User.findByPk(id);
 

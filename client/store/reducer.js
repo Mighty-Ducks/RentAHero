@@ -8,6 +8,15 @@ const initialHeroState = {
   hero: {},
 };
 
+const initialCartState = {
+  cart: [],
+};
+
+const initialSearchState = {
+  heroes: [],
+  heroesTotal: 0,
+};
+
 const heroesReducer = (state = initialHeroState, action) => {
   switch (action.type) {
     case TYPES.SET_HEROES:
@@ -106,11 +115,6 @@ const usersReducer = (state = initialUserState, action) => {
   }
 };
 
-const initialCartState = {
-  cart: [],
-  newItem: {},
-};
-
 const cartReducer = (state = initialCartState, action) => {
   switch (action.type) {
     case TYPES.SET_CART:
@@ -126,11 +130,6 @@ const cartReducer = (state = initialCartState, action) => {
     default:
       return state;
   }
-};
-
-const initialSearchState = {
-  heroes: [],
-  heroesTotal: 0,
 };
 
 const searchReducer = (state = initialSearchState, action) => {

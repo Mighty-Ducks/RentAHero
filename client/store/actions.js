@@ -15,10 +15,10 @@ export const fetchUsers = () => async (dispatch) => {
   return dispatch(setUsers(data));
 };
 
-export const setUser = ({ user, admin }) => {
+export const setUser = ({ id, firstName, lastName, user, admin }) => {
   return {
     type: TYPES.SET_USER,
-    payload: { user, admin },
+    payload: { id, firstName, lastName, user, admin },
   };
 };
 
@@ -40,6 +40,11 @@ export const setLoggedOut = (flag) => async (dispatch) => {
   await axios.put('/api/users/logout');
 
   return dispatch(setLoggedIn(flag));
+};
+
+export const fetchUser = (id) => async (dispatch) => {
+  const { data } = await axios.get(`/api/users/${id}`);
+  return dispatch(setUser(data));
 };
 
 export const postUser = (email, password, flag) => {
@@ -66,7 +71,15 @@ export const logInWithSession = () => {
     const { data } = await axios.get('/api/users/session');
 
     if (data) {
-      dispatch(setUser({ user: data.email, admin: data.admin }));
+      dispatch(
+        setUser({
+          id: data.id,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          user: data.email,
+          admin: data.admin,
+        })
+      );
       dispatch(setLoggedIn(true));
     } else {
       dispatch(setLoggedIn(false));
