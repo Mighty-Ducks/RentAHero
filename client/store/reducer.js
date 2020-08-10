@@ -138,12 +138,41 @@ const searchReducer = (state = initialSearchState, action) => {
   }
 };
 
+const initialCategoriesState = {
+  categoriesList: [],
+  heroes: [],
+  categoryTotal: 0,
+};
+
+const categoriesReducer = (state = initialCategoriesState, action) => {
+  switch (action.type) {
+    case TYPES.SET_CATEGORIES:
+      return {
+        ...state,
+        categoriesList: action.categoriesList,
+      };
+    case TYPES.SET_CATEGORIES_HEROES:
+      return {
+        ...state,
+        heroes: action.heroes,
+      };
+    case TYPES.SET_CATEGORIES_HEROES_TOTAL:
+      return {
+        ...state,
+        categoryTotal: action.categoryTotal,
+      };
+    default:
+      return state;
+  }
+};
+
 const reducer = combineReducers({
   heroes: heroesReducer,
   users: usersReducer,
   acts: actsReducer,
   cart: cartReducer,
   searchResults: searchReducer,
+  categories: categoriesReducer,
 });
 
 export default reducer;

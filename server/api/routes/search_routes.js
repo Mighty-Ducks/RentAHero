@@ -4,7 +4,7 @@ const { Act, Superhero, Category } = require('../../db/models/models_index.js');
 
 // search all superheroes
 searchRouter.get('/:term/page/:page', async (req, res) => {
-  const limit = 12;
+  const limit = 6;
   let offset = 0;
   try {
     const { page, term } = req.params;

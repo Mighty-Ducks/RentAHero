@@ -14,6 +14,8 @@ import {
   Hero,
   Cart,
   SearchResults,
+  Categories,
+  CategoriesLinks,
 } from './components';
 import { fetchActs, logInWithSession } from './store/actions';
 
@@ -36,6 +38,12 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/heroes/page/:page?" component={Heroes} />
             <Route exact path="/heroes/:id" component={Hero} />
+            <Route
+              exact
+              path="/categories/:categoryName/page/:page?"
+              component={Categories}
+            />
+            <Route exact path="/categories/:id" component={CategoriesLinks} />
             <Route exact path="/cart" component={Cart} />
             <Route
               exact

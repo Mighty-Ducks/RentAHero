@@ -16,6 +16,8 @@ import UpdateHeroForm from './updateHeroForm/UpdateHeroForm';
 import Paginator from './paginator/Paginator';
 import AddFullButton from './buttons/AddFullButton';
 import EditButton from './buttons/EditButton';
+import Categories from './categories/Categories';
+import CategoriesLinks from './categoriesLinks/CategoriesLinks';
 
 export {
   Header,
@@ -36,4 +38,6 @@ export {
   Paginator,
   AddFullButton,
   EditButton,
+  Categories,
+  CategoriesLinks,
 };
