@@ -22,6 +22,12 @@ export const setError = (err) => {
   };
 };
 
+export const setLoggedOut = (flag) => async (dispatch) => {
+  await axios.put('/api/users/logout');
+
+  return dispatch(setLoggedIn(flag));
+};
+
 export const postUser = (email, password, flag) => {
   return async (dispatch) => {
     try {
