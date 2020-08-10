@@ -10,6 +10,9 @@ const Act = db.define('act', {
   name: {
     type: STRING,
     allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
   },
   description: {
     type: STRING,
@@ -17,6 +20,9 @@ const Act = db.define('act', {
   price: {
     type: FLOAT,
     allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
   },
 });
 

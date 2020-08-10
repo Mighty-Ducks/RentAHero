@@ -30,13 +30,10 @@ export default class Header extends Component {
                 <Link to="/">Home</Link>
               </li>
               <li>
-                <Link to="/categories">Categories</Link>
+                <Link to="/heroes/page/1">Heroes</Link>
               </li>
               <li>
                 <Link to="/popular">Most Popular</Link>
-              </li>
-              <li>
-                <Link to="/deals">Deals</Link>
               </li>
               <li>
                 <Link to="/new">New</Link>

@@ -7,11 +7,7 @@ export default class Search extends Component {
       <form className="input-group input-group-sm" id="header-search">
         <input type="text" className="form-control" placeholder="Search" />
         <div className="input-group-append">
-          <button
-            className="btn btn-outline-secondary"
-            type="button"
-            id="button-search"
-          >
+          <button className="btn btn-primary" type="button" id="button-search">
             <i className="fas fa-search"></i>
           </button>
         </div>

@@ -1,13 +1,4 @@
 header {
-  .logo {
-    font-family: 'Roboto';
-  
-    a {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-  }
   ul {
     display: flex;
     list-style: none;
@@ -26,4 +17,3 @@ header {
     }
   }
 }
-
