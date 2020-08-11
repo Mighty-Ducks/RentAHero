@@ -25,10 +25,7 @@ class UserPage extends Component {
               Email:&nbsp;
               {user}
             </li>
-            <li>
-              Address:&nbsp;
-              {/* {address} */}
-            </li>
+            <li>Address:&nbsp;</li>
             <Popup
               title="Edit Hero"
               BodyModal={EditUserForm}
