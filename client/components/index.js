@@ -45,7 +45,7 @@ export {
   EditButton,
   Categories,
   CategoriesLinks,
-  Users,
   UserPage,
+  Users,
   UserOrders,
 };
