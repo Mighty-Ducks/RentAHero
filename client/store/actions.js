@@ -15,10 +15,17 @@ export const fetchUsers = () => async (dispatch) => {
   return dispatch(setUsers(data));
 };
 
-export const setUser = ({ user, admin }) => {
+export const setUser = ({ id, firstName, lastName, user, admin }) => {
   return {
     type: TYPES.SET_USER,
-    payload: { user, admin },
+    payload: { id, firstName, lastName, user, admin },
+  };
+};
+
+export const setUserOrders = (orders) => {
+  return {
+    type: TYPES.SET_USER_ORDERS,
+    payload: orders,
   };
 };
 
@@ -42,6 +49,16 @@ export const setLoggedOut = (flag) => async (dispatch) => {
   return dispatch(setLoggedIn(flag));
 };
 
+export const fetchUser = (id) => async (dispatch) => {
+  const { data } = await axios.get(`/api/users/${id}`);
+  return dispatch(setUser(data));
+};
+
+export const fetchUserOrders = (id) => async (dispatch) => {
+  const { data } = await axios.get(`/api/users/${id}/orders`);
+  return dispatch(setUserOrders(data));
+};
+
 export const postUser = (email, password, flag) => {
   return async (dispatch) => {
     try {
@@ -61,12 +78,42 @@ export const postUser = (email, password, flag) => {
   };
 };
 
+export const registerUser = (firstName, lastName, email, password) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post('/api/users/register', {
+        firstName,
+        lastName,
+        email,
+        password,
+      });
+      if (data) {
+        localStorage.setItem('token', data.token);
+        const { history } = this.props;
+
+        dispatch(setLoggedIn(true));
+        history.push('/');
+      }
+    } catch (e) {
+      dispatch(setError(e.response.data.message));
+    }
+  };
+};
+
 export const logInWithSession = () => {
   return async (dispatch) => {
     const { data } = await axios.get('/api/users/session');
 
     if (data) {
-      dispatch(setUser({ user: data.email, admin: data.admin }));
+      dispatch(
+        setUser({
+          id: data.id,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          user: data.email,
+          admin: data.admin,
+        })
+      );
       dispatch(setLoggedIn(true));
     } else {
       dispatch(setLoggedIn(false));

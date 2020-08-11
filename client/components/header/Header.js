@@ -9,13 +9,13 @@ import { setLoggedOut } from '../../store/actions';
 
 class Header extends Component {
   render() {
-    const { loggedIn, logOut } = this.props;
-
+    const { loggedIn, logOut, id, user } = this.props;
     return (
       <header>
         <div className="border-bottom d-flex justify-content-between align-items-center py-2 pl-3">
           <Logo />
           <ul className="pr-1">
+            <li>{loggedIn && <Link to={`/user/${id}`}>{user}</Link>}</li>
             <li>
               {loggedIn ? (
                 <Link to="/" onClick={() => logOut()}>
@@ -63,6 +63,8 @@ class Header extends Component {
 const mapStateToProps = (state) => {
   return {
     loggedIn: state.users.loggedIn,
+    id: state.users.user.id,
+    user: state.users.user.user,
   };
 };
 
@@ -74,9 +76,16 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+Header.defaultProps = {
+  id: '',
+  user: '',
+};
+
 Header.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
   logOut: PropTypes.func.isRequired,
+  id: PropTypes.string,
+  user: PropTypes.string,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

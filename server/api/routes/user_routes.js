@@ -1,6 +1,11 @@
 const usersRouter = require('express').Router();
 const { check, validationResult } = require('express-validator');
-const { User, Session } = require('../../db/models/models_index.js');
+const {
+  Cart,
+  Item,
+  User,
+  Session,
+} = require('../../db/models/models_index.js');
 const hash = require('../../utilities/index');
 
 // app.use('/api/users', usersRouter) in routes_index.js
@@ -34,9 +39,8 @@ usersRouter.get('/session', async (req, res) => {
 });
 
 // get individual user
-usersRouter.get('/user/:id', async (req, res) => {
+usersRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
-
   try {
     const user = await User.findByPk(id);
 
@@ -44,6 +48,27 @@ usersRouter.get('/user/:id', async (req, res) => {
       res.status(200).send(user);
     } else {
       res.status(404).send({ message: `user id: ${id} not found.` });
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({ message: 'Server error' });
+  }
+});
+
+usersRouter.get('/:id/orders', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const orders = await Cart.findAll({
+      where: {
+        userId: id,
+        status: false,
+      },
+      include: [Item],
+    });
+    if (orders) {
+      res.status(200).send(orders);
+    } else {
+      res.status(404).send({ message: `Orders not found.` });
     }
   } catch (e) {
     console.error(e);
@@ -155,7 +180,7 @@ usersRouter.post(
 usersRouter.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({
+  const user = await User.scope('login').findOne({
     where: {
       email,
     },

@@ -49,6 +49,11 @@ const User = db.define(
     defaultScope: {
       attributes: { exclude: ['password'] },
     },
+    scopes: {
+      login: {
+        attributes: { include: ['password'] },
+      },
+    },
   }
 );
 

@@ -20,6 +20,8 @@ import EditButton from './buttons/EditButton';
 import Categories from './categories/Categories';
 import CategoriesLinks from './categoriesLinks/CategoriesLinks';
 import Users from './users/Users';
+import UserOrders from './userOrders/UserOrders';
+import UserPage from './userPage/UserPage';
 
 export {
   PrivateRoute,
@@ -44,4 +46,6 @@ export {
   Categories,
   CategoriesLinks,
   Users,
+  UserPage,
+  UserOrders,
 };
