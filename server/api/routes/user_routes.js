@@ -180,7 +180,7 @@ usersRouter.post(
 usersRouter.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({
+  const user = await User.scope('login').findOne({
     where: {
       email,
     },
