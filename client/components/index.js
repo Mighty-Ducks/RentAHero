@@ -1,3 +1,4 @@
+import PrivateRoute from './privateRoute/PrivateRoute';
 import Header from './header/Header';
 import Logo from './logo/Logo';
 import Search from './search/Search';
@@ -18,8 +19,10 @@ import AddFullButton from './buttons/AddFullButton';
 import EditButton from './buttons/EditButton';
 import Categories from './categories/Categories';
 import CategoriesLinks from './categoriesLinks/CategoriesLinks';
+import Users from './users/Users';
 
 export {
+  PrivateRoute,
   Header,
   Logo,
   Search,
@@ -40,4 +43,5 @@ export {
   EditButton,
   Categories,
   CategoriesLinks,
+  Users,
 };
