@@ -31,7 +31,7 @@ class UserOrders extends Component {
                 </h6>
                 <h6>
                   <strong>Order Date:&nbsp;</strong>
-                  {Date.parse(order.updatedAt)}
+                  {new Date(order.updatedAt).toDateString()}
                 </h6>
                 {order.items.map((item) => {
                   return (

@@ -1,6 +1,11 @@
 const usersRouter = require('express').Router();
 const { check, validationResult } = require('express-validator');
-const { Cart, Item, User, Session } = require('../../db/models/models_index.js');
+const {
+  Cart,
+  Item,
+  User,
+  Session,
+} = require('../../db/models/models_index.js');
 const hash = require('../../utilities/index');
 
 // app.use('/api/users', usersRouter) in routes_index.js
@@ -56,6 +61,7 @@ usersRouter.get('/:id/orders', async (req, res) => {
     const orders = await Cart.findAll({
       where: {
         userId: id,
+        status: false,
       },
       include: [Item],
     });
