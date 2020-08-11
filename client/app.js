@@ -36,11 +36,6 @@ class App extends Component {
     logIn();
   }
 
-  redirect = () => {
-    const { loggedIn } = this.props;
-    return loggedIn && <UserPage />;
-  };
-
   render() {
     const { loggedIn } = this.props;
     return (
@@ -66,12 +61,7 @@ class App extends Component {
               component={SearchResults}
             />
             <PrivateRoute exact path="/users" component={Users} />
-            <Route exact path="/user/:id" component={UserPage} />
-            <Route
-              exact
-              path="/user/:id"
-              render={(props) => loggedIn && <UserPage {...props} />}
-            />
+            <PrivateRoute exact path="/user/:id" component={UserPage} />
           </Switch>
         </div>
       </HashRouter>

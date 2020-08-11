@@ -9,7 +9,7 @@ import './userPage.scss';
 
 class UserPage extends Component {
   render() {
-    const { firstName, lastName, user, address } = this.props;
+    const { firstName, lastName, user } = this.props;
     return (
       <div className="hero-view container-xl">
         <h1>Profile Info</h1>
@@ -26,13 +26,13 @@ class UserPage extends Component {
           </li>
           <li>
             Address:&nbsp;
-            {address}
+            {/* {address} */}
           </li>
           <Popup
             title="Edit Hero"
             BodyModal={EditUserForm}
             ButtonModal={EditUserButton}
-            data={{ firstName, lastName, user, address }}
+            data={{ firstName, lastName, user }}
           />
         </ul>
         <UserOrders {...this.props} />
