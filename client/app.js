@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import '../public/styles.scss';
 
 import {
+  PrivateRoute,
   Header,
   Home,
   Login,
@@ -16,6 +17,7 @@ import {
   SearchResults,
   Categories,
   CategoriesLinks,
+  Users,
 } from './components';
 import { fetchActs, logInWithSession } from './store/actions';
 
@@ -50,6 +52,7 @@ class App extends Component {
               path="/search/:term?/page/:page?"
               component={SearchResults}
             />
+            <PrivateRoute exact path="/users" component={Users} />
           </Switch>
         </div>
       </HashRouter>

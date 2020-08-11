@@ -68,8 +68,10 @@ const actsReducer = (state = initialActState, action) => {
 
 const initialUserState = {
   user: {},
+  usersList: [],
   loggedIn: false,
   error: '',
+  loading: true,
 };
 
 const usersReducer = (state = initialUserState, action) => {
@@ -78,16 +80,26 @@ const usersReducer = (state = initialUserState, action) => {
       return {
         ...state,
         user: action.payload,
+        loading: false,
+      };
+    case TYPES.SET_USERS:
+      console.log(action.payload);
+      return {
+        ...state,
+        usersList: action.payload,
+        loading: false,
       };
     case TYPES.SET_LOGGED_IN:
       return {
         ...state,
         loggedIn: action.payload,
+        loading: false,
       };
     case TYPES.SET_ERROR:
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
     default:
       return state;

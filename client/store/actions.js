@@ -1,6 +1,20 @@
 const axios = require('axios');
 const { TYPES } = require('./types');
 
+export const setUsers = (users) => {
+  return {
+    type: TYPES.SET_USERS,
+    payload: users,
+    loading: false,
+  };
+};
+
+export const fetchUsers = () => async (dispatch) => {
+  const { data } = await axios.get('/api/users/');
+
+  return dispatch(setUsers(data));
+};
+
 export const setUser = ({ user, admin }) => {
   return {
     type: TYPES.SET_USER,
