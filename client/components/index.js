@@ -19,7 +19,6 @@ import AddFullButton from './buttons/AddFullButton';
 import EditButton from './buttons/EditButton';
 import Categories from './categories/Categories';
 import CategoriesLinks from './categoriesLinks/CategoriesLinks';
-import UserPage from './userPage/UserPage';
 import Users from './users/Users';
 import UserOrders from './userOrders/UserOrders';
 
@@ -45,7 +44,6 @@ export {
   EditButton,
   Categories,
   CategoriesLinks,
-  UserPage,
   Users,
   UserOrders,
 };
