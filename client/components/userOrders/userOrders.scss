@@ -1,11 +1,14 @@
 .order-history {
     ol {
         border: 1px solid black;
-    }     
-    .order {
-        list-style-type: decimal
+        border-radius: 10px;
+        padding: 1%;
     }
     img {
-        max-width: 150px;
+        max-width: 100px;
     }
+}
+
+.order-total {
+    text-align: right;
 }

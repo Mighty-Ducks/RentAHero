@@ -30,6 +30,17 @@ class App extends Component {
     logIn();
   }
 
+  componentDidUpdate() {
+    const { logIn } = this.props;
+
+    logIn();
+  }
+
+  redirect = () => {
+    const { loggedIn } = this.props;
+    return loggedIn && <UserPage />;
+  };
+
   render() {
     const { loggedIn } = this.props;
     return (
@@ -71,6 +82,7 @@ class App extends Component {
 App.propTypes = {
   load: PropTypes.func.isRequired,
   logIn: PropTypes.func.isRequired,
+  loggedIn: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {

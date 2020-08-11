@@ -8,7 +8,7 @@ class UserPage extends Component {
   render() {
     const { firstName, lastName, user } = this.props;
     return (
-      <div className="px-3 hero-view container-xl">
+      <div className="hero-view container-xl">
         <h1>Profile Info</h1>
         <ul>
           <li>
@@ -24,7 +24,7 @@ class UserPage extends Component {
             {user}
           </li>
         </ul>
-        <UserOrders {...this.props}/>
+        <UserOrders {...this.props} />
       </div>
     );
   }
