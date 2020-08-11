@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import axios from 'axios';
-import { setLoggedIn } from '../../store/actions';
+import { registerUser } from '../../store/actions';
 import './register.scss';
 
 class Register extends Component {
@@ -18,24 +17,11 @@ class Register extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  registerUser = async (e) => {
+  register = async (e) => {
     e.preventDefault();
-
     const { firstName, lastName, email, password } = this.state;
-    const { data } = await axios.post('/api/users/register', {
-      firstName,
-      lastName,
-      email,
-      password,
-    });
-
-    if (data) {
-      localStorage.setItem('token', data.token);
-      const { loggedIn, history } = this.props;
-
-      loggedIn(true);
-      history.push('/');
-    }
+    const { register } = this.props;
+    register(firstName, lastName, email, password);
   };
 
   render() {
@@ -43,7 +29,7 @@ class Register extends Component {
 
     return (
       <div className="card p-5 col-md-6 m-auto">
-        <form onSubmit={this.registerUser} className="auth-form">
+        <form onSubmit={this.register} className="auth-form">
           <h1>Register User</h1>
           <div className="form-group">
             <label htmlFor="firstName" className="label-full">
@@ -117,16 +103,16 @@ class Register extends Component {
 }
 
 Register.propTypes = {
-  loggedIn: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  register: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loggedIn: async (flag) => {
-      dispatch(setLoggedIn(flag));
+    register: async (data) => {
+      dispatch(registerUser(data));
     },
   };
 };

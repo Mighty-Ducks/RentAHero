@@ -78,6 +78,28 @@ export const postUser = (email, password, flag) => {
   };
 };
 
+export const registerUser = (firstName, lastName, email, password) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post('/api/users/register', {
+        firstName,
+        lastName,
+        email,
+        password,
+      });
+      if (data) {
+        localStorage.setItem('token', data.token);
+        const { history } = this.props;
+
+        dispatch(setLoggedIn(true));
+        history.push('/');
+      }
+    } catch (e) {
+      dispatch(setError(e.response.data.message));
+    }
+  };
+};
+
 export const logInWithSession = () => {
   return async (dispatch) => {
     const { data } = await axios.get('/api/users/session');
