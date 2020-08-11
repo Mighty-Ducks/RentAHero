@@ -37,7 +37,6 @@ class App extends Component {
   }
 
   render() {
-    const { loggedIn } = this.props;
     return (
       <HashRouter>
         <Header />
@@ -72,13 +71,6 @@ class App extends Component {
 App.propTypes = {
   load: PropTypes.func.isRequired,
   logIn: PropTypes.func.isRequired,
-  loggedIn: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = (state) => {
-  return {
-    loggedIn: state.users.loggedIn,
-  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -92,4 +84,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);
