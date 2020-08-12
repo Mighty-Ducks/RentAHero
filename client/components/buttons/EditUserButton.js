@@ -8,11 +8,7 @@ export default class EditUserButton extends Component {
     const { onClick } = this.props;
 
     return (
-      <button
-        type="button"
-        className="btn btn-secondary edit-user"
-        onClick={onClick}
-      >
+      <button type="button" className="btn btn-danger" onClick={onClick}>
         Edit Profile
       </button>
     );

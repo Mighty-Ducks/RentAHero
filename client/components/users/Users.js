@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -32,9 +33,11 @@ class Users extends Component {
                       <div className="card h-100">
                         <div className="card-body">
                           <h5 className="card-title">
-                            {firstName}
-                            &nbsp;
-                            {lastName}
+                            <Link to={`/user/${id}`}>
+                              {firstName}
+                              &nbsp;
+                              {lastName}
+                            </Link>
                           </h5>
                           <p className="card-text">{email}</p>
                           <p className="card-text">

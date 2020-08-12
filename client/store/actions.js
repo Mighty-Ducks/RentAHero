@@ -9,17 +9,17 @@ export const setUsers = (users) => {
   };
 };
 
-export const fetchUsers = () => async (dispatch) => {
-  const { data } = await axios.get('/api/users/');
-
-  return dispatch(setUsers(data));
-};
-
 export const setUser = ({ id, firstName, lastName, user, admin }) => {
   return {
     type: TYPES.SET_USER,
     payload: { id, firstName, lastName, user, admin },
   };
+};
+
+export const fetchUsers = () => async (dispatch) => {
+  const { data } = await axios.get('/api/users/');
+
+  return dispatch(setUsers(data));
 };
 
 export const setUserOrders = (orders) => {
@@ -51,11 +51,13 @@ export const setLoggedOut = (flag) => async (dispatch) => {
 
 export const fetchUser = (id) => async (dispatch) => {
   const { data } = await axios.get(`/api/users/${id}`);
+
   return dispatch(setUser(data));
 };
 
 export const fetchUserOrders = (id) => async (dispatch) => {
   const { data } = await axios.get(`/api/users/${id}/orders`);
+
   return dispatch(setUserOrders(data));
 };
 
