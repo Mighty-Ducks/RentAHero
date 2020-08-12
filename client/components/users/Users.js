@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import Popup from '../popup/Popup';
+import EditUserForm from '../editUserForm/EditUserForm';
+import EditUserButton from '../buttons/EditUserButton';
 import { fetchUsers } from '../../store/actions';
 
 class Users extends Component {
@@ -14,18 +18,57 @@ class Users extends Component {
     const { usersList } = this.props;
 
     return (
-      <div>
-        {usersList.map((user) => {
-          return (
-            <div key={user.id}>
-              {user.firstName}
-              &nbsp;
-              {user.lastName}
-              <br />
-              {user.email}
-            </div>
-          );
-        })}
+      <div className="px-3 container-xl">
+        <div className="header">
+          <h1>Users</h1>
+        </div>
+        <div className="mt-5">
+          <div className="users-list row row-cols-1 row-cols-md-3">
+            {usersList &&
+              usersList.map(
+                ({ id, firstName, lastName, email, createdAt, admin }) => {
+                  return (
+                    <div className="col mb-4" key={id}>
+                      <div className="card h-100">
+                        <div className="card-body">
+                          <h5 className="card-title">
+                            {firstName}
+                            &nbsp;
+                            {lastName}
+                          </h5>
+                          <p className="card-text">{email}</p>
+                          <p className="card-text">
+                            <span className="text-muted small">
+                              Registered:
+                            </span>
+                            &nbsp;
+                            {new Date(createdAt).toDateString()}
+                          </p>
+                          <p className="card-text">
+                            <span className="text-muted small">User type:</span>
+                            &nbsp;
+                            {admin ? (
+                              <span className="text-success">Admin</span>
+                            ) : (
+                              <span className="text-info">Customer</span>
+                            )}
+                          </p>
+                        </div>
+                        <div className="card-footer text-center">
+                          <Popup
+                            title="Edit User"
+                            BodyModal={EditUserForm}
+                            ButtonModal={EditUserButton}
+                            data={{ firstName, lastName, email, id }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              )}
+          </div>
+        </div>
       </div>
     );
   }
