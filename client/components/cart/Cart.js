@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import heroCard from './heroCard';
@@ -13,7 +14,7 @@ class Cart extends Component {
 
   render() {
     const { cart, deleteItem } = this.props;
-
+    const { pathname } = this.props.history.location;
     return (
       <section>
         <div className="row container-xl">
@@ -25,43 +26,46 @@ class Cart extends Component {
               </div>
             </div>
           </div>
-          <div className="col-lg-4">
-            <div className="card mb-3">
-              <div className="card-body">
-                <h5 className="mb-3">The total amount of</h5>
-                <ul className="list-group list-group-flush">
-                  {cart.map((item) => {
-                    return (
-                      <li
-                        key={item.id}
-                        className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"
-                      >
-                        {item.actName}
-                        <span>{`$${item.price}`}</span>
-                      </li>
-                    );
-                  })}
-                  <li
-                    key="totalAmount"
-                    className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"
+          {pathname !== '/checkout' && (
+            <div className="col-lg-4">
+              <div className="card mb-3">
+                <div className="card-body">
+                  <h5 className="mb-3">The total amount of</h5>
+                  <ul className="list-group list-group-flush">
+                    {cart.map((item) => {
+                      return (
+                        <li
+                          key={item.id}
+                          className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"
+                        >
+                          {item.actName}
+                          <span>{`$${item.price}`}</span>
+                        </li>
+                      );
+                    })}
+                    <li
+                      key="totalAmount"
+                      className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"
+                    >
+                      Total Amount
+                      <span>
+                        {`$${cart.reduce((acc, curr) => {
+                          return acc + curr.price;
+                        }, 0)}`}
+                      </span>
+                    </li>
+                  </ul>
+                  <Link
+                    to="/checkout"
+                    type="button"
+                    className="btn btn-primary btn-block waves-effect waves-light"
                   >
-                    Total Amount
-                    <span>
-                      {`$${cart.reduce((acc, curr) => {
-                        return acc + curr.price;
-                      }, 0)}`}
-                    </span>
-                  </li>
-                </ul>
-                <button
-                  type="button"
-                  className="btn btn-primary btn-block waves-effect waves-light"
-                >
-                  go to checkout
-                </button>
+                    go to checkout
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
     );
