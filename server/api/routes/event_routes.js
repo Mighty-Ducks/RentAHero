@@ -34,7 +34,7 @@ eventRouter.post(
       });
     }
 
-    const { heroId, datetime } = req.body;
+    const { heroId, datetime, itemId } = req.body;
 
     console.log(datetime);
 
@@ -42,6 +42,7 @@ eventRouter.post(
       const event = await Event.create({
         heroId,
         datetime,
+        itemId,
       });
       res.status(200).send(event);
     } catch (e) {

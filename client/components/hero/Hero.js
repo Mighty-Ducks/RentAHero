@@ -6,12 +6,7 @@ import moment from 'moment-timezone';
 import Popup from '../popup/Popup';
 import UpdateHeroForm from '../updateHeroForm/UpdateHeroForm';
 import EditButton from '../buttons/EditButton';
-import {
-  fetchHero,
-  createItem,
-  createEvent,
-  fetchEvents,
-} from '../../store/actions';
+import { fetchHero, createItem, fetchEvents } from '../../store/actions';
 import './hero.scss';
 
 class Hero extends Component {
@@ -270,8 +265,7 @@ const mapDispatchToProps = (dispatch) => {
         total,
       };
 
-      await dispatch(createItem(item));
-      await dispatch(createEvent(id, datetime));
+      await dispatch(createItem(item, datetime));
     },
   };
 };

@@ -243,6 +243,35 @@ export const fetchCart = () => async (dispatch) => {
   return dispatch(setCart(data));
 };
 
+export const setEventHeroId = (heroId) => {
+  return {
+    type: TYPES.SET_EVENT_HEROID,
+    payload: heroId,
+  };
+};
+
+export const setEvents = (events) => {
+  return {
+    type: TYPES.SET_EVENTS,
+    payload: events,
+  };
+};
+
+export const fetchEvents = (heroId) => {
+  return async (dispatch) => {
+    const { data } = await axios.get(`/api/event/${heroId}`);
+
+    dispatch(setEventHeroId(heroId));
+    dispatch(setEvents(data));
+  };
+};
+
+export const createEvent = (heroId, datetime, itemId) => async (dispatch) => {
+  await axios.post('/api/event', { heroId, datetime, itemId });
+
+  return dispatch(fetchEvents(heroId));
+};
+
 export const setItem = (item) => {
   return {
     type: TYPES.CREATE_ITEM,
@@ -250,10 +279,13 @@ export const setItem = (item) => {
   };
 };
 
-export const createItem = (item) => async (dispatch) => {
-  const { data } = await axios.post('/api/cart/item', item);
+export const createItem = (item, datetime) => {
+  return async (dispatch) => {
+    const { data } = await axios.post('/api/cart/item', item);
 
-  return dispatch(setItem(data));
+    dispatch(setItem(data));
+    dispatch(createEvent(item.heroId, datetime, data.id));
+  };
 };
 
 export const removeItem = (id) => async (dispatch) => {
@@ -298,33 +330,4 @@ export const fetchCategoryHeroes = (categoryName, page) => {
     dispatch(setCategoryHeroes(data.categoryHeroes));
     dispatch(setCategoryHeroesTotal(data.categoryHeroesTotal));
   };
-};
-
-export const setEventHeroId = (heroId) => {
-  return {
-    type: TYPES.SET_EVENT_HEROID,
-    payload: heroId,
-  };
-};
-
-export const setEvents = (events) => {
-  return {
-    type: TYPES.SET_EVENTS,
-    payload: events,
-  };
-};
-
-export const fetchEvents = (heroId) => {
-  return async (dispatch) => {
-    const { data } = await axios.get(`/api/event/${heroId}`);
-
-    dispatch(setEventHeroId(heroId));
-    dispatch(setEvents(data));
-  };
-};
-
-export const createEvent = (heroId, datetime) => async (dispatch) => {
-  await axios.post('/api/event', { heroId, datetime });
-
-  return dispatch(fetchEvents(heroId));
 };
