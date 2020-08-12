@@ -29,6 +29,7 @@ cartRouter.delete('/item/:id', async (req, res) => {
     if (item) {
       item.destroy();
       const items = await Item.findAll({ where: { cartId: cart.id } });
+      cart.decrement('total', { by: item.price });
       if (!items) {
         cart.destroy();
       }
@@ -64,7 +65,6 @@ cartRouter.post('/item', async (req, res) => {
 
   if (isCart) {
     try {
-      console.log(req.body);
       const item = await Item.create({
         heroId,
         heroName,
@@ -74,6 +74,7 @@ cartRouter.post('/item', async (req, res) => {
         price,
         cartId: isCart.id,
       });
+      isCart.increment('total', { by: price });
       res.status(200).send(item);
     } catch (e) {
       console.error(e);
