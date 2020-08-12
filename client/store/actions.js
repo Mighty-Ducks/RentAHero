@@ -299,3 +299,32 @@ export const fetchCategoryHeroes = (categoryName, page) => {
     dispatch(setCategoryHeroesTotal(data.categoryHeroesTotal));
   };
 };
+
+export const setEventHeroId = (heroId) => {
+  return {
+    type: TYPES.SET_EVENT_HEROID,
+    payload: heroId,
+  };
+};
+
+export const setEvents = (events) => {
+  return {
+    type: TYPES.SET_EVENTS,
+    payload: events,
+  };
+};
+
+export const fetchEvents = (heroId) => {
+  return async (dispatch) => {
+    const { data } = await axios.get(`/api/event/${heroId}`);
+
+    dispatch(setEventHeroId(heroId));
+    dispatch(setEvents(data));
+  };
+};
+
+export const createEvent = (heroId, datetime) => async (dispatch) => {
+  await axios.post('/api/event', { heroId, datetime });
+
+  return dispatch(fetchEvents(heroId));
+};
