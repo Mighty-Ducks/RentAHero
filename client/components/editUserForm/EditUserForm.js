@@ -1,108 +1,135 @@
-// import React, { Component } from 'react';
-// import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
-// import axios from 'axios';
-// import { setLoggedIn } from '../../store/actions';
-// import './editUserForm.scss';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { updateHero, deleteHero } from '../../store/actions';
 
-// class EditUserForm extends Component {
-//   state = {
-//     firstName: '',
-//     lastName: '',
-//     email: '',
-//     password: '',
-//   };
+class EditUserForm extends Component {
+  constructor({ data }) {
+    super();
 
-//   setFieldToState = (e) => {
-//     this.setState({ [e.target.name]: e.target.value });
-//   };
+    const { id, firstName, lastName, email } = data;
 
-//   render() {
-//     const { firstName, lastName, email, password } = this.state;
+    this.state = {
+      id,
+      firstName,
+      lastName,
+      email,
+    };
+  }
 
-//     return (
-//       <div className="card p-5 col-md-6 m-auto">
-//         <form onSubmit={this.registerUser} className="auth-form">
-//           <h1>Edit Profile</h1>
-//           <div className="form-group">
-//             <label htmlFor="firstName" className="label-full">
-//               First Name
-//               <input
-//                 type="firstName"
-//                 className="form-control"
-//                 name="firstName"
-//                 value={firstName}
-//                 onChange={(e) => this.setFieldToState(e)}
-//                 placeholder="First Name"
-//                 required
-//               />
-//             </label>
-//           </div>
-//           <div className="form-group">
-//             <label htmlFor="LastName" className="label-full">
-//               Last Name
-//               <input
-//                 type="LastName"
-//                 className="form-control"
-//                 name="lastName"
-//                 value={lastName}
-//                 onChange={(e) => this.setFieldToState(e)}
-//                 placeholder="Last Name"
-//                 required
-//               />
-//             </label>
-//           </div>
-//           <div className="form-group">
-//             <label htmlFor="email" className="label-full">
-//               Email address
-//               <input
-//                 type="email"
-//                 className="form-control"
-//                 name="email"
-//                 value={email}
-//                 onChange={(e) => this.setFieldToState(e)}
-//                 placeholder="Email"
-//                 required
-//               />
-//             </label>
-//           </div>
-//           <div className="form-group">
-//             <label htmlFor="password" className="label-full">
-//               Password
-//               <input
-//                 type="password"
-//                 className="form-control"
-//                 name="password"
-//                 value={password}
-//                 onChange={(e) => this.setFieldToState(e)}
-//                 id="inputPassword"
-//                 required
-//               />
-//             </label>
-//           </div>
-//           <div className="d-flex justify-content-between align-items-center">
-//             <button type="submit" className="btn btn-primary">
-//               Update
-//             </button>
-//           </div>
-//         </form>
-//       </div>
-//     );
-//   }
-// }
+  setFieldToState = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
-// EditUserForm.propTypes = {
-//   history: PropTypes.shape({
-//     push: PropTypes.func,
-//   }).isRequired,
-// };
+  updateHero = async (e) => {
+    e.preventDefault();
+    const { post } = this.props;
+    const { id, name, imgURL, description, acts } = this.state;
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     loggedIn: async (flag) => {
-//       dispatch(setLoggedIn(flag));
-//     },
-//   };
-// };
+    post(id, { name, imgURL, description, acts });
+  };
 
-// export default connect(null, mapDispatchToProps)(EditUserForm);
+  deleteHero = (e) => {
+    e.preventDefault();
+    const { remove } = this.props;
+    const { id } = this.state;
+
+    remove(id);
+  };
+
+  render() {
+    const { firstName, lastName, email } = this.state;
+
+    return (
+      <form className="add-hero-form">
+        <div className="form-group">
+          <label htmlFor="firstName" className="label-full">
+            First Name
+            <input
+              type="text"
+              className="form-control"
+              name="firstName"
+              value={firstName}
+              onChange={this.setFieldToState}
+              placeholder="First Name"
+              required
+            />
+          </label>
+        </div>
+        <div className="form-group">
+          <label htmlFor="lastName" className="label-full">
+            Last Name
+            <input
+              type="text"
+              className="form-control"
+              name="lastName"
+              value={lastName}
+              onChange={this.setFieldToState}
+              placeholder="Last Name"
+              required
+            />
+          </label>
+        </div>
+        <div className="form-group">
+          <label htmlFor="description" className="label-full">
+            Email
+            <input
+              type="email"
+              className="form-control"
+              name="email"
+              value={email}
+              onChange={this.setFieldToState}
+              placeholder="Email"
+              required
+            />
+          </label>
+        </div>
+        <div className="card-footer add-hero-footer text-center">
+          <input
+            type="button"
+            className="btn btn-danger"
+            value="Delete"
+            onClick={this.deleteHero}
+          />
+          <input
+            type="button"
+            className="btn btn-success"
+            value="Save"
+            onClick={this.updateHero}
+          />
+        </div>
+      </form>
+    );
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    acts: state.acts.actsList,
+    hero: state.heroes.hero,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    post: (id, updatedHero) => {
+      dispatch(updateHero(id, updatedHero));
+    },
+    remove: (id) => {
+      dispatch(deleteHero(id));
+    },
+  };
+};
+
+EditUserForm.defaultProps = {
+  acts: [],
+};
+
+EditUserForm.propTypes = {
+  acts: PropTypes.arrayOf(PropTypes.object),
+  post: PropTypes.func.isRequired,
+  remove: PropTypes.func.isRequired,
+  data: PropTypes.oneOfType([PropTypes.object]).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditUserForm);

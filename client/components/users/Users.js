@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Popup from '../popup/Popup';
-import AddHeroForm from '../addHeroForm/AddHeroForm';
+import EditUserForm from '../editUserForm/EditUserForm';
 import EditUserButton from '../buttons/EditUserButton';
 import { fetchUsers } from '../../store/actions';
 
@@ -54,9 +54,10 @@ class Users extends Component {
                         </div>
                         <div className="card-footer text-center">
                           <Popup
-                            title="Create a Hero"
-                            BodyModal={AddHeroForm}
+                            title="Edit User"
+                            BodyModal={EditUserForm}
                             ButtonModal={EditUserButton}
+                            data={{ firstName, lastName, email, id }}
                           />
                         </div>
                       </div>
