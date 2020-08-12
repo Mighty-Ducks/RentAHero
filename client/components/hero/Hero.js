@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment-timezone';
 
 import Popup from '../popup/Popup';
 import UpdateHeroForm from '../updateHeroForm/UpdateHeroForm';
 import EditButton from '../buttons/EditButton';
-import { fetchHero, createItem } from '../../store/actions';
+import { fetchHero, createItem, fetchEvents } from '../../store/actions';
 import './hero.scss';
 
 class Hero extends Component {
@@ -14,17 +15,21 @@ class Hero extends Component {
     actId: '',
     actName: '',
     actPrice: '',
+    date: moment(),
+    time: '',
   };
 
   componentDidMount() {
     const {
       load,
+      loadEvents,
       match: {
         params: { id },
       },
     } = this.props;
 
     load(id);
+    loadEvents(id);
   }
 
   setFieldToState = ({ target }) => {
@@ -39,15 +44,32 @@ class Hero extends Component {
     });
   };
 
+  resetState() {
+    this.setState({
+      total: 0,
+      actId: '',
+      actName: '',
+      actPrice: '',
+      date: moment(),
+      time: '',
+    });
+  }
+
   render() {
     const {
       hero: { id, name, imgURL, description, acts = [] },
       addToCart,
       loggedIn,
       isAdmin,
+      events,
     } = this.props;
 
-    const { total, actId, actName, actPrice } = this.state;
+    const { total, actId, actName, actPrice, date, time } = this.state;
+
+    const hours = [];
+    for (let i = 9; i < 22; i++) {
+      hours.push(i < 10 ? `0${i}:00` : `${i}:00`);
+    }
 
     return (
       <div className="px-3 hero-view container-xl">
@@ -93,7 +115,7 @@ class Hero extends Component {
                               id={act.id}
                               onChange={this.setFieldToState}
                             />
-                            {act.name}
+                            {`${act.name} (1 hour)`}
                             <span className="space-dots"></span>
                             <div>
                               <strong>{act.price}</strong>
@@ -103,6 +125,54 @@ class Hero extends Component {
                         </div>
                       );
                     })}
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="date">Date</label>
+                    <div className="col-10">
+                      <input
+                        className="form-control"
+                        type="date"
+                        value={date}
+                        id="date"
+                        onChange={(ev) => {
+                          this.setState({ date: ev.target.value });
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="time">Time</label>
+                    <select
+                      className="form-control"
+                      name="time"
+                      id="time"
+                      value={time}
+                      onChange={(ev) => {
+                        this.setState({ time: ev.target.value });
+                      }}
+                    >
+                      <option>-- Choose time --</option>
+                      {hours.map((hour) => {
+                        const eventsByDate = events.filter(
+                          (ev) => date === ev.datetime.substring(0, 10)
+                        );
+                        const taken = eventsByDate.filter((ev) => {
+                          const evTime = moment(ev.datetime).hours();
+                          const finalTime =
+                            evTime < 10 ? `0${evTime}:00` : `${evTime}:00`;
+                          return hour === finalTime;
+                        });
+                        return (
+                          <option
+                            key={hour}
+                            disabled={taken.length > 0 ? true : null}
+                            value={hour}
+                          >
+                            {hour}
+                          </option>
+                        );
+                      })}
+                    </select>
                   </div>
                   <div className="d-flex justify-content-between align-items-center">
                     <div className="total">
@@ -125,8 +195,16 @@ class Hero extends Component {
                             actId,
                             actName,
                             actPrice,
-                            total
+                            total,
+                            moment
+                              .tz(
+                                date + time,
+                                'YYYY MM DD hh:mm',
+                                'America/New_York'
+                              )
+                              .format()
                           );
+                          this.resetState();
                         }}
                       >
                         Book a hero
@@ -148,6 +226,7 @@ const mapStateToProps = (state) => {
     hero: state.heroes.hero,
     loggedIn: state.users.loggedIn,
     isAdmin: state.users.user.admin,
+    events: state.event.events,
   };
 };
 
@@ -156,7 +235,20 @@ const mapDispatchToProps = (dispatch) => {
     load: (id) => {
       dispatch(fetchHero(id));
     },
-    addToCart: (ev, id, name, imgURL, actId, actName, actPrice, total) => {
+    loadEvents: (id) => {
+      dispatch(fetchEvents(id));
+    },
+    addToCart: async (
+      ev,
+      id,
+      name,
+      imgURL,
+      actId,
+      actName,
+      actPrice,
+      total,
+      datetime
+    ) => {
       ev.preventDefault();
       const item = {
         heroId: id,
@@ -168,7 +260,7 @@ const mapDispatchToProps = (dispatch) => {
         total,
       };
 
-      dispatch(createItem(item));
+      await dispatch(createItem(item, datetime));
     },
   };
 };
@@ -187,9 +279,11 @@ Hero.propTypes = {
     }),
   }),
   load: PropTypes.func.isRequired,
+  loadEvents: PropTypes.func.isRequired,
   addToCart: PropTypes.func.isRequired,
   loggedIn: PropTypes.bool,
   isAdmin: PropTypes.bool,
+  events: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Hero);

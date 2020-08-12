@@ -5,6 +5,7 @@ const User = require('./user');
 const Session = require('./session');
 const Item = require('./item');
 const Cart = require('./cart');
+const Event = require('./event');
 
 // Relations between superheroes and their acts.
 Act.belongsToMany(Superhero, { through: 'HeroAct' });
@@ -29,4 +30,9 @@ Cart.belongsTo(Session);
 Cart.hasMany(Item);
 Item.belongsTo(Cart);
 
-module.exports = { Superhero, Act, Category, User, Session, Item, Cart };
+// Relation between events and heroes
+Superhero.hasMany(Event);
+Event.belongsTo(Superhero);
+Event.belongsTo(Item, { onDelete: 'cascade', hooks: true });
+
+module.exports = { Superhero, Act, Category, User, Session, Item, Cart, Event };

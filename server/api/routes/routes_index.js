@@ -6,6 +6,7 @@ const usersRouter = require('./user_routes');
 const cartRouter = require('./cart_routes');
 const app = require('../server');
 const searchRouter = require('./search_routes');
+const eventRouter = require('./event_routes');
 
 const applyRoutes = () => {
   app.use('/api/superheroes', superheroesRouter);
@@ -14,6 +15,7 @@ const applyRoutes = () => {
   app.use('/api/users', usersRouter);
   app.use('/api/cart', cartRouter);
   app.use('/api/search', searchRouter);
+  app.use('/api/event', eventRouter);
 };
 
 module.exports = applyRoutes;

@@ -183,6 +183,41 @@ const blackWidow = {
   ],
 };
 
+const catWoman = {
+  hero: {
+    name: 'Catwoman',
+    imgURL:
+      'https://i.pinimg.com/originals/cb/d5/a4/cbd5a4f8087a308a53c71bdf5d6b165e.png',
+    description: `Honey I'm Home!`,
+  },
+  acts: [],
+  categories: [
+    {
+      name: 'Female',
+    },
+    {
+      name: 'Human',
+    },
+  ],
+};
+
+const ironMan = {
+  hero: {
+    name: 'Iron Man',
+    imgURL: 'https://avatarfiles.alphacoders.com/217/thumb-217097.jpg',
+    description: `Give me a scotch. I'm starving.`,
+  },
+  acts: [],
+  categories: [
+    {
+      name: 'Male',
+    },
+    {
+      name: 'Human',
+    },
+  ],
+};
+
 const superheroes = [
   wolverine,
   superman,
@@ -193,6 +228,8 @@ const superheroes = [
   spiderman,
   deadpool,
   blackWidow,
+  catWoman,
+  ironMan,
 ];
 
 const acts = [

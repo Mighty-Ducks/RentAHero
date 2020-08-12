@@ -183,6 +183,28 @@ const categoriesReducer = (state = initialCategoriesState, action) => {
   }
 };
 
+const initialEventState = {
+  heroId: '',
+  events: [],
+};
+
+const eventReducer = (state = initialEventState, action) => {
+  switch (action.type) {
+    case TYPES.SET_EVENT_HEROID:
+      return {
+        ...state,
+        heroId: action.payload,
+      };
+    case TYPES.SET_EVENTS:
+      return {
+        ...state,
+        events: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 const reducer = combineReducers({
   heroes: heroesReducer,
   users: usersReducer,
@@ -190,6 +212,7 @@ const reducer = combineReducers({
   cart: cartReducer,
   searchResults: searchReducer,
   categories: categoriesReducer,
+  event: eventReducer,
 });
 
 export default reducer;
