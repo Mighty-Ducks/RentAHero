@@ -38,7 +38,9 @@ class Users extends Component {
                           </h5>
                           <p className="card-text">{email}</p>
                           <p className="card-text">
-                            <span className="text-muted small">Registered:</span>
+                            <span className="text-muted small">
+                              Registered:
+                            </span>
                             &nbsp;
                             {new Date(createdAt).toDateString()}
                           </p>

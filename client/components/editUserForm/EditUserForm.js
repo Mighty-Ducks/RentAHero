@@ -121,12 +121,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-EditUserForm.defaultProps = {
-  acts: [],
-};
-
 EditUserForm.propTypes = {
-  acts: PropTypes.arrayOf(PropTypes.object),
   post: PropTypes.func.isRequired,
   remove: PropTypes.func.isRequired,
   data: PropTypes.oneOfType([PropTypes.object]).isRequired,
