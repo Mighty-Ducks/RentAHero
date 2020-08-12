@@ -38,16 +38,17 @@ class Users extends Component {
                           </h5>
                           <p className="card-text">{email}</p>
                           <p className="card-text">
-                            <span className="text-muted">Registered:</span>
-                            {createdAt}
+                            <span className="text-muted small">Registered:</span>
+                            &nbsp;
+                            {new Date(createdAt).toDateString()}
                           </p>
                           <p className="card-text">
-                            <span className="text-muted">User type:</span>
+                            <span className="text-muted small">User type:</span>
                             &nbsp;
                             {admin ? (
                               <span className="text-success">Admin</span>
                             ) : (
-                              <span className="text-primary">Customer</span>
+                              <span className="text-info">Customer</span>
                             )}
                           </p>
                         </div>

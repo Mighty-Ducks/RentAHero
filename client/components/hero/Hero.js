@@ -27,15 +27,15 @@ class Hero extends Component {
     load(id);
   }
 
-  setFieldToState = (ev) => {
-    const {
-      target: { value, checked },
-    } = ev;
-    const { total } = this.state;
-    const updatedTotal = checked ? total + +value : total - +value;
+  setFieldToState = ({ target }) => {
+    const { value, id } = target;
+    const actName = target.getAttribute('data-act');
 
     this.setState({
-      total: updatedTotal,
+      total: value,
+      actId: id,
+      actName,
+      actPrice: value,
     });
   };
 
@@ -86,17 +86,12 @@ class Hero extends Component {
                           >
                             <input
                               className="form-check-input"
-                              type="checkbox"
+                              data-act={act.name}
+                              name="acts"
+                              type="radio"
                               value={act.price}
-                              id={`${act.id}`}
-                              onChange={(ev) => {
-                                this.setState({
-                                  actId: ev.target.id,
-                                  actName: act.name,
-                                  actPrice: act.price,
-                                });
-                                this.setFieldToState(ev);
-                              }}
+                              id={act.id}
+                              onChange={this.setFieldToState}
                             />
                             {act.name}
                             <span className="space-dots"></span>

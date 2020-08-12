@@ -27,7 +27,7 @@ class UserPage extends Component {
             </li>
             <li>Address:&nbsp;</li>
             <Popup
-              title="Edit Hero"
+              title="Edit User"
               BodyModal={EditUserForm}
               ButtonModal={EditUserButton}
               data={{ firstName, lastName, user }}
