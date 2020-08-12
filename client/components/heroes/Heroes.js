@@ -77,7 +77,7 @@ class Heroes extends Component {
                 heroesList.map(({ id, imgURL, name, description, acts }) => {
                   return (
                     <div className="col mb-4" key={id}>
-                      <div className="card h-100 ">
+                      <div className="card h-100">
                         {loggedIn && isAdmin && (
                           <Popup
                             title="Edit Hero"
