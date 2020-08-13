@@ -5,6 +5,7 @@ const {
   Item,
   User,
   Session,
+  Event,
 } = require('../../db/models/models_index.js');
 const hash = require('../../utilities/index');
 
@@ -63,7 +64,12 @@ usersRouter.get('/:id/orders', async (req, res) => {
         userId: id,
         status: true,
       },
-      include: [Item],
+      include: [
+        {
+          model: Item,
+          include: [Event],
+        },
+      ],
     });
     if (orders) {
       res.status(200).send(orders);
