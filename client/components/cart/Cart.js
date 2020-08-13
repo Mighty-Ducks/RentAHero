@@ -14,7 +14,11 @@ class Cart extends Component {
 
   render() {
     const { cart, deleteItem } = this.props;
-    const { pathname } = this.props.history.location;
+    const {
+      history: {
+        location: { pathname },
+      },
+    } = this.props;
     return (
       <section>
         <div className="row container-xl">
@@ -93,6 +97,8 @@ Cart.propTypes = {
   cart: PropTypes.arrayOf(PropTypes.object).isRequired,
   load: PropTypes.func.isRequired,
   deleteItem: PropTypes.func.isRequired,
+  pathname: PropTypes.string.isRequired,
+  history: PropTypes.objectOf(PropTypes.object),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
