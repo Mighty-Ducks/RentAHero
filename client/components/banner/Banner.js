@@ -26,7 +26,7 @@ export default class Banner extends Component {
           <div className="banner-text-slogan">{slogan}</div>
           <h1>{title}</h1>
         </div>
-        {imgSrc && <img alt={imgAlt} src={imgSrc} />}
+        {imgSrc && <img alt={imgAlt} src={imgSrc} className="img-fluid" />}
       </div>
     );
   }
