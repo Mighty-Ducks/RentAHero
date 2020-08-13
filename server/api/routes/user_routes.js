@@ -61,7 +61,7 @@ usersRouter.get('/:id/orders', async (req, res) => {
     const orders = await Cart.findAll({
       where: {
         userId: id,
-        status: false,
+        status: true,
       },
       include: [Item],
     });

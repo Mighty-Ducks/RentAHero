@@ -20,6 +20,8 @@ import {
   Users,
   UserPage,
   Checkout,
+  ReviewOrder,
+  OrderConfirmation,
 } from './components';
 import { fetchActs, logInWithSession } from './store/actions';
 
@@ -60,6 +62,8 @@ class App extends Component {
               path="/search/:term?/page/:page?"
               component={SearchResults}
             />
+            <Route exact path="/review" component={ReviewOrder} />
+            <Route exact path="/confirmation" component={OrderConfirmation} />
             <PrivateRoute exact path="/checkout" component={Checkout} />
             <PrivateRoute exact path="/users" component={Users} />
             <PrivateRoute exact path="/users/:id" component={UserPage} />

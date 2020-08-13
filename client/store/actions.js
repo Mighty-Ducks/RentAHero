@@ -270,6 +270,12 @@ export const fetchCart = () => async (dispatch) => {
   return dispatch(setCart(data));
 };
 
+export const updateCart = (id) => async (dispatch) => {
+  await axios.put(`/api/cart/${id}`);
+
+  return dispatch(setCart([]));
+};
+
 export const setEventHeroId = (heroId) => {
   return {
     type: TYPES.SET_EVENT_HEROID,
@@ -306,12 +312,12 @@ export const setItem = (item) => {
   };
 };
 
-export const createItem = (item, datetime) => {
+export const createItem = (item) => {
   return async (dispatch) => {
     const { data } = await axios.post('/api/cart/item', item);
 
     dispatch(setItem(data));
-    dispatch(createEvent(item.heroId, datetime, data.id));
+    dispatch(createEvent(item.heroId, item.datetime, data.id));
   };
 };
 
