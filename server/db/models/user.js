@@ -1,4 +1,4 @@
-const { UUID, UUIDV4, STRING, BOOLEAN } = require('sequelize');
+const { UUID, UUIDV4, STRING, BOOLEAN, INTEGER } = require('sequelize');
 const db = require('../db_index');
 
 const User = db.define(
@@ -39,6 +39,15 @@ const User = db.define(
       validate: {
         notEmpty: true,
       },
+    },
+    street: {
+      type: STRING,
+    },
+    state: {
+      type: STRING,
+    },
+    zip: {
+      type: INTEGER,
     },
     admin: {
       type: BOOLEAN,

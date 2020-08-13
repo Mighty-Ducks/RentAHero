@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
 import './addressForm.scss';
 
 class AddressForm extends Component {
@@ -15,8 +14,10 @@ class AddressForm extends Component {
   };
 
   componentDidMount() {
-    const { firstName, lastName } = this.props;
-    this.setState({ name: `${firstName} ${lastName}` });
+    const {
+      user: { firstName, lastName, street, state, zip },
+    } = this.props;
+    this.setState({ name: `${firstName} ${lastName}`, street, state, zip });
   }
 
   setFieldToState = (e) => {
@@ -109,20 +110,19 @@ class AddressForm extends Component {
   }
 }
 
-AddressForm.defaultProps = {
-  firstName: 'First Name',
-  lastName: 'Last Name',
-};
-
 AddressForm.propTypes = {
-  firstName: PropTypes.string,
-  lastName: PropTypes.string,
+  user: PropTypes.shape({
+    firstName: PropTypes.string.isRequired,
+    lastName: PropTypes.string.isRequired,
+    street: PropTypes.string.isRequired,
+    state: PropTypes.string.isRequired,
+    zip: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
-    firstName: state.users.user.firstName,
-    lastName: state.users.user.lastName,
+    user: state.users.user,
   };
 };
 
