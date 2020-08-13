@@ -50,7 +50,7 @@ class Categories extends Component {
       (v, i) => i + 1
     );
     return (
-      <div className="px-3">
+      <div className="px-3 container-xl">
         <div className="header">
           <h1>
             {categoryName}

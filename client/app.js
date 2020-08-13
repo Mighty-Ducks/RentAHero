@@ -60,9 +60,9 @@ class App extends Component {
               path="/search/:term?/page/:page?"
               component={SearchResults}
             />
-            <PrivateRoute exact path="/user" component={Users} />
-            <PrivateRoute exact path="/user/:id" component={UserPage} />
             <PrivateRoute exact path="/checkout" component={Checkout} />
+            <PrivateRoute exact path="/users" component={Users} />
+            <PrivateRoute exact path="/users/:id" component={UserPage} />
           </Switch>
         </div>
       </HashRouter>

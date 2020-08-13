@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import './header.scss';
+
 import Search from '../search/Search';
 import Logo from '../logo/Logo';
 import { setLoggedOut } from '../../store/actions';
+import './header.scss';
 
 class Header extends Component {
   render() {
@@ -19,7 +20,7 @@ class Header extends Component {
               {loggedIn && (
                 <>
                   Hi&nbsp;
-                  <Link to={`/user/${id}`}>{firstName}</Link>
+                  <Link to={`/users/${id}`}>{firstName}</Link>
                 </>
               )}
             </li>

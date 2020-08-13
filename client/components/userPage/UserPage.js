@@ -1,67 +1,87 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import UserOrders from '../userOrders/UserOrders';
 import EditUserForm from '../editUserForm/EditUserForm';
 import Popup from '../popup/Popup';
 import EditUserButton from '../buttons/EditUserButton';
-import './userPage.scss';
 
 class UserPage extends Component {
+  // componentDidUpdate(prev) {
+  //   const { admin, email, id, firstName, lastName } = this.props;
+  //   const user = { admin, email, id, firstName, lastName };
+  //   const keys = Object.keys(prev);
+  //   console.log(this.props);
+  //   console.log(keys);
+
+  //   keys.forEach((key) => {
+  //     console.log(prev[key], user[key]);
+  //     if (prev[key] !== user[key]) {
+  //       fetchUser(id);
+  //     }
+  //     console.log(this.props);
+  //   });
+  // }
+
   render() {
-    const { firstName, lastName, user, loggedIn } = this.props;
+    const { firstName, lastName, email, id, admin } = this.props;
     return (
-      loggedIn && (
-        <div className="hero-view container-xl">
-          <h1>Profile Info</h1>
-          <ul>
-            <li>
-              Name:&nbsp;
+      <div className="hero-view container-xl">
+        <h1>Profile Info</h1>
+        <div className="card mb-3">
+          <div className="card-body">
+            <h2 className="card-title">
               {firstName}
               &nbsp;
               {lastName}
-            </li>
-            <li>
-              Email:&nbsp;
-              {user}
-            </li>
-            <li>Address:&nbsp;</li>
+            </h2>
+            <p className="card-text">
+              <span className="text-muted small">Email:</span>
+              &nbsp;
+              {email}
+            </p>
+          </div>
+          <div className="card-footer text-center">
             <Popup
               title="Edit User"
               BodyModal={EditUserForm}
               ButtonModal={EditUserButton}
-              data={{ firstName, lastName, user }}
+              data={{ firstName, lastName, email, id, admin }}
             />
-          </ul>
-          <UserOrders {...this.props} />
+          </div>
         </div>
-      )
+        <UserOrders {...this.props} />
+      </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    user: state.users.user.user,
+    email: state.users.user.email,
     firstName: state.users.user.firstName,
     lastName: state.users.user.lastName,
-    loggedIn: state.users.loggedIn,
+    id: state.users.user.id,
+    admin: state.users.user.admin,
   };
 };
 
 UserPage.defaultProps = {
-  user: '',
+  email: '',
   firstName: '',
   lastName: '',
-  loggedIn: false,
   match: {},
+  id: '',
+  admin: false,
 };
 
 UserPage.propTypes = {
-  user: PropTypes.string,
+  email: PropTypes.string,
   firstName: PropTypes.string,
   lastName: PropTypes.string,
-  loggedIn: PropTypes.bool,
+  id: PropTypes.string,
+  admin: PropTypes.bool,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,

@@ -78,7 +78,7 @@ usersRouter.get('/:id/orders', async (req, res) => {
 
 // update/edit user
 usersRouter.put(
-  '/user/:id',
+  '/:id',
   [check('email', 'email is required').not().isEmpty()],
   async (req, res) => {
     const errors = validationResult(req);
@@ -115,7 +115,7 @@ usersRouter.put(
 );
 
 // delete a user
-usersRouter.delete('/user/:id', async (req, res) => {
+usersRouter.delete('/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
