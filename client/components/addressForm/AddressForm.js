@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { postUser } from '../../store/actions';
 import './addressForm.scss';
 
 class AddressForm extends Component {
@@ -16,11 +15,9 @@ class AddressForm extends Component {
 
   componentDidMount() {
     const {
-      users: {
-        user: { firstName, lastName },
-      },
+      user: { firstName, lastName, street, state, zip },
     } = this.props;
-    this.setState({ name: `${firstName} ${lastName}` });
+    this.setState({ name: `${firstName} ${lastName}`, street, state, zip });
   }
 
   setFieldToState = (e) => {
@@ -114,24 +111,19 @@ class AddressForm extends Component {
 }
 
 AddressForm.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
+  user: PropTypes.shape({
+    firstName: PropTypes.string.isRequired,
+    lastName: PropTypes.string.isRequired,
+    street: PropTypes.string.isRequired,
+    state: PropTypes.string.isRequired,
+    zip: PropTypes.number.isRequired,
   }).isRequired,
-  users: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
-    heroes: state.heroes,
-    users: state.users,
-    error: state.users.error,
+    user: state.users.user,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    logIn: (email, password, flag) => dispatch(postUser(email, password, flag)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddressForm);
+export default connect(mapStateToProps)(AddressForm);

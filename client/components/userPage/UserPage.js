@@ -25,7 +25,16 @@ class UserPage extends Component {
   // }
 
   render() {
-    const { firstName, lastName, email, id, admin } = this.props;
+    const {
+      firstName,
+      lastName,
+      email,
+      id,
+      street,
+      state,
+      zip,
+      admin,
+    } = this.props;
     return (
       <div className="hero-view container-xl">
         <h1>Profile Info</h1>
@@ -41,13 +50,31 @@ class UserPage extends Component {
               &nbsp;
               {email}
             </p>
+            <p className="card-text">
+              <span className="text-muted small">Address:</span>
+              &nbsp;
+              {street}
+              ,&nbsp;
+              {state}
+              &nbsp;
+              {zip}
+            </p>
           </div>
           <div className="card-footer text-center">
             <Popup
               title="Edit User"
               BodyModal={EditUserForm}
               ButtonModal={EditUserButton}
-              data={{ firstName, lastName, email, id, admin }}
+              data={{
+                firstName,
+                lastName,
+                email,
+                id,
+                street,
+                state,
+                zip,
+                admin,
+              }}
             />
           </div>
         </div>
@@ -63,6 +90,9 @@ const mapStateToProps = (state) => {
     firstName: state.users.user.firstName,
     lastName: state.users.user.lastName,
     id: state.users.user.id,
+    street: state.users.user.street,
+    state: state.users.user.state,
+    zip: state.users.user.zip,
     admin: state.users.user.admin,
   };
 };
@@ -71,6 +101,9 @@ UserPage.defaultProps = {
   email: '',
   firstName: '',
   lastName: '',
+  street: '',
+  state: '',
+  zip: 0,
   match: {},
   id: '',
   admin: false,
@@ -81,6 +114,9 @@ UserPage.propTypes = {
   firstName: PropTypes.string,
   lastName: PropTypes.string,
   id: PropTypes.string,
+  street: PropTypes.string,
+  state: PropTypes.string,
+  zip: PropTypes.number,
   admin: PropTypes.bool,
   match: PropTypes.shape({
     params: PropTypes.shape({

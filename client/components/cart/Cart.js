@@ -93,16 +93,14 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-Cart.defaultProps = {
-  history: {},
-};
-
 Cart.propTypes = {
   cart: PropTypes.arrayOf(PropTypes.object).isRequired,
   load: PropTypes.func.isRequired,
   deleteItem: PropTypes.func.isRequired,
-  pathname: PropTypes.string.isRequired,
-  history: PropTypes.objectOf(PropTypes.object),
+  history: PropTypes.shape({
+    location: PropTypes.oneOfType([PropTypes.object]).isRequired,
+    pathname: PropTypes.string,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

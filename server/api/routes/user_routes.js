@@ -90,7 +90,24 @@ usersRouter.put(
     }
 
     const { id } = req.params;
-    const { firstName, lastName, email, password, admin } = req.body; // review to agree on properties for superhero
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      street,
+      state,
+      zip,
+      admin,
+    } = req.body;
+
+    // const updParams = {};
+
+    // if (firstName) updParams.firstName = firstName;
+    // if (lastName) updParams.lastName = lastName;
+    // if (email) updParams.email = email;
+    // if (actIds) updParams.actIds = actIds;
+    // if (categoryIds) updParams.categoryIds = categoryIds;
 
     try {
       const user = await User.findByPk(id);
@@ -101,6 +118,9 @@ usersRouter.put(
           lastName,
           email,
           password,
+          street,
+          state,
+          zip,
           admin,
         });
         res.status(200).send(updatedUser);

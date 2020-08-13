@@ -138,6 +138,9 @@ export const logInWithSession = () => {
           firstName: data.firstName,
           lastName: data.lastName,
           email: data.email,
+          street: data.street,
+          state: data.state,
+          zip: data.zip,
           admin: data.admin,
         })
       );
