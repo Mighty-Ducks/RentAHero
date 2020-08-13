@@ -93,6 +93,10 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+Cart.defaultProps = {
+  history: {},
+};
+
 Cart.propTypes = {
   cart: PropTypes.arrayOf(PropTypes.object).isRequired,
   load: PropTypes.func.isRequired,
