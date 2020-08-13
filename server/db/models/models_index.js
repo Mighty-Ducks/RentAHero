@@ -34,6 +34,5 @@ Item.belongsTo(Cart);
 Superhero.hasMany(Event);
 Event.belongsTo(Superhero);
 Event.belongsTo(Item, { onDelete: 'cascade', hooks: true });
-Item.hasOne(Event);
 
 module.exports = { Superhero, Act, Category, User, Session, Item, Cart, Event };

@@ -25,7 +25,11 @@ const heroCard = (
                 <p className="mb-2 text-muted text-uppercase small">
                   {actName}
                 </p>
-                <p>{moment(datetime).format('LLLL')}</p>
+                <p className="mb-2 text-muted text-uppercase small">
+                  <strong>Appointment</strong>
+                  <br />
+                  {moment(datetime).format('LLLL')}
+                </p>
               </div>
             </div>
             <div className="d-flex justify-content-between align-items-center">
@@ -60,6 +64,9 @@ heroCard.propTypes = {
   actName: PropTypes.string.isRequired,
   datetime: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
+  event: PropTypes.shape({
+    datetime: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default heroCard;
