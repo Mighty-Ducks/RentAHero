@@ -76,6 +76,17 @@ usersRouter.get('/:id/orders', async (req, res) => {
   }
 });
 
+// User logout
+usersRouter.put('/logout', async (req, res) => {
+  const session = await Session.findByPk(req.session_id);
+  try {
+    await session.update({ userId: null });
+    res.status(201).send({ message: `user loggedout` });
+  } catch (e) {
+    res.status(500).send({ message: 'Server error' });
+  }
+});
+
 // update/edit user
 usersRouter.put(
   '/:id',
@@ -198,17 +209,6 @@ usersRouter.post('/login', async (req, res) => {
     res.sendStatus(201);
   } else {
     res.status(401).send({ message: `Password is incorrect` });
-  }
-});
-
-// User logout
-usersRouter.put('/logout', async (req, res) => {
-  const session = await Session.findByPk(req.session_id);
-  try {
-    await session.update({ userId: null });
-    res.status(201).send({ message: `user loggedout` });
-  } catch (e) {
-    res.status(500).send({ message: 'Server error' });
   }
 });
 

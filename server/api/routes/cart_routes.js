@@ -68,6 +68,7 @@ cartRouter.post('/item', async (req, res) => {
   const isCart = await Cart.findOne({
     where: {
       sessionId: req.session_id,
+      status: false,
     },
   });
 
@@ -114,6 +115,7 @@ cartRouter.post('/item', async (req, res) => {
         heroImgURL,
         actId,
         actName,
+        datetime,
         price,
         cartId: cart.id,
       });

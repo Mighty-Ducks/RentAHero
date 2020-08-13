@@ -109,9 +109,14 @@ class AddressForm extends Component {
   }
 }
 
+AddressForm.defaultProps = {
+  firstName: 'First Name',
+  lastName: 'Last Name',
+};
+
 AddressForm.propTypes = {
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
 };
 
 const mapStateToProps = (state) => {

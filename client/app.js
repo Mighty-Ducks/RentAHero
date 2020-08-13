@@ -64,7 +64,7 @@ class App extends Component {
             />
             <Route exact path="/review" component={ReviewOrder} />
             <Route exact path="/confirmation" component={OrderConfirmation} />
-            <PrivateRoute exact path="/checkout" component={Checkout} />
+            <Route exact path="/checkout" component={Checkout} />
             <PrivateRoute exact path="/users" component={Users} />
             <PrivateRoute exact path="/users/:id" component={UserPage} />
           </Switch>
