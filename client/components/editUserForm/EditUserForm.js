@@ -1,35 +1,40 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { updateHero, deleteHero } from '../../store/actions';
+import { updateUser, deleteUser } from '../../store/actions';
 
 class EditUserForm extends Component {
   constructor({ data }) {
     super();
 
-    const { id, firstName, lastName, email } = data;
+    const { id, firstName, lastName, email, admin } = data;
 
     this.state = {
       id,
       firstName,
       lastName,
       email,
+      admin,
     };
   }
 
-  setFieldToState = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+  setFieldToState = ({ target: { name, value, checked, type } }) => {
+    if (type === 'checkbox') {
+      this.setState({ [name]: checked });
+    } else {
+      this.setState({ [name]: value });
+    }
   };
 
-  updateHero = async (e) => {
+  updateUser = async (e) => {
     e.preventDefault();
     const { post } = this.props;
-    const { id, name, imgURL, description, acts } = this.state;
+    const { id, firstName, lastName, email, admin } = this.state;
 
-    post(id, { name, imgURL, description, acts });
+    post(id, { firstName, lastName, email, admin });
   };
 
-  deleteHero = (e) => {
+  deleteUser = (e) => {
     e.preventDefault();
     const { remove } = this.props;
     const { id } = this.state;
@@ -38,10 +43,10 @@ class EditUserForm extends Component {
   };
 
   render() {
-    const { firstName, lastName, email } = this.state;
+    const { id, firstName, lastName, email, admin } = this.state;
 
     return (
-      <form className="add-hero-form">
+      <form className="add-user-form">
         <div className="form-group">
           <label htmlFor="firstName" className="label-full">
             First Name
@@ -84,18 +89,34 @@ class EditUserForm extends Component {
             />
           </label>
         </div>
-        <div className="card-footer add-hero-footer text-center">
+        <div className="form-group form-check">
+          <label
+            className="form-check-label d-flex justify-content-between"
+            htmlFor={id}
+          >
+            is Admin
+            <input
+              className="form-check-input"
+              name="admin"
+              type="checkbox"
+              id={id}
+              checked={admin}
+              onChange={this.setFieldToState}
+            />
+          </label>
+        </div>
+        <div className="card-footer add-user-footer text-center">
           <input
             type="button"
             className="btn btn-danger"
             value="Delete"
-            onClick={this.deleteHero}
+            onClick={this.deleteUser}
           />
           <input
             type="button"
             className="btn btn-success"
             value="Save"
-            onClick={this.updateHero}
+            onClick={this.updateUser}
           />
         </div>
       </form>
@@ -105,18 +126,17 @@ class EditUserForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    acts: state.acts.actsList,
-    hero: state.heroes.hero,
+    user: state.users.user,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    post: (id, updatedHero) => {
-      dispatch(updateHero(id, updatedHero));
+    post: (id, updatedUser) => {
+      dispatch(updateUser(id, updatedUser));
     },
     remove: (id) => {
-      dispatch(deleteHero(id));
+      dispatch(deleteUser(id));
     },
   };
 };

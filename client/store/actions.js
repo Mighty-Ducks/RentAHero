@@ -1,11 +1,43 @@
 const axios = require('axios');
 const { TYPES } = require('./types');
 
+export const removeUser = (id) => {
+  return {
+    type: TYPES.DELETE_USER,
+    payload: id,
+  };
+};
+
+export const deleteUser = (id) => async (dispatch) => {
+  await axios.delete(`/api/users/${id}`);
+
+  return dispatch(removeUser(id));
+};
+
+export const updUser = (updatedUser) => {
+  return {
+    type: TYPES.UPDATE_USER,
+    payload: updatedUser,
+  };
+};
+
+export const updateUser = (id, payload) => async (dispatch) => {
+  const { data } = await axios.put(`/api/users/${id}`, payload);
+
+  return dispatch(updUser(data));
+};
+
+export const setUser = (user) => {
+  return {
+    type: TYPES.SET_USER,
+    payload: user,
+  };
+};
+
 export const setUsers = (users) => {
   return {
     type: TYPES.SET_USERS,
     payload: users,
-    loading: false,
   };
 };
 
@@ -13,13 +45,6 @@ export const fetchUsers = () => async (dispatch) => {
   const { data } = await axios.get('/api/users/');
 
   return dispatch(setUsers(data));
-};
-
-export const setUser = ({ id, firstName, lastName, user, admin }) => {
-  return {
-    type: TYPES.SET_USER,
-    payload: { id, firstName, lastName, user, admin },
-  };
 };
 
 export const setUserOrders = (orders) => {
@@ -51,11 +76,13 @@ export const setLoggedOut = (flag) => async (dispatch) => {
 
 export const fetchUser = (id) => async (dispatch) => {
   const { data } = await axios.get(`/api/users/${id}`);
+
   return dispatch(setUser(data));
 };
 
 export const fetchUserOrders = (id) => async (dispatch) => {
   const { data } = await axios.get(`/api/users/${id}/orders`);
+
   return dispatch(setUserOrders(data));
 };
 
@@ -110,7 +137,7 @@ export const logInWithSession = () => {
           id: data.id,
           firstName: data.firstName,
           lastName: data.lastName,
-          user: data.email,
+          email: data.email,
           admin: data.admin,
         })
       );

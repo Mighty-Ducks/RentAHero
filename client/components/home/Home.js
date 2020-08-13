@@ -8,7 +8,7 @@ export default class Home extends Component {
         <Banner
           slogan="Got robbers on a backyard?"
           title="Rent a Superhero!"
-          imgSrc="./assets/robbers.jpg"
+          imgSrc="./assets/heroes.jpg"
           imgAlt=""
           align=""
         />

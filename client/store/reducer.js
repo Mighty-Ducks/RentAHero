@@ -92,8 +92,20 @@ const usersReducer = (state = initialUserState, action) => {
         user: action.payload,
         loading: false,
       };
+    case TYPES.UPDATE_USER:
+      return {
+        ...state,
+        usersList: state.usersList.map((user) =>
+          user.id === action.payload.id ? action.payload : user
+        ),
+        loading: false,
+      };
+    case TYPES.DELETE_USER:
+      return {
+        ...state,
+        usersList: state.usersList.filter((user) => user.id !== action.payload),
+      };
     case TYPES.SET_USERS:
-      console.log(action.payload);
       return {
         ...state,
         usersList: action.payload,
