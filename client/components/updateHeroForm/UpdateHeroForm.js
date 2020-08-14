@@ -15,7 +15,7 @@ class AddHeroForm extends Component {
       name,
       imgURL,
       description,
-      acts,
+      updatedActs: acts.map((act) => act.id).flat(),
     };
   }
 
@@ -24,12 +24,12 @@ class AddHeroForm extends Component {
   };
 
   setActsToState = (e) => {
-    const acts = [];
+    const { updatedActs } = this.state;
     const inputs = document.querySelectorAll('input[type=checkbox]');
     inputs.forEach((el) => {
-      if (el.checked) acts.push(el.value);
+      if (el.checked) updatedActs.push(el.value);
     });
-    this.setState({ [e.target.name]: acts });
+    this.setState({ updatedActs: acts });
   };
 
   updateHero = async (e) => {
