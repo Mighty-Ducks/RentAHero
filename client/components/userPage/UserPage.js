@@ -44,7 +44,7 @@ class UserPage extends Component {
               <span className="text-muted small">Address:</span>
               &nbsp;
               {street || ''}
-              ,&nbsp;
+              &nbsp;
               {state || ''}
               &nbsp;
               {zip || ''}
