@@ -9,6 +9,7 @@ class AddHeroForm extends Component {
     super();
 
     const { id, name, imgURL, description, acts } = data;
+
     this.state = {
       id,
       name,
