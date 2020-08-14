@@ -35,7 +35,6 @@ class App extends Component {
 
   componentDidUpdate() {
     const { logIn } = this.props;
-
     logIn();
   }
 

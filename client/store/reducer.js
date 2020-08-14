@@ -77,6 +77,13 @@ const actsReducer = (state = initialActState, action) => {
 };
 
 const initialUserState = {
+  me: {
+    firstName: '',
+    lastName: '',
+    street: '',
+    state: '',
+    zip: '',
+  },
   user: {
     firstName: '',
     lastName: '',
@@ -93,6 +100,11 @@ const initialUserState = {
 
 const usersReducer = (state = initialUserState, action) => {
   switch (action.type) {
+    case TYPES.SET_ME:
+      return {
+        ...state,
+        me: action.payload,
+      };
     case TYPES.SET_USER:
       return {
         ...state,

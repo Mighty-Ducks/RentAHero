@@ -71,15 +71,15 @@ class Header extends Component {
 const mapStateToProps = (state) => {
   return {
     loggedIn: state.users.loggedIn,
-    id: state.users.user.id,
-    firstName: state.users.user.firstName,
+    id: state.users.me.id,
+    firstName: state.users.me.firstName,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     logOut: () => {
-      dispatch(setLoggedOut(false));
+      dispatch(setLoggedOut());
     },
   };
 };
