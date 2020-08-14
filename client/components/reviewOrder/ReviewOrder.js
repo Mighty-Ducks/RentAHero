@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import moment from 'moment';
 
 import { fetchCart, updateCart } from '../../store/actions';
-import './ReviewOrder.scss';
+import './reviewOrder.scss';
 
 class ReviewOrder extends Component {
   state = {
@@ -44,7 +44,7 @@ class ReviewOrder extends Component {
     }
 
     return (
-      <div className="container-xl">
+      <div className="container-xl review-order">
         <div className="card">
           <div className="card-header">Order Review</div>
           <div className="card-body">

@@ -34,6 +34,12 @@ export const setUser = (user) => {
   };
 };
 
+export const fetchUser = (id) => async (dispatch) => {
+  const { data } = await axios.get(`/api/users/${id}`);
+
+  return dispatch(setUser(data));
+};
+
 export const setUsers = (users) => {
   return {
     type: TYPES.SET_USERS,
@@ -68,16 +74,21 @@ export const setError = (err) => {
   };
 };
 
-export const setLoggedOut = (flag) => async (dispatch) => {
-  await axios.put('/api/users/logout');
+export const setLoggedOut = (flag) => {
+  return async (dispatch) => {
+    await axios.put('/api/users/logout');
 
-  return dispatch(setLoggedIn(flag));
-};
+    const user = {
+      firstName: '',
+      lastName: '',
+      street: '',
+      state: '',
+      zip: '',
+    };
 
-export const fetchUser = (id) => async (dispatch) => {
-  const { data } = await axios.get(`/api/users/${id}`);
-
-  return dispatch(setUser(data));
+    dispatch(setLoggedIn(flag));
+    dispatch(setUser(user));
+  };
 };
 
 export const fetchUserOrders = (id) => async (dispatch) => {

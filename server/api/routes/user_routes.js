@@ -5,7 +5,6 @@ const {
   Item,
   User,
   Session,
-  Event,
 } = require('../../db/models/models_index.js');
 const hash = require('../../utilities/index');
 
@@ -67,7 +66,6 @@ usersRouter.get('/:id/orders', async (req, res) => {
       include: [
         {
           model: Item,
-          include: [Event],
         },
       ],
     });

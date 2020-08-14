@@ -58,15 +58,13 @@ class UserOrders extends Component {
                               <p className="mb-2 text-muted text-uppercase small">
                                 <strong>Appointment</strong>
                                 <br />
-                                {new Date(item.event.datetime).toLocaleString()}
+                                {new Date(item.datetime).toLocaleString()}
                               </p>
                             </div>
                           </div>
                           <div className="d-flex justify-content-between align-items-center">
                             <p className="mb-0">
-                              <span>
-                                <strong>{`$${item.price}`}</strong>
-                              </span>
+                              <strong>{`$${item.price}`}</strong>
                             </p>
                           </div>
                         </div>

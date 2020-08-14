@@ -22,7 +22,7 @@ class Cart extends Component {
 
     return (
       <section>
-        <div className="row container-xl">
+        <div className="row container-xl cart">
           <div className="col-lg-8">
             <div className="card wish-list mb-3">
               <div className="card-body">
@@ -44,26 +44,31 @@ class Cart extends Component {
                           className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"
                         >
                           {item.actName}
+                          <span className="space-dots"></span>
                           <span>{`$${item.price}`}</span>
                         </li>
                       );
                     })}
                     <li
                       key="totalAmount"
-                      className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"
+                      className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0 total"
                     >
                       Total Amount
-                      <span>
-                        {`$${cart.reduce((acc, curr) => {
+                      <span className="space-dots"></span>
+                      <strong className="h1">
+                        $
+                        {cart.reduce((acc, curr) => {
                           return acc + curr.price;
-                        }, 0)}`}
-                      </span>
+                        }, 0)}
+                      </strong>
                     </li>
                   </ul>
+                </div>
+                <div className="card-footer text-center">
                   <Link
                     to="/checkout"
                     type="button"
-                    className="btn btn-primary btn-block waves-effect waves-light"
+                    className="btn btn-primary"
                   >
                     go to checkout
                   </Link>
