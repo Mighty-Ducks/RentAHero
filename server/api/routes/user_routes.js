@@ -116,14 +116,6 @@ usersRouter.put(
       admin,
     } = req.body;
 
-    // const updParams = {};
-
-    // if (firstName) updParams.firstName = firstName;
-    // if (lastName) updParams.lastName = lastName;
-    // if (email) updParams.email = email;
-    // if (actIds) updParams.actIds = actIds;
-    // if (categoryIds) updParams.categoryIds = categoryIds;
-
     try {
       const user = await User.findByPk(id);
 
@@ -139,9 +131,9 @@ usersRouter.put(
           admin,
         });
         res.status(200).send(updatedUser);
+      } else {
+        res.status(404).send({ message: `User id: ${id} not found.` });
       }
-
-      res.status(404).send({ message: `User id: ${id} not found.` });
     } catch (e) {
       console.error(e);
       res.status(500).send({ message: 'Server error' });
@@ -228,7 +220,7 @@ usersRouter.post('/login', async (req, res) => {
 
     await usersSession.setUser(user);
 
-    res.sendStatus(201);
+    res.status(201).send(user);
   } else {
     res.status(401).send({ message: `Password is incorrect` });
   }

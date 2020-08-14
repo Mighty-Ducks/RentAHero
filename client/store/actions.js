@@ -1,30 +1,17 @@
 const axios = require('axios');
 const { TYPES } = require('./types');
 
-export const removeUser = (id) => {
+export const setMe = (me) => {
   return {
-    type: TYPES.DELETE_USER,
-    payload: id,
+    type: TYPES.SET_ME,
+    payload: me,
   };
 };
 
-export const deleteUser = (id) => async (dispatch) => {
-  await axios.delete(`/api/users/${id}`);
+export const fetchMe = (id) => async (dispatch) => {
+  const { data } = await axios.get(`/api/users/${id}`);
 
-  return dispatch(removeUser(id));
-};
-
-export const updUser = (updatedUser) => {
-  return {
-    type: TYPES.UPDATE_USER,
-    payload: updatedUser,
-  };
-};
-
-export const updateUser = (id, payload) => async (dispatch) => {
-  const { data } = await axios.put(`/api/users/${id}`, payload);
-
-  return dispatch(updUser(data));
+  return dispatch(setMe(data));
 };
 
 export const setUser = (user) => {
@@ -40,6 +27,37 @@ export const fetchUser = (id) => async (dispatch) => {
   return dispatch(setUser(data));
 };
 
+export const updUser = (updatedUser) => {
+  return {
+    type: TYPES.UPDATE_USER,
+    payload: updatedUser,
+  };
+};
+
+export const updateUser = (id, payload, me) => {
+  return async (dispatch) => {
+    const { data } = await axios.put(`/api/users/${id}`, payload);
+
+    dispatch(updUser(data));
+    if (id === me.id) {
+      dispatch(setMe(data));
+    }
+  };
+};
+
+export const removeUser = (id) => {
+  return {
+    type: TYPES.DELETE_USER,
+    payload: id,
+  };
+};
+
+export const deleteUser = (id) => async (dispatch) => {
+  await axios.delete(`/api/users/${id}`);
+
+  return dispatch(removeUser(id));
+};
+
 export const setUsers = (users) => {
   return {
     type: TYPES.SET_USERS,
@@ -51,13 +69,6 @@ export const fetchUsers = () => async (dispatch) => {
   const { data } = await axios.get('/api/users/');
 
   return dispatch(setUsers(data));
-};
-
-export const setUserOrders = (orders) => {
-  return {
-    type: TYPES.SET_USER_ORDERS,
-    payload: orders,
-  };
 };
 
 export const setLoggedIn = (flag) => {
@@ -74,7 +85,40 @@ export const setError = (err) => {
   };
 };
 
-export const setLoggedOut = (flag) => {
+// login
+export const postUser = (email, password) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post('/api/users/login', {
+        email,
+        password,
+      });
+
+      await dispatch(setMe(data));
+      dispatch(setLoggedIn(true));
+      dispatch(setError(''));
+      return true;
+    } catch (e) {
+      dispatch(setError(e.response.data.message));
+      return false;
+    }
+  };
+};
+
+export const logInWithSession = () => {
+  return async (dispatch) => {
+    const { data } = await axios.get('/api/users/session');
+
+    if (data) {
+      dispatch(setMe(data));
+      dispatch(setLoggedIn(true));
+    } else {
+      dispatch(setLoggedIn(false));
+    }
+  };
+};
+
+export const setLoggedOut = () => {
   return async (dispatch) => {
     await axios.put('/api/users/logout');
 
@@ -86,33 +130,8 @@ export const setLoggedOut = (flag) => {
       zip: '',
     };
 
-    dispatch(setLoggedIn(flag));
-    dispatch(setUser(user));
-  };
-};
-
-export const fetchUserOrders = (id) => async (dispatch) => {
-  const { data } = await axios.get(`/api/users/orders/${id}`);
-
-  return dispatch(setUserOrders(data));
-};
-
-export const postUser = (email, password, flag) => {
-  return async (dispatch) => {
-    try {
-      await axios.post('/api/users/login', {
-        email,
-        password,
-      });
-
-      dispatch(setUser({ email }));
-      dispatch(setLoggedIn(flag));
-      dispatch(setError(''));
-      return true;
-    } catch (e) {
-      dispatch(setError(e.response.data.message));
-      return false;
-    }
+    dispatch(setLoggedIn(false));
+    dispatch(setMe(user));
   };
 };
 
@@ -129,6 +148,7 @@ export const registerUser = (firstName, lastName, email, password) => {
         localStorage.setItem('token', data.token);
         const { history } = this.props;
 
+        dispatch(setMe(data));
         dispatch(setLoggedIn(true));
         history.push('/');
       }
@@ -138,28 +158,17 @@ export const registerUser = (firstName, lastName, email, password) => {
   };
 };
 
-export const logInWithSession = () => {
-  return async (dispatch) => {
-    const { data } = await axios.get('/api/users/session');
-
-    if (data) {
-      dispatch(
-        setUser({
-          id: data.id,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email,
-          street: data.street,
-          state: data.state,
-          zip: data.zip,
-          admin: data.admin,
-        })
-      );
-      dispatch(setLoggedIn(true));
-    } else {
-      dispatch(setLoggedIn(false));
-    }
+export const setUserOrders = (orders) => {
+  return {
+    type: TYPES.SET_USER_ORDERS,
+    payload: orders,
   };
+};
+
+export const fetchUserOrders = (id) => async (dispatch) => {
+  const { data } = await axios.get(`/api/users/orders/${id}`);
+
+  return dispatch(setUserOrders(data));
 };
 
 export const setHeroes = (heroes) => {

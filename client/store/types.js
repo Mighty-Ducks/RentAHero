@@ -1,4 +1,5 @@
 export const TYPES = {
+  SET_ME: 'SET_ME',
   SET_USER: 'SET_USER',
   UPDATE_USER: 'UPDATE_USER',
   DELETE_USER: 'DELETE_USER',

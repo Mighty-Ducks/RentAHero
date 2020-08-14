@@ -31,7 +31,7 @@ class EditUserForm extends Component {
 
   updateUser = async (e) => {
     e.preventDefault();
-    const { post } = this.props;
+    const { me, post } = this.props;
     const {
       id,
       firstName,
@@ -43,7 +43,7 @@ class EditUserForm extends Component {
       admin,
     } = this.state;
 
-    post(id, { firstName, lastName, email, street, state, zip, admin });
+    post(id, { firstName, lastName, email, street, state, zip, admin }, me);
   };
 
   deleteUser = (e) => {
@@ -189,14 +189,14 @@ class EditUserForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.users.user,
+    me: state.users.me,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    post: (id, updatedUser) => {
-      dispatch(updateUser(id, updatedUser));
+    post: (id, updatedUser, me) => {
+      dispatch(updateUser(id, updatedUser, me));
     },
     remove: (id) => {
       dispatch(deleteUser(id));
@@ -207,6 +207,7 @@ const mapDispatchToProps = (dispatch) => {
 EditUserForm.propTypes = {
   post: PropTypes.func.isRequired,
   remove: PropTypes.func.isRequired,
+  me: PropTypes.oneOfType([PropTypes.object]).isRequired,
   data: PropTypes.oneOfType([PropTypes.object]).isRequired,
 };
 
