@@ -7,13 +7,16 @@ class EditUserForm extends Component {
   constructor({ data }) {
     super();
 
-    const { id, firstName, lastName, email, admin } = data;
+    const { id, firstName, lastName, email, street, state, zip, admin } = data;
 
     this.state = {
       id,
       firstName,
       lastName,
       email,
+      street,
+      state,
+      zip,
       admin,
     };
   }
@@ -29,9 +32,18 @@ class EditUserForm extends Component {
   updateUser = async (e) => {
     e.preventDefault();
     const { post } = this.props;
-    const { id, firstName, lastName, email, admin } = this.state;
+    const {
+      id,
+      firstName,
+      lastName,
+      email,
+      street,
+      state,
+      zip,
+      admin,
+    } = this.state;
 
-    post(id, { firstName, lastName, email, admin });
+    post(id, { firstName, lastName, email, street, state, zip, admin });
   };
 
   deleteUser = (e) => {
@@ -43,7 +55,16 @@ class EditUserForm extends Component {
   };
 
   render() {
-    const { id, firstName, lastName, email, admin } = this.state;
+    const {
+      id,
+      firstName,
+      lastName,
+      email,
+      street,
+      state,
+      zip,
+      admin,
+    } = this.state;
 
     return (
       <form className="add-user-form">
@@ -85,6 +106,48 @@ class EditUserForm extends Component {
               value={email}
               onChange={this.setFieldToState}
               placeholder="Email"
+              required
+            />
+          </label>
+        </div>
+        <div className="form-group">
+          <label htmlFor="description" className="label-full">
+            Street
+            <input
+              type="text"
+              className="form-control"
+              name="street"
+              value={street}
+              onChange={this.setFieldToState}
+              placeholder="Street"
+              required
+            />
+          </label>
+        </div>
+        <div className="form-group">
+          <label htmlFor="description" className="label-full">
+            State
+            <input
+              type="text"
+              className="form-control"
+              name="state"
+              value={state}
+              onChange={this.setFieldToState}
+              placeholder="State"
+              required
+            />
+          </label>
+        </div>
+        <div className="form-group">
+          <label htmlFor="description" className="label-full">
+            Zip
+            <input
+              type="text"
+              className="form-control"
+              name="zip"
+              value={zip}
+              onChange={this.setFieldToState}
+              placeholder="Zip"
               required
             />
           </label>
