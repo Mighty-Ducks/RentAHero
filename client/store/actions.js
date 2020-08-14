@@ -191,6 +191,13 @@ export const fetchHeroes = (page) => {
   };
 };
 
+export const fetchNewHeroes = () => {
+  return async (dispatch) => {
+    const { data } = await axios.get(`/api/superheroes/new`);
+    dispatch(setHeroes(data));
+  };
+};
+
 export const setSearchHeroes = (searchResults) => {
   return {
     type: TYPES.SET_SEARCH_HEROES,

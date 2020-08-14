@@ -52,6 +52,26 @@ superheroesRouter.get('/:id', async (req, res) => {
   }
 });
 
+superheroesRouter.get('/new', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const superhero = await Superhero.findByPk(id, {
+      limit: 6,
+      include: [Act],
+      order: [['createdAt']],
+    });
+
+    if (superhero) {
+      res.status(200).send(superhero);
+    } else {
+      res.status(404).send({ message: `Superhero id: ${id} not found.` });
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({ message: 'Server error' });
+  }
+});
+
 // update/edit superhero
 superheroesRouter.put('/:id', async (req, res) => {
   const { id } = req.params;
