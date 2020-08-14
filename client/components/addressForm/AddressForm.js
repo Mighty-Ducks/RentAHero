@@ -14,14 +14,23 @@ class AddressForm extends Component {
   };
 
   componentDidMount() {
+    this.updateState();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      this.updateState();
+    }
+  }
+
+  updateState = () => {
     const {
       user: { firstName, lastName, street, state, zip },
     } = this.props;
 
     const name = firstName && lastName ? `${firstName} ${lastName}` : '';
-
     this.setState({ name, street, state, zip });
-  }
+  };
 
   setFieldToState = (e) => {
     this.setState({ [e.target.name]: e.target.value });
