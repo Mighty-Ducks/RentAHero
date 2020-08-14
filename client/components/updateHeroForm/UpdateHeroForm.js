@@ -15,7 +15,7 @@ class AddHeroForm extends Component {
       name,
       imgURL,
       description,
-      updatedActs: acts.map((act) => act.id),
+      actIds: acts.map((act) => act.id),
     };
   }
 
@@ -29,15 +29,15 @@ class AddHeroForm extends Component {
     inputs.forEach((el) => {
       if (el.checked) newActs.push(el.value);
     });
-    this.setState({ updatedActs: newActs }, ()=> console.log(this.state.updatedActs));
+    this.setState({ actIds: newActs });
   };
 
   updateHero = async (e) => {
     e.preventDefault();
     const { post } = this.props;
-    const { id, name, imgURL, description, acts } = this.state;
+    const { id, name, imgURL, description, actIds } = this.state;
 
-    post(id, { name, imgURL, description, acts });
+    post(id, { name, imgURL, description, actIds });
   };
 
   deleteHero = (e) => {
@@ -50,6 +50,7 @@ class AddHeroForm extends Component {
 
   render() {
     const { acts } = this.props;
+    const { actIds } = this.state;
     const { name, imgURL, description } = this.state;
 
     return (
@@ -102,6 +103,7 @@ class AddHeroForm extends Component {
           <div className="acts-container">
             {acts &&
               acts.map((act) => {
+                const filterActs = actIds.filter((actId) => actId === act.id);
                 return (
                   <div key={act.id} className="form-check">
                     <label
@@ -115,6 +117,7 @@ class AddHeroForm extends Component {
                         value={act.id}
                         id={`check-${act.id}`}
                         onChange={this.setActsToState}
+                        checked={filterActs.length > 0}
                       />
                       {act.name}
                       <span className="space-dots"></span>
