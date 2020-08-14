@@ -148,7 +148,6 @@ superheroesRouter.post(
     }
 
     const { name, imgURL, description, actIds, categoryIds } = req.body;
-
     try {
       const superhero = await Superhero.create({
         name,

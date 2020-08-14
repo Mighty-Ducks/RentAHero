@@ -9,20 +9,20 @@ class AddHeroForm extends Component {
     name: '',
     imgURL: '',
     description: '',
-    acts: [],
+    actIds: [],
   };
 
   setFieldToState = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  setActsToState = (e) => {
+  setActsToState = () => {
     const acts = [];
     const inputs = document.querySelectorAll('input[type=checkbox]');
     inputs.forEach((el) => {
       if (el.checked) acts.push(el.value);
     });
-    this.setState({ [e.target.name]: acts });
+    this.setState({ actIds: acts });
   };
 
   createHero = async (e) => {
