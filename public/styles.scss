@@ -49,3 +49,9 @@ body {
 .border-dash {
   border-style: dashed !important;
 }
+
+.space-dots {
+  border-bottom: 1px dotted #ccc;
+  flex-grow: 2;
+  margin: .6rem 1rem;
+}

@@ -39,6 +39,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "sequelize": "^6.3.3",
+    "stripe": "^8.84.0",
     "webpack": "^4.44.0",
     "webpack-cli": "^3.3.12"
   },

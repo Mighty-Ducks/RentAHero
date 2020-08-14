@@ -126,53 +126,57 @@ class Hero extends Component {
                       );
                     })}
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="date">Date</label>
-                    <div className="col-10">
-                      <input
-                        className="form-control"
-                        type="date"
-                        value={date}
-                        id="date"
-                        onChange={(ev) => {
-                          this.setState({ date: ev.target.value });
-                        }}
-                      />
+                  <div className="form-row">
+                    <div className="form-group col-md-6">
+                      <label className="label-full" htmlFor="date">
+                        Date
+                        <input
+                          className="form-control"
+                          type="date"
+                          value={date}
+                          id="date"
+                          onChange={(ev) => {
+                            this.setState({ date: ev.target.value });
+                          }}
+                        />
+                      </label>
                     </div>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="time">Time</label>
-                    <select
-                      className="form-control"
-                      name="time"
-                      id="time"
-                      value={time}
-                      onChange={(ev) => {
-                        this.setState({ time: ev.target.value });
-                      }}
-                    >
-                      <option>-- Choose time --</option>
-                      {hours.map((hour) => {
-                        const eventsByDate = events.filter(
-                          (ev) => date === ev.datetime.substring(0, 10)
-                        );
-                        const taken = eventsByDate.filter((ev) => {
-                          const evTime = moment(ev.datetime).hours();
-                          const finalTime =
-                            evTime < 10 ? `0${evTime}:00` : `${evTime}:00`;
-                          return hour === finalTime;
-                        });
-                        return (
-                          <option
-                            key={hour}
-                            disabled={taken.length > 0 ? true : null}
-                            value={hour}
-                          >
-                            {hour}
-                          </option>
-                        );
-                      })}
-                    </select>
+                    <div className="form-group col-md-6">
+                      <label className="label-full" htmlFor="time">
+                        Time
+                        <select
+                          className="form-control"
+                          name="time"
+                          id="time"
+                          value={time}
+                          onChange={(ev) => {
+                            this.setState({ time: ev.target.value });
+                          }}
+                        >
+                          <option>-- Choose time --</option>
+                          {hours.map((hour) => {
+                            const eventsByDate = events.filter(
+                              (ev) => date === ev.datetime.substring(0, 10)
+                            );
+                            const taken = eventsByDate.filter((ev) => {
+                              const evTime = moment(ev.datetime).hours();
+                              const finalTime =
+                                evTime < 10 ? `0${evTime}:00` : `${evTime}:00`;
+                              return hour === finalTime;
+                            });
+                            return (
+                              <option
+                                key={hour}
+                                disabled={taken.length > 0 ? true : null}
+                                value={hour}
+                              >
+                                {hour}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </label>
+                    </div>
                   </div>
                   <div className="d-flex justify-content-between align-items-center">
                     <div className="total">

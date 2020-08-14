@@ -6,34 +6,32 @@ import UserOrders from '../userOrders/UserOrders';
 import EditUserForm from '../editUserForm/EditUserForm';
 import Popup from '../popup/Popup';
 import EditUserButton from '../buttons/EditUserButton';
+import { fetchUser } from '../../store/actions';
 
 class UserPage extends Component {
-  // componentDidUpdate(prev) {
-  //   const { admin, email, id, firstName, lastName } = this.props;
-  //   const user = { admin, email, id, firstName, lastName };
-  //   const keys = Object.keys(prev);
-  //   console.log(this.props);
-  //   console.log(keys);
+  componentDidMount() {
+    const {
+      load,
+      match: {
+        params: { id },
+      },
+    } = this.props;
 
-  //   keys.forEach((key) => {
-  //     console.log(prev[key], user[key]);
-  //     if (prev[key] !== user[key]) {
-  //       fetchUser(id);
-  //     }
-  //     console.log(this.props);
-  //   });
-  // }
+    load(id);
+  }
 
   render() {
     const {
-      firstName,
-      lastName,
-      email,
-      id,
-      street,
-      state,
-      zip,
-      admin,
+      user: {
+        firstName,
+        lastName,
+        email,
+        id,
+        street,
+        state,
+        zip,
+        admin,
+      },
     } = this.props;
     return (
       <div className="hero-view container-xl">
@@ -86,43 +84,30 @@ class UserPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    email: state.users.user.email,
-    firstName: state.users.user.firstName,
-    lastName: state.users.user.lastName,
-    id: state.users.user.id,
-    street: state.users.user.street,
-    state: state.users.user.state,
-    zip: state.users.user.zip,
-    admin: state.users.user.admin,
+    user: state.users.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    load: (id) => {
+      dispatch(fetchUser(id));
+    },
   };
 };
 
 UserPage.defaultProps = {
-  email: '',
-  firstName: '',
-  lastName: '',
-  street: '',
-  state: '',
-  zip: 0,
   match: {},
-  id: '',
-  admin: false,
 };
 
 UserPage.propTypes = {
-  email: PropTypes.string,
-  firstName: PropTypes.string,
-  lastName: PropTypes.string,
-  id: PropTypes.string,
-  street: PropTypes.string,
-  state: PropTypes.string,
-  zip: PropTypes.number,
-  admin: PropTypes.bool,
+  user: PropTypes.oneOfType([PropTypes.object]).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
     }),
   }),
+  load: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(UserPage);
+export default connect(mapStateToProps, mapDispatchToProps)(UserPage);

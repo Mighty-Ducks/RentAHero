@@ -34,6 +34,12 @@ export const setUser = (user) => {
   };
 };
 
+export const fetchUser = (id) => async (dispatch) => {
+  const { data } = await axios.get(`/api/users/${id}`);
+
+  return dispatch(setUser(data));
+};
+
 export const setUsers = (users) => {
   return {
     type: TYPES.SET_USERS,
@@ -72,12 +78,6 @@ export const setLoggedOut = (flag) => async (dispatch) => {
   await axios.put('/api/users/logout');
 
   return dispatch(setLoggedIn(flag));
-};
-
-export const fetchUser = (id) => async (dispatch) => {
-  const { data } = await axios.get(`/api/users/${id}`);
-
-  return dispatch(setUser(data));
 };
 
 export const fetchUserOrders = (id) => async (dispatch) => {

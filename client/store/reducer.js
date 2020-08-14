@@ -45,6 +45,7 @@ const heroesReducer = (state = initialHeroState, action) => {
         heroesList: state.heroesList.map((hero) =>
           hero.id === action.payload.id ? action.payload : hero
         ),
+        hero: action.payload,
       };
     case TYPES.DELETE_HERO:
       return {
@@ -98,6 +99,7 @@ const usersReducer = (state = initialUserState, action) => {
         usersList: state.usersList.map((user) =>
           user.id === action.payload.id ? action.payload : user
         ),
+        user: action.payload,
         loading: false,
       };
     case TYPES.DELETE_USER:
