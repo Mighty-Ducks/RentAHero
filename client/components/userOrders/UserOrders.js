@@ -55,6 +55,11 @@ class UserOrders extends Component {
                               <p className="mb-2 text-muted text-uppercase small">
                                 {item.actName}
                               </p>
+                              <p className="mb-2 text-muted text-uppercase small">
+                                <strong>Appointment</strong>
+                                <br />
+                                {new Date(item.event.datetime).toLocaleString()}
+                              </p>
                             </div>
                           </div>
                           <div className="d-flex justify-content-between align-items-center">

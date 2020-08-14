@@ -1,5 +1,4 @@
 const cartRouter = require('express').Router();
-const chalk = require('chalk');
 // const { check, validationResult } = require('express-validator');
 const { Cart, Item } = require('../../db/models/models_index.js');
 
@@ -64,7 +63,6 @@ cartRouter.delete('/item/:id', async (req, res) => {
 // add an item to cart - if a cart does not exist create one!
 // '/api/cart/item'
 cartRouter.post('/item', async (req, res) => {
-  console.log(chalk.yellow(`request was made to ${req.path}`));
   const isCart = await Cart.findOne({
     where: {
       sessionId: req.session_id,
