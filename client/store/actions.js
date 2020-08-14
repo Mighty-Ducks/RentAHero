@@ -74,10 +74,21 @@ export const setError = (err) => {
   };
 };
 
-export const setLoggedOut = (flag) => async (dispatch) => {
-  await axios.put('/api/users/logout');
+export const setLoggedOut = (flag) => {
+  return async (dispatch) => {
+    await axios.put('/api/users/logout');
 
-  return dispatch(setLoggedIn(flag));
+    const user = {
+      firstName: '',
+      lastName: '',
+      street: '',
+      state: '',
+      zip: '',
+    };
+
+    dispatch(setLoggedIn(flag));
+    dispatch(setUser(user));
+  };
 };
 
 export const fetchUserOrders = (id) => async (dispatch) => {

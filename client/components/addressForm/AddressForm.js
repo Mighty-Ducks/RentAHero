@@ -17,7 +17,10 @@ class AddressForm extends Component {
     const {
       user: { firstName, lastName, street, state, zip },
     } = this.props;
-    this.setState({ name: `${firstName} ${lastName}`, street, state, zip });
+
+    const name = firstName && lastName ? `${firstName} ${lastName}` : '';
+
+    this.setState({ name, street, state, zip });
   }
 
   setFieldToState = (e) => {
@@ -116,7 +119,7 @@ AddressForm.propTypes = {
     lastName: PropTypes.string.isRequired,
     street: PropTypes.string.isRequired,
     state: PropTypes.string.isRequired,
-    zip: PropTypes.number.isRequired,
+    zip: PropTypes.string.isRequired,
   }).isRequired,
 };
 

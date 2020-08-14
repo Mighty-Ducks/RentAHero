@@ -22,17 +22,9 @@ class UserPage extends Component {
 
   render() {
     const {
-      user: {
-        firstName,
-        lastName,
-        email,
-        id,
-        street,
-        state,
-        zip,
-        admin,
-      },
+      user: { firstName, lastName, email, id, street, state, zip, admin },
     } = this.props;
+
     return (
       <div className="hero-view container-xl">
         <h1>Profile Info</h1>
@@ -51,11 +43,11 @@ class UserPage extends Component {
             <p className="card-text">
               <span className="text-muted small">Address:</span>
               &nbsp;
-              {street}
+              {street || ''}
               ,&nbsp;
-              {state}
+              {state || ''}
               &nbsp;
-              {zip}
+              {zip || ''}
             </p>
           </div>
           <div className="card-footer text-center">
@@ -98,10 +90,11 @@ const mapDispatchToProps = (dispatch) => {
 
 UserPage.defaultProps = {
   match: {},
+  user: {},
 };
 
 UserPage.propTypes = {
-  user: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  user: PropTypes.oneOfType([PropTypes.object]),
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
