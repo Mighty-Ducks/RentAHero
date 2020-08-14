@@ -19,6 +19,7 @@ class Cart extends Component {
         location: { pathname },
       },
     } = this.props;
+
     return (
       <section>
         <div className="row container-xl">
@@ -93,16 +94,15 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-Cart.defaultProps = {
-  history: {},
-};
-
 Cart.propTypes = {
   cart: PropTypes.arrayOf(PropTypes.object).isRequired,
   load: PropTypes.func.isRequired,
   deleteItem: PropTypes.func.isRequired,
-  pathname: PropTypes.string.isRequired,
-  history: PropTypes.objectOf(PropTypes.object),
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

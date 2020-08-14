@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { postUser } from '../../store/actions';
+
 import './addressForm.scss';
 
 class AddressForm extends Component {
@@ -15,11 +15,7 @@ class AddressForm extends Component {
   };
 
   componentDidMount() {
-    const {
-      users: {
-        user: { firstName, lastName },
-      },
-    } = this.props;
+    const { firstName, lastName } = this.props;
     this.setState({ name: `${firstName} ${lastName}` });
   }
 
@@ -113,25 +109,21 @@ class AddressForm extends Component {
   }
 }
 
+AddressForm.defaultProps = {
+  firstName: 'First Name',
+  lastName: 'Last Name',
+};
+
 AddressForm.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
-  users: PropTypes.string.isRequired,
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
 };
 
 const mapStateToProps = (state) => {
   return {
-    heroes: state.heroes,
-    users: state.users,
-    error: state.users.error,
+    firstName: state.users.user.firstName,
+    lastName: state.users.user.lastName,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    logIn: (email, password, flag) => dispatch(postUser(email, password, flag)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddressForm);
+export default connect(mapStateToProps)(AddressForm);

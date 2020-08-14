@@ -256,11 +256,12 @@ const mapDispatchToProps = (dispatch) => {
         heroImgURL: imgURL,
         actId,
         actName,
+        datetime,
         price: actPrice,
         total,
       };
 
-      await dispatch(createItem(item, datetime));
+      await dispatch(createItem(item));
     },
   };
 };

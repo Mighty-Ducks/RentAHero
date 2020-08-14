@@ -7,11 +7,29 @@ const { Cart, Item } = require('../../db/models/models_index.js');
 
 // get all items in cart '/api/cart/'
 cartRouter.get('/', async (req, res) => {
+  const cart = await Cart.findOne({
+    where: { sessionId: req.session_id, status: false },
+  });
+  if (cart) {
+    try {
+      const items = await Item.findAll({ where: { cartId: cart.id } });
+      res.status(200).send(items);
+    } catch (e) {
+      console.error(e);
+      res.status(500).send({ message: 'Server error' });
+    }
+  }
+});
+
+// update cart to true when order completed '/api/cart/:id'
+cartRouter.put('/:id', async (req, res) => {
   // id belongs to cart
-  const cart = await Cart.findOne({ where: { sessionId: req.session_id } });
+  const { id } = req.params;
+
+  const cart = await Cart.findOne({ where: { id } });
   try {
-    const items = await Item.findAll({ where: { cartId: cart.id } });
-    res.status(200).send(items);
+    const cartUpdate = await cart.update({ status: true });
+    res.status(200).send(cartUpdate);
   } catch (e) {
     console.error(e);
     res.status(500).send({ message: 'Server error' });
@@ -50,6 +68,7 @@ cartRouter.post('/item', async (req, res) => {
   const isCart = await Cart.findOne({
     where: {
       sessionId: req.session_id,
+      status: false,
     },
   });
 
@@ -59,6 +78,7 @@ cartRouter.post('/item', async (req, res) => {
     heroImgURL,
     actId,
     actName,
+    datetime,
     price,
     total,
   } = req.body;
@@ -71,6 +91,7 @@ cartRouter.post('/item', async (req, res) => {
         heroImgURL,
         actId,
         actName,
+        datetime,
         price,
         cartId: isCart.id,
       });
@@ -94,6 +115,7 @@ cartRouter.post('/item', async (req, res) => {
         heroImgURL,
         actId,
         actName,
+        datetime,
         price,
         cartId: cart.id,
       });

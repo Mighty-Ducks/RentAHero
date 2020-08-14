@@ -1,4 +1,4 @@
-const { UUID, UUIDV4, FLOAT, STRING } = require('sequelize');
+const { UUID, UUIDV4, FLOAT, STRING, DATE } = require('sequelize');
 const db = require('../db_index');
 
 const Item = db.define('item', {
@@ -25,6 +25,10 @@ const Item = db.define('item', {
   },
   actName: {
     type: STRING,
+    allowNull: false,
+  },
+  datetime: {
+    type: DATE,
     allowNull: false,
   },
   price: {

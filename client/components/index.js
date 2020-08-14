@@ -23,6 +23,8 @@ import Users from './users/Users';
 import UserOrders from './userOrders/UserOrders';
 import UserPage from './userPage/UserPage';
 import Checkout from './checkout/Checkout';
+import ReviewOrder from './reviewOrder/ReviewOrder';
+import OrderConfirmation from './orderConfirmation/OrderConfirmation';
 
 export {
   PrivateRoute,
@@ -50,4 +52,6 @@ export {
   UserPage,
   UserOrders,
   Checkout,
+  ReviewOrder,
+  OrderConfirmation,
 };

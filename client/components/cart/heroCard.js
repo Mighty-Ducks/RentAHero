@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import moment from 'moment';
+
 import './cart.scss';
 
 const heroCard = (
-  { id, heroId, heroName, heroImgURL, actName, price },
+  { id, heroId, heroName, heroImgURL, actName, datetime, price },
   deleteItem
 ) => {
   return (
@@ -23,6 +25,7 @@ const heroCard = (
                 <p className="mb-2 text-muted text-uppercase small">
                   {actName}
                 </p>
+                <p>{moment(datetime).format('LLLL')}</p>
               </div>
             </div>
             <div className="d-flex justify-content-between align-items-center">
@@ -55,6 +58,7 @@ heroCard.propTypes = {
   heroName: PropTypes.string.isRequired,
   heroImgURL: PropTypes.string.isRequired,
   actName: PropTypes.string.isRequired,
+  datetime: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
 };
 

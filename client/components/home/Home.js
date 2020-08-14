@@ -6,7 +6,7 @@ export default class Home extends Component {
     return (
       <>
         <Banner
-          slogan="Got robbers on a backyard?"
+          slogan="Got robbers on your backyard?!"
           title="Rent a Superhero!"
           imgSrc="./assets/heroes.jpg"
           imgAlt=""
