@@ -1,5 +1,4 @@
 const cartRouter = require('express').Router();
-const chalk = require('chalk');
 // const { check, validationResult } = require('express-validator');
 const { Cart, Item } = require('../../db/models/models_index.js');
 
