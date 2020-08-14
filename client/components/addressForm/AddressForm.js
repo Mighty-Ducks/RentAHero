@@ -96,8 +96,6 @@ class AddressForm extends Component {
                 value={zip}
                 onChange={this.setFieldToState}
                 id="zip"
-                type="number"
-                maxLength="5"
                 required
               />
             </label>
