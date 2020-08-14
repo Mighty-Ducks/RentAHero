@@ -32,6 +32,20 @@ class Hero extends Component {
     loadEvents(id);
   }
 
+  componentDidUpdate(prevProps) {
+    const {
+      events,
+      loadEvents,
+      match: {
+        params: { id },
+      },
+    } = this.props;
+
+    if (prevProps.events === events) {
+      loadEvents(id);
+    }
+  }
+
   setFieldToState = ({ target }) => {
     const { value, id } = target;
     const actName = target.getAttribute('data-act');

@@ -55,7 +55,7 @@ usersRouter.get('/:id', async (req, res) => {
   }
 });
 
-usersRouter.get('/:id/orders', async (req, res) => {
+usersRouter.get('/orders/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const orders = await Cart.findAll({
@@ -220,8 +220,6 @@ usersRouter.post('/login', async (req, res) => {
       email,
     },
   });
-
-  // console.log('Login request from:', req.body, 'user', user);
 
   if (!user) {
     res.status(401).send({ message: `User ${email} does not exist` });

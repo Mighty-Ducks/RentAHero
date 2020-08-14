@@ -92,7 +92,7 @@ export const setLoggedOut = (flag) => {
 };
 
 export const fetchUserOrders = (id) => async (dispatch) => {
-  const { data } = await axios.get(`/api/users/${id}/orders`);
+  const { data } = await axios.get(`/api/users/orders/${id}`);
 
   return dispatch(setUserOrders(data));
 };

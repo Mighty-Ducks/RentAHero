@@ -77,7 +77,13 @@ const actsReducer = (state = initialActState, action) => {
 };
 
 const initialUserState = {
-  user: {},
+  user: {
+    firstName: '',
+    lastName: '',
+    street: '',
+    state: '',
+    zip: '',
+  },
   usersList: [],
   loggedIn: false,
   error: '',

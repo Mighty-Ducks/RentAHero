@@ -36,8 +36,6 @@ eventRouter.post(
 
     const { heroId, datetime, itemId } = req.body;
 
-    console.log(datetime);
-
     try {
       const event = await Event.create({
         heroId,
