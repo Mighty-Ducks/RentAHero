@@ -8,12 +8,6 @@ export const setMe = (me) => {
   };
 };
 
-export const fetchMe = (id) => async (dispatch) => {
-  const { data } = await axios.get(`/api/users/${id}`);
-
-  return dispatch(setMe(data));
-};
-
 export const setUser = (user) => {
   return {
     type: TYPES.SET_USER,
@@ -95,6 +89,7 @@ export const postUser = (email, password) => {
       });
 
       await dispatch(setMe(data));
+      dispatch(setUser(data));
       dispatch(setLoggedIn(true));
       dispatch(setError(''));
       return true;
@@ -111,6 +106,7 @@ export const logInWithSession = () => {
 
     if (data) {
       dispatch(setMe(data));
+      dispatch(setUser(data));
       dispatch(setLoggedIn(true));
     } else {
       dispatch(setLoggedIn(false));
@@ -132,6 +128,7 @@ export const setLoggedOut = () => {
 
     dispatch(setLoggedIn(false));
     dispatch(setMe(user));
+    dispatch(setUser(user));
   };
 };
 
@@ -149,6 +146,7 @@ export const registerUser = (firstName, lastName, email, password) => {
         const { history } = this.props;
 
         dispatch(setMe(data));
+        dispatch(setUser(data));
         dispatch(setLoggedIn(true));
         history.push('/');
       }
@@ -341,6 +339,7 @@ export const createItem = (item) => {
 
     dispatch(setItem(data));
     dispatch(createEvent(item.heroId, item.datetime, data.id));
+    dispatch(fetchCart(data.cartId));
   };
 };
 
