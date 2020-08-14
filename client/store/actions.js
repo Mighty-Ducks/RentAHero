@@ -132,7 +132,7 @@ export const setLoggedOut = () => {
   };
 };
 
-export const registerUser = (firstName, lastName, email, password) => {
+export const registerUser = ({ firstName, lastName, email, password }) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post('/api/users/register', {
@@ -142,13 +142,9 @@ export const registerUser = (firstName, lastName, email, password) => {
         password,
       });
       if (data) {
-        localStorage.setItem('token', data.token);
-        const { history } = this.props;
-
         dispatch(setMe(data));
         dispatch(setUser(data));
         dispatch(setLoggedIn(true));
-        history.push('/');
       }
     } catch (e) {
       dispatch(setError(e.response.data.message));
