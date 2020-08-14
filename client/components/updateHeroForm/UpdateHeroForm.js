@@ -9,13 +9,12 @@ class AddHeroForm extends Component {
     super();
 
     const { id, name, imgURL, description, acts } = data;
-
     this.state = {
       id,
       name,
       imgURL,
       description,
-      updatedActs: acts.map((act) => act.id).flat(),
+      updatedActs: acts.map((act) => act.id),
     };
   }
 
@@ -23,13 +22,13 @@ class AddHeroForm extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  setActsToState = (e) => {
-    const { updatedActs } = this.state;
+  setActsToState = () => {
+    const newActs = [];
     const inputs = document.querySelectorAll('input[type=checkbox]');
     inputs.forEach((el) => {
-      if (el.checked) updatedActs.push(el.value);
+      if (el.checked) newActs.push(el.value);
     });
-    this.setState({ updatedActs: acts });
+    this.setState({ updatedActs: newActs }, ()=> console.log(this.state.updatedActs));
   };
 
   updateHero = async (e) => {
