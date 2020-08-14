@@ -25,6 +25,7 @@ import UserPage from './userPage/UserPage';
 import Checkout from './checkout/Checkout';
 import ReviewOrder from './reviewOrder/ReviewOrder';
 import OrderConfirmation from './orderConfirmation/OrderConfirmation';
+import NewHeroes from './newHeroes/NewHeroes';
 
 export {
   PrivateRoute,
@@ -54,4 +55,5 @@ export {
   Checkout,
   ReviewOrder,
   OrderConfirmation,
+  NewHeroes,
 };

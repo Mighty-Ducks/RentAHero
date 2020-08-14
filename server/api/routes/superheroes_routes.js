@@ -33,18 +33,18 @@ superheroesRouter.get('/page/:page?', async (req, res) => {
   }
 });
 
-// get individual superhero
-superheroesRouter.get('/:id', async (req, res) => {
-  const { id } = req.params;
+superheroesRouter.get('/new', async (req, res) => {
   try {
-    const superhero = await Superhero.findByPk(id, {
+    const superhero = await Superhero.findAll({
+      limit: 6,
       include: [Act],
+      order: [['createdAt', 'DESC']],
     });
 
     if (superhero) {
       res.status(200).send(superhero);
     } else {
-      res.status(404).send({ message: `Superhero id: ${id} not found.` });
+      res.status(404).send({ message: `Superheroes not found.` });
     }
   } catch (e) {
     console.error(e);
@@ -52,13 +52,12 @@ superheroesRouter.get('/:id', async (req, res) => {
   }
 });
 
-superheroesRouter.get('/new', async (req, res) => {
+// get individual superhero
+superheroesRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const superhero = await Superhero.findByPk(id, {
-      limit: 6,
       include: [Act],
-      order: [['createdAt']],
     });
 
     if (superhero) {

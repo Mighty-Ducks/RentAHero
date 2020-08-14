@@ -30,7 +30,7 @@ class NewHeroes extends Component {
     return (
       <div className="px-3 container-xl">
         <div className="header">
-          <h1>Heroes</h1>
+          <h1>New Heroes</h1>
         </div>
         <div className="row mt-5">
           <CategoriesLinks />

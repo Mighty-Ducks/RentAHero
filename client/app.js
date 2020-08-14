@@ -22,6 +22,7 @@ import {
   Checkout,
   ReviewOrder,
   OrderConfirmation,
+  NewHeroes,
 } from './components';
 import { fetchActs, logInWithSession } from './store/actions';
 
@@ -47,6 +48,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
+            <Route exact path="/heroes/new" component={NewHeroes} />
             <Route exact path="/heroes/page/:page?" component={Heroes} />
             <Route exact path="/heroes/:id" component={Hero} />
             <Route
