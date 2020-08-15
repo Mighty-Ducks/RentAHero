@@ -55,7 +55,7 @@ class Header extends Component {
                 <Link to="/popular">Most Popular</Link>
               </li>
               <li>
-                <Link to="/new">New</Link>
+                <Link to="/heroes/new">New</Link>
               </li>
             </ul>
           </nav>

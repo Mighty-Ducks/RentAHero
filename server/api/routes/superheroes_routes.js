@@ -33,6 +33,25 @@ superheroesRouter.get('/page/:page?', async (req, res) => {
   }
 });
 
+superheroesRouter.get('/new', async (req, res) => {
+  try {
+    const superhero = await Superhero.findAll({
+      limit: 6,
+      include: [Act],
+      order: [['createdAt', 'DESC']],
+    });
+
+    if (superhero) {
+      res.status(200).send(superhero);
+    } else {
+      res.status(404).send({ message: `Superheroes not found.` });
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({ message: 'Server error' });
+  }
+});
+
 // get individual superhero
 superheroesRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
