@@ -28,6 +28,7 @@ searchRouter.get('/:term/page/:page', async (req, res) => {
       await Superhero.findAll({
         limit,
         offset,
+        order: [['name', 'ASC']],
         where: {
           [Op.or]: [
             {
