@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Page404 } from '../../components';
+import Page404 from '../page404/Page404';
 
 class PrivateRoute extends React.Component {
   render() {
