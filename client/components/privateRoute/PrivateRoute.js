@@ -20,9 +20,9 @@ class PrivateRoute extends React.Component {
         {...rest}
         render={(props) =>
           isAuth ? (
-            <div className="text-center">
-              <h1>You don`t have permission to access this page</h1>
-            </div>
+            <h1 className="text-center">
+              You don`t have permission to access this page
+            </h1>
           ) : (
             <Component {...props} />
           )
