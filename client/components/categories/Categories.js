@@ -110,7 +110,11 @@ class Categories extends Component {
                   );
                 })}
             </div>
-            <Paginator pages={pages || []} page={+page || 1} />
+            <Paginator
+              pages={pages || []}
+              page={+page || 1}
+              pageParams={pageParams}
+            />
           </div>
         </div>
       </div>
