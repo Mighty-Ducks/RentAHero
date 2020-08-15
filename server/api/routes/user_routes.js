@@ -217,8 +217,10 @@ usersRouter.post('/login', async (req, res) => {
     res.status(401).send({ message: `User ${email} does not exist` });
   } else if (hash(password) === user.password) {
     const usersSession = await Session.findByPk(req.session_id);
+    const cart = await Cart.findOne({ where: { sessionId: req.session_id } });
 
     await usersSession.setUser(user);
+    await cart.setUser(user);
 
     res.status(201).send(user);
   } else {
