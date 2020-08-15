@@ -5,9 +5,11 @@ import './checkout.scss';
 class Checkout extends Component {
   render() {
     return (
-      <div className="hero-view container-xl">
-        <h1>Checkout</h1>
-        <AddressForm />
+      <div className="checkout-view container-xl">
+        <div className="col-md-6 offset-md-3">
+          <h1>Checkout</h1>
+          <AddressForm />
+        </div>
       </div>
     );
   }
