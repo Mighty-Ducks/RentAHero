@@ -34,6 +34,7 @@ categoriesRouter.get('/:categoryName/page/:page', async (req, res) => {
       await Superhero.findAll({
         limit,
         offset,
+        order: [['name', 'ASC']],
         include: [
           {
             model: Category,

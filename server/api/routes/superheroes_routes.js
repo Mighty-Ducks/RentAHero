@@ -15,6 +15,7 @@ superheroesRouter.get('/page/:page?', async (req, res) => {
       await Superhero.findAll({
         limit,
         offset,
+        order: [['name', 'ASC']],
         include: [
           {
             model: Act,
