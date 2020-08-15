@@ -25,8 +25,8 @@ class PrivateRoute extends React.Component {
             </h1>
           ) : (
             <Component {...props} />
-          )
-        }
+            // eslint-disable-next-line prettier/prettier
+          )}
       />
     );
   }
