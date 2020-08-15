@@ -49,6 +49,12 @@ class Categories extends Component {
       },
       (v, i) => i + 1
     );
+    const pageParams = {
+      url: '/categories',
+      match: {
+        params: categoryName,
+      },
+    };
     return (
       <div className="px-3 container-xl">
         <div className="header">
@@ -65,7 +71,11 @@ class Categories extends Component {
               buttonText="Create"
               BodyModal={AddHeroForm}
             />
-            <Paginator pages={pages || []} page={+page || 1} />
+            <Paginator
+              pages={pages || []}
+              page={+page || 1}
+              pageParams={pageParams}
+            />
             <div className="heroes-list row row-cols-1 row-cols-md-3">
               {heroes &&
                 heroes.map(({ id, imgURL, name, description }) => {

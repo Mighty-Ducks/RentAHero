@@ -56,6 +56,9 @@ class Heroes extends Component {
       },
       (v, i) => i + 1
     );
+    const pageParams = {
+      url: '/heroes',
+    };
     return (
       <div className="px-3 container-xl">
         <div className="header">
@@ -71,7 +74,11 @@ class Heroes extends Component {
                 ButtonModal={AddFullButton}
               />
             )}
-            <Paginator pages={pages || []} page={+page || 1} />
+            <Paginator
+              pages={pages || []}
+              page={+page || 1}
+              pageParams={pageParams}
+            />
             <div className="heroes-list row row-cols-1 row-cols-md-3">
               {heroesList &&
                 heroesList.map(({ id, imgURL, name, description, acts }) => {
