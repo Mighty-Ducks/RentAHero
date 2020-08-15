@@ -10,7 +10,8 @@ import './header.scss';
 
 class Header extends Component {
   render() {
-    const { loggedIn, logOut, id, firstName } = this.props;
+    const { loggedIn, logOut, id, firstName, admin } = this.props;
+
     return (
       <header>
         <div className="border-bottom d-flex justify-content-between align-items-center py-2 pl-3">
@@ -56,7 +57,12 @@ class Header extends Component {
               </li>
             </ul>
           </nav>
-          <div id="user-info" className="pr-3">
+          <div id="user-info" className="pr-3 d-flex align-items-center">
+            {admin && (
+              <Link to="/users" className="">
+                <i className="fas fa-users"></i>
+              </Link>
+            )}
             <Search />
           </div>
         </div>
@@ -70,6 +76,7 @@ const mapStateToProps = (state) => {
     loggedIn: state.users.loggedIn,
     id: state.users.me.id,
     firstName: state.users.me.firstName,
+    admin: state.users.me.admin,
   };
 };
 
@@ -84,6 +91,7 @@ const mapDispatchToProps = (dispatch) => {
 Header.defaultProps = {
   id: '',
   firstName: '',
+  admin: false,
 };
 
 Header.propTypes = {
@@ -91,6 +99,7 @@ Header.propTypes = {
   logOut: PropTypes.func.isRequired,
   id: PropTypes.string,
   firstName: PropTypes.string,
+  admin: PropTypes.bool,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

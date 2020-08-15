@@ -16,7 +16,7 @@ export default class Search extends Component {
     const { input } = this.state;
     return (
       <form
-        className="input-group input-group"
+        className="input-group input-group ml-3"
         id="header-search"
         action={`#/search/${input}/page/1`}
       >
