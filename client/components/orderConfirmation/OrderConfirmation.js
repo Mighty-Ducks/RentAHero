@@ -7,6 +7,7 @@ export default class OrderConfirmation extends Component {
     const {
       location: { orderId },
     } = this.props;
+
     return (
       <div className="container-xl review-order">
         <div className="jumbotron text-center">
@@ -15,9 +16,9 @@ export default class OrderConfirmation extends Component {
             <strong>Your order is complete. </strong>
             {`your oredr number is ${orderId}.`}
           </p>
-          <hr></hr>
+          <hr />
           <p className="lead">
-            <Link className="btn btn-primary btn-sm" to="/" role="button">
+            <Link className="btn btn-primary btn-primary" to="/">
               Continue to homepage
             </Link>
           </p>

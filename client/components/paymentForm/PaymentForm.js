@@ -24,18 +24,27 @@ class PaymentForm extends Component {
     e.preventDefault();
     const { post, cart, update } = this.props;
     const { cartId } = cart[0];
+
     this.setState({ confirmation: true });
+
     update(cartId);
     post({});
   };
 
   render() {
     const { confirmation } = this.state;
-    const { cart } = this.props;
-    const cartId = cart && cart.cart && cart.cart[0] ? cart.cart[0].cartId : '';
+    const { cartId } = this.props;
 
-    if (confirmation) return <Redirect to="/confirmation" orderId={cartId} />;
-
+    if (confirmation) {
+      return (
+        <Redirect
+          to={{
+            pathname: '/confirmation',
+            orderId: cartId,
+          }}
+        />
+      );
+    }
     return (
       <div className="card">
         <form onSubmit={this.handleSubmit} className="auth-form">
@@ -79,6 +88,7 @@ const mapStateToProps = (state) => {
   return {
     user: state.users.user,
     cart: state.cart.cart,
+    cartId: state.cart.cartId,
   };
 };
 
@@ -95,8 +105,9 @@ const mapDispatchToProps = (dispatch) => {
 
 PaymentForm.propTypes = {
   post: PropTypes.func.isRequired,
-  cart: PropTypes.objectOf(PropTypes.array).isRequired,
   update: PropTypes.func.isRequired,
+  cart: PropTypes.arrayOf(PropTypes.object).isRequired,
+  cartId: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaymentForm);

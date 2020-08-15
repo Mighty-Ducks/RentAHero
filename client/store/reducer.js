@@ -150,6 +150,7 @@ const usersReducer = (state = initialUserState, action) => {
 };
 
 const initialCartState = {
+  cartId: '',
   cart: [],
   paymentInfo: {},
 };
@@ -160,6 +161,11 @@ const cartReducer = (state = initialCartState, action) => {
       return {
         ...state,
         cart: action.payload,
+      };
+    case TYPES.SET_CART_ID:
+      return {
+        ...state,
+        cartId: action.payload,
       };
     case TYPES.CREATE_ITEM:
       return {
