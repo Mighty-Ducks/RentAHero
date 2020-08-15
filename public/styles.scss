@@ -1,0 +1,57 @@
+$theme-colors: ('primary': #000);
+
+@import 'bootstrap/scss/bootstrap.scss';
+
+
+body {
+  font-family: 'Roboto';
+}
+
+.btn,
+.form-control,
+.list-group,
+.card,
+.card-img,
+.card-img-top,
+.card-img-bottom,
+.modal-content,
+.page-item:first-child .page-link,
+.page-item:last-child .page-link,
+.badge {
+  border-radius: 0;
+}
+
+.btn {
+  box-shadow: 3px 3px 0 #999;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  text-shadow: 1px 2px 1px #999;
+
+  &:hover {
+    background-color: #fff;
+    color: #000;
+  }
+}
+
+.label-full {
+  width: 100%;
+}
+
+.form-control,
+.card {
+  box-shadow: 3px 3px 0 #999;
+}
+
+.modal-content {
+  box-shadow: 3px 3px 0 #000;
+}
+
+.border-dash {
+  border-style: dashed !important;
+}
+
+.space-dots {
+  border-bottom: 1px dotted #ccc;
+  flex-grow: 2;
+  margin: .6rem 1rem;
+}

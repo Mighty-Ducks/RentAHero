@@ -1,0 +1,77 @@
+{
+  "extends": [
+    "airbnb",
+    "plugin:prettier/recommended",
+    "eslint:recommended"
+  ],
+  "plugins": [
+    "jest"
+  ],
+  "rules": {
+    "indent": [
+      "error",
+      2, // 2-spaces
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true
+      },
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "no-plusplus": "off",
+    "max-classes-per-file": "off",
+    "react/jsx-filename-extension": "off",
+    "react/prefer-stateless-function": "off",
+    "react/state-in-constructor": "off",
+    "react/self-closing-comp": "off",
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/label-has-for": "off",
+    "no-extra-parens": [
+      "warn",
+      "all",
+      {
+        "ignoreJSX": "all",
+        "nestedBinaryExpressions": false,
+        "conditionalAssign": false
+      }
+    ],
+    "no-unused-vars": 2,
+    "no-console": [
+      "warn",
+      {
+        "allow": [
+          "warn",
+          "error"
+        ]
+      }
+    ],
+    "camelcase": "off"
+    /*
+    ,
+    "max-len": [
+      1,
+      80,
+      2,
+      {
+        "ignoreUrls": true,
+        "ignoreStrings": true
+      }
+    ]
+    */
+  },
+  "env": {
+    "jest/globals": true,
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "parser": "babel-eslint"
+}

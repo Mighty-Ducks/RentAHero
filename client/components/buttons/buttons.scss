@@ -1,0 +1,11 @@
+.edit-hero {
+  display: none;
+  position: absolute;
+}
+.card:hover {
+  .edit-hero {
+    display: inline-block;
+    right: 0;
+    z-index: 1;
+  }
+}
