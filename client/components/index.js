@@ -26,6 +26,7 @@ import Checkout from './checkout/Checkout';
 import ReviewOrder from './reviewOrder/ReviewOrder';
 import OrderConfirmation from './orderConfirmation/OrderConfirmation';
 import NewHeroes from './newHeroes/NewHeroes';
+import Page404 from './page404/Page404';
 
 export {
   PrivateRoute,
@@ -56,4 +57,5 @@ export {
   ReviewOrder,
   OrderConfirmation,
   NewHeroes,
+  Page404,
 };

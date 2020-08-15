@@ -19,67 +19,64 @@ class UserOrders extends Component {
   render() {
     const { orders } = this.props;
     return (
-      <div className="order-history">
-        <h2>Order History</h2>
-        <ol>
+      <div className="card mb-3">
+        <div className="card-body">
+          <h2 className="card-title">Order History</h2>
           {orders.map((order) => {
             return (
               <div className="order" key={order.id}>
-                <h6>
-                  <strong>Order ID:&nbsp;</strong>
+                <p className="card-text">
+                  <span className="text-muted small">Order ID:&nbsp;</span>
                   {order.id}
-                </h6>
-                <h6>
-                  <strong>Order Date:&nbsp;</strong>
+                </p>
+                <p className="card-text">
+                  <span className="text-muted small">Order Date:&nbsp;</span>
                   {new Date(order.updatedAt).toDateString()}
-                </h6>
+                </p>
                 {order.items.map((item) => {
                   return (
                     <div className="row mb-4" key={item.id}>
-                      <div className="col-md-5 col-lg-3 col-xl-3">
-                        <div className="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
-                          <img
-                            className="img-fluid w-100"
-                            src={item.heroImgURL}
-                            alt="hero"
-                          />
-                        </div>
+                      <div className="col-md-4">
+                        <img
+                          className="card-img"
+                          src={item.heroImgURL}
+                          alt={item.heroName}
+                        />
                       </div>
-                      <div className="col-md-7 col-lg-9 col-xl-9">
-                        <div>
-                          <div className="d-flex justify-content-between">
-                            <div>
+                      <div className="col-md-8">
+                        <div className="d-flex justify-content-between">
+                          <div>
+                            <h5>
                               <Link to={`/heroes/${item.heroId}`}>
                                 {item.heroName}
                               </Link>
-                              <p className="mb-2 text-muted text-uppercase small">
-                                {item.actName}
-                              </p>
-                              <p className="mb-2 text-muted text-uppercase small">
-                                <strong>Appointment</strong>
-                                <br />
-                                {new Date(item.datetime).toLocaleString()}
-                              </p>
-                            </div>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <p className="mb-0">
-                              <strong>{`$${item.price}`}</strong>
+                            </h5>
+                            <p className="mb-2 text-muted text-uppercase small">
+                              {item.actName}
                             </p>
+                            <p className="mb-2 text-muted text-uppercase small">
+                              <strong>Appointment</strong>
+                              <br />
+                              {new Date(item.datetime).toLocaleString()}
+                            </p>
+                          </div>
+                          <div className="d-flex justify-content-between">
+                            <strong>{`$${item.price}`}</strong>
                           </div>
                         </div>
                       </div>
                     </div>
                   );
                 })}
-                <h5 className="order-total">
-                  <strong>Total:&nbsp;$</strong>
-                  {order.total}
-                </h5>
+                <div className="total d-flex justify-content-between align-items-center">
+                  Total Amount
+                  <span className="space-dots"></span>
+                  <strong className="h1">{`$${order.total}`}</strong>
+                </div>
               </div>
             );
           })}
-        </ol>
+        </div>
       </div>
     );
   }

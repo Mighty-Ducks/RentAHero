@@ -2,6 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Page404 } from '../../components';
 
 class PrivateRoute extends React.Component {
   render() {
@@ -18,7 +19,7 @@ class PrivateRoute extends React.Component {
     return (
       <Route
         {...rest}
-        render={(props) => (isAuth ? <>404</> : <Component {...props} />)}
+        render={(props) => (isAuth ? <Page404 /> : <Component {...props} />)}
       />
     );
   }
