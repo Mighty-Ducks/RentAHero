@@ -1,7 +1,11 @@
 .order-history {
     ol {
+        padding: 0;
+    }
+    .order {
         border: 1px solid black;
         border-radius: 10px;
+        margin: 2% 0;
         padding: 1%;
     }
     img {
