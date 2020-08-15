@@ -294,6 +294,13 @@ export const fetchActs = () => async (dispatch) => {
   return dispatch(setActs(data));
 };
 
+export const setCartId = (cartId) => {
+  return {
+    type: TYPES.SET_CART_ID,
+    payload: cartId,
+  };
+};
+
 export const setCart = (cart) => {
   return {
     type: TYPES.SET_CART,
@@ -301,10 +308,13 @@ export const setCart = (cart) => {
   };
 };
 
-export const fetchCart = () => async (dispatch) => {
-  const { data } = await axios.get(`/api/cart`);
+export const fetchCart = () => {
+  return async (dispatch) => {
+    const { data } = await axios.get(`/api/cart`);
 
-  return dispatch(setCart(data));
+    dispatch(setCart(data));
+    dispatch(setCartId(data[0].cartId));
+  };
 };
 
 export const updateCart = (id) => async (dispatch) => {
