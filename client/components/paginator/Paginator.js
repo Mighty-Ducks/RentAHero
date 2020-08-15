@@ -3,9 +3,34 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export default class Paginator extends Component {
-  render() {
-    const { pages, page } = this.props;
+  state = {
+    url: '',
+    params: '',
+  };
 
+  componentDidMount() {
+    this.updateState();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      this.updateState();
+    }
+  }
+
+  updateState = () => {
+    const { pageParams } = this.props;
+    const url = pageParams ? pageParams.url : '';
+    const params =
+      pageParams && pageParams.match && pageParams.match.params
+        ? pageParams.match.params
+        : '';
+    this.setState({ url, params });
+  };
+
+  render() {
+    const { url, params } = this.state;
+    const { pages, page } = this.props;
     return (
       <nav className="pages d-flex justify-content-end">
         <ul className="pagination">
@@ -13,7 +38,7 @@ export default class Paginator extends Component {
             <Link
               className="page-link"
               aria-label="Previous"
-              to={`/heroes/page/${page - 1 || 1}`}
+              to={`${url}/${params ? `${params}/` : ''}page/${page - 1 || 1}`}
             >
               <span aria-hidden="true">&laquo;</span>
             </Link>
@@ -24,7 +49,10 @@ export default class Paginator extends Component {
                 className={`page-item${pg === page ? ' active' : ''}`}
                 key={pg}
               >
-                <Link className="page-link" to={`/heroes/page/${pg}`}>
+                <Link
+                  className="page-link"
+                  to={`${url}/${params ? `${params}/` : ''}page/${pg}`}
+                >
                   {pg}
                 </Link>
               </li>
@@ -34,7 +62,7 @@ export default class Paginator extends Component {
             <Link
               className="page-link"
               aria-label="Next"
-              to={`/heroes/page/${
+              to={`${url}/${params ? `${params}/` : ''}page/${
                 page + 1 >= pages.length ? pages.length : page + 1
               }`}
             >
@@ -50,9 +78,16 @@ export default class Paginator extends Component {
 Paginator.defaultProps = {
   pages: [],
   page: 1,
+  pageParams: {},
 };
 
 Paginator.propTypes = {
   pages: PropTypes.arrayOf(PropTypes.number),
   page: PropTypes.number,
+  pageParams: PropTypes.shape({
+    url: PropTypes.string,
+    match: PropTypes.shape({
+      params: PropTypes.string,
+    }),
+  }),
 };

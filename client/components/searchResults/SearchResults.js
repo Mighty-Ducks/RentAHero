@@ -45,8 +45,14 @@ class SearchResults extends Component {
       },
       (v, i) => i + 1
     );
+    const pageParams = {
+      url: '/search',
+      match: {
+        params: term,
+      },
+    };
     return (
-      <div className="px-3">
+      <div className="px-3 container-xl">
         <div className="header">
           <h1>
             Showing&nbsp;
@@ -58,7 +64,11 @@ class SearchResults extends Component {
               &quot;
             </strong>
           </h1>
-          <Paginator pages={pages || []} page={+page || 1} />
+          <Paginator
+            pages={pages || []}
+            page={+page || 1}
+            pageParams={pageParams}
+          />
         </div>
         <div className="row mt-5">
           <CategoriesLinks />
