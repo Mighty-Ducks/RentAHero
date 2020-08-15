@@ -52,7 +52,7 @@ class Header extends Component {
                 <Link to="/heroes/page/1">Heroes</Link>
               </li>
               <li>
-                <Link to="/new">New</Link>
+                <Link to="/heroes/new">New</Link>
               </li>
             </ul>
           </nav>
