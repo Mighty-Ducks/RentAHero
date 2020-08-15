@@ -20,8 +20,9 @@ class Register extends Component {
   register = async (e) => {
     e.preventDefault();
     const { firstName, lastName, email, password } = this.state;
-    const { register } = this.props;
-    register(firstName, lastName, email, password);
+    const { register, history } = this.props;
+    register({ firstName, lastName, email, password });
+    history.push('/');
   };
 
   render() {
@@ -112,7 +113,7 @@ Register.propTypes = {
 const mapDispatchToProps = (dispatch) => {
   return {
     register: async (data) => {
-      dispatch(registerUser(data));
+      await dispatch(registerUser(data));
     },
   };
 };
