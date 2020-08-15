@@ -24,7 +24,7 @@ class UserOrders extends Component {
         <ol>
           {orders.map((order) => {
             return (
-              <div key={order.id}>
+              <div className="order" key={order.id}>
                 <h6>
                   <strong>Order ID:&nbsp;</strong>
                   {order.id}

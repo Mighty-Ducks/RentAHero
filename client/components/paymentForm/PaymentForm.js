@@ -9,7 +9,7 @@ import {
   CardCvcElement,
 } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import { postPayment } from '../../store/actions';
+import { updateCart, postPayment } from '../../store/actions';
 
 const stripePromise = loadStripe(
   'pk_test_51HF8kpFygF7AEgLO0ijlGurivMeNBBuveJnXnM41E8QeJtCdKLyhtc1MQxW36Phq5MElkfEATFDaDtAK0iCk5z3B00gYzEQqyY'
@@ -21,12 +21,11 @@ class PaymentForm extends Component {
   };
 
   handleSubmit = async (e) => {
-    console.log(this.props);
     e.preventDefault();
-    const { post } = this.props;
-
+    const { post, cart, update } = this.props;
+    const { cartId } = cart[0];
     this.setState({ confirmation: true });
-
+    update(cartId);
     post({});
   };
 
@@ -88,12 +87,16 @@ const mapDispatchToProps = (dispatch) => {
     post: (paymentInfo) => {
       dispatch(postPayment(paymentInfo));
     },
+    update: (id) => {
+      dispatch(updateCart(id));
+    },
   };
 };
 
 PaymentForm.propTypes = {
   post: PropTypes.func.isRequired,
   cart: PropTypes.objectOf(PropTypes.array).isRequired,
+  update: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaymentForm);
