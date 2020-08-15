@@ -52,7 +52,8 @@
           "error"
         ]
       }
-    ]
+    ],
+    "camelcase": "off"
     /*
     ,
     "max-len": [

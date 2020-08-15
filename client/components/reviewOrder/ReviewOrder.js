@@ -3,9 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import moment from 'moment';
+import { Elements, ElementsConsumer } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
+import PaymentForm from '../paymentForm/PaymentForm';
 import { fetchCart, updateCart } from '../../store/actions';
-import './reviewOrder.scss';
+
+const stripePromise = loadStripe(
+  'pk_test_51HF8kpFygF7AEgLO0ijlGurivMeNBBuveJnXnM41E8QeJtCdKLyhtc1MQxW36Phq5MElkfEATFDaDtAK0iCk5z3B00gYzEQqyY'
+);
 
 class ReviewOrder extends Component {
   state = {
@@ -45,41 +51,49 @@ class ReviewOrder extends Component {
 
     return (
       <div className="container-xl review-order">
-        <div className="card">
-          <div className="card-header">Order Review</div>
-          <div className="card-body">
-            <h5 className="card-title">Items</h5>
-            {cart.map((item) => {
-              return (
-                <div key={item.id} className="item">
-                  <h3 className="card-text">{item.heroName}</h3>
-                  <p className="card-text">
-                    {`${item.actName}, ${moment(item.datetime).format('LLLL')}`}
-                  </p>
-                  <p className="card-text">{`$${item.price}`}</p>
-                </div>
-              );
-            })}
+        <h1>Order Review</h1>
+        <div className="row">
+          <div className="col-lg-8">
+            <div className="card">
+              <div className="card-body">
+                <h2 className="card-title">Items</h2>
+                {cart.map((item) => {
+                  return (
+                    <div key={item.id} className="card bg-light mb-3">
+                      <div className="card-body">
+                        <h3 className="card-text">{item.heroName}</h3>
+                        <p className="card-text">
+                          {`${item.actName}, ${moment(item.datetime).format(
+                            'LLLL'
+                          )}`}
+                        </p>
+                        <p className="card-text">{`$${item.price}`}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="card-body">
+                <h5 className="card-title">Contact Information</h5>
+                <p className="card-text">{state.name}</p>
+                <p className="card-text">{state.street}</p>
+                <p className="card-text">{`${state.state}, ${state.zip}`}</p>
+              </div>
+            </div>
           </div>
-          <div className="card-body">
-            <h5 className="card-title">Contact Information</h5>
-            <p className="card-text">{state.name}</p>
-            <p className="card-text">{state.street}</p>
-            <p className="card-text">{`${state.state}, ${state.zip}`}</p>
+          <div className="col-lg-4">
+            <Elements stripe={stripePromise}>
+              <ElementsConsumer>
+                {({ elements, stripe }) => (
+                  <PaymentForm
+                    elements={elements}
+                    stripe={stripe}
+                    {...this.props}
+                  />
+                )}
+              </ElementsConsumer>
+            </Elements>
           </div>
-          <div className="card-body">
-            <h5 className="card-title">Payment</h5>
-            <p className="card-text">
-              this will present all the payment infornmation
-            </p>
-          </div>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={this.handleClick}
-          >
-            Confirm
-          </button>
         </div>
       </div>
     );

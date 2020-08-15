@@ -1,6 +1,19 @@
 const axios = require('axios');
 const { TYPES } = require('./types');
 
+export const setPayment = (paymentInfo) => {
+  return {
+    type: TYPES.SET_PAYMENT,
+    payload: paymentInfo,
+  };
+};
+
+export const postPayment = (paymentInfo) => async (dispatch) => {
+  const { data } = await axios.post('/api/payment/', paymentInfo);
+
+  return dispatch(setPayment(data));
+};
+
 export const setMe = (me) => {
   return {
     type: TYPES.SET_ME,

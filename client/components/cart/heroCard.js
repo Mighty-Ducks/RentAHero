@@ -13,24 +13,25 @@ const heroCard = (
     <div key={id}>
       <div className="row mb-4">
         <div className="col-md-4">
-          <div className="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
+          <div className="mb-3 mb-md-0">
             <img className="img-fluid w-100" src={heroImgURL} alt="hero" />
           </div>
         </div>
         <div className="col-md-8">
           <div className="d-flex justify-content-between">
-            <h5>
-              <Link to={`/heroes/${heroId}`}>{heroName}</Link>
-            </h5>
-            <p className="text-muted text-uppercase small">{actName}</p>
-            <p className="text-muted text-uppercase small">
-              <strong>Appointment</strong>
-              <br />
-              {moment(datetime).format('LLLL')}
-            </p>
-          </div>
-          <div className="d-flex justify-content-between align-items-center">
             <div>
+              <h5>
+                <Link to={`/heroes/${heroId}`}>{heroName}</Link>
+              </h5>
+              <p className="text-muted text-uppercase small">{actName}</p>
+              <p className="text-muted text-uppercase small">
+                <strong>Appointment</strong>
+                <br />
+                {moment(datetime).format('LLLL')}
+              </p>
+            </div>
+            <div className="d-flex flex-column justify-content-between align-items-end">
+              <strong>{`$${price}`}</strong>
               <button
                 type="button"
                 className="btn btn-danger"
@@ -39,11 +40,6 @@ const heroCard = (
                 Remove item
               </button>
             </div>
-            <p className="mb-0">
-              <span>
-                <strong>{`$${price}`}</strong>
-              </span>
-            </p>
           </div>
         </div>
       </div>

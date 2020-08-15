@@ -8,18 +8,20 @@ export default class OrderConfirmation extends Component {
       location: { orderId },
     } = this.props;
     return (
-      <div className="jumbotron text-center">
-        <h1 className="display-3">Thank You!</h1>
-        <p className="lead">
-          <strong>Your order is complete. </strong>
-          {`your oredr number is ${orderId}.`}
-        </p>
-        <hr></hr>
-        <p className="lead">
-          <Link className="btn btn-primary btn-sm" to="/" role="button">
-            Continue to homepage
-          </Link>
-        </p>
+      <div className="container-xl review-order">
+        <div className="jumbotron text-center">
+          <h1 className="display-3">Thank You!</h1>
+          <p className="lead">
+            <strong>Your order is complete. </strong>
+            {`your oredr number is ${orderId}.`}
+          </p>
+          <hr></hr>
+          <p className="lead">
+            <Link className="btn btn-primary btn-sm" to="/" role="button">
+              Continue to homepage
+            </Link>
+          </p>
+        </div>
       </div>
     );
   }

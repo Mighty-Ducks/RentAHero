@@ -8,10 +8,6 @@ const initialHeroState = {
   hero: {},
 };
 
-const initialCartState = {
-  cart: [],
-};
-
 const initialSearchState = {
   heroes: [],
   heroesTotal: 0,
@@ -153,6 +149,11 @@ const usersReducer = (state = initialUserState, action) => {
   }
 };
 
+const initialCartState = {
+  cart: [],
+  paymentInfo: {},
+};
+
 const cartReducer = (state = initialCartState, action) => {
   switch (action.type) {
     case TYPES.SET_CART:
@@ -164,6 +165,11 @@ const cartReducer = (state = initialCartState, action) => {
       return {
         ...state,
         newItem: action.payload,
+      };
+    case TYPES.SET_PAYMENT:
+      return {
+        ...state,
+        paymentInfo: action.payload,
       };
     default:
       return state;
