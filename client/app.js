@@ -23,6 +23,7 @@ import {
   ReviewOrder,
   OrderConfirmation,
   NewHeroes,
+  Page404,
 } from './components';
 import { fetchActs, logInWithSession } from './store/actions';
 
@@ -68,6 +69,7 @@ class App extends Component {
             <Route exact path="/checkout" component={Checkout} />
             <PrivateRoute exact path="/users" component={Users} />
             <PrivateRoute exact path="/users/:id" component={UserPage} />
+            <Route component={Page404} />
           </Switch>
         </div>
       </HashRouter>

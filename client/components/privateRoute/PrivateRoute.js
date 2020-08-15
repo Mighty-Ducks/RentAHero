@@ -2,6 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Page404 from '../page404/Page404';
 
 class PrivateRoute extends React.Component {
   render() {
@@ -18,15 +19,7 @@ class PrivateRoute extends React.Component {
     return (
       <Route
         {...rest}
-        render={(props) =>
-          isAuth ? (
-            <h1 className="text-center">
-              You don`t have permission to access this page
-            </h1>
-          ) : (
-            <Component {...props} />
-          )
-        }
+        render={(props) => (isAuth ? <Page404 /> : <Component {...props} />)}
       />
     );
   }
